@@ -1,0 +1,819 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,RegEX," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="自java1.4.0以后，java就内建了正则表达式包， java.utile.regex,它的API毫不复杂（可以称得上简单），提供了强大而有创意的功能。对Unicode的支持很棒，文档清晰，运行速度也很快。它能够用来匹配CharSequence对象，所以使用起来非常方便。">
+<meta name="keywords" content="Java,RegEX">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java RegEx">
+<meta property="og:url" content="http://xiaozhuang.github.io/2016/07/21/Java-RegEx/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="自java1.4.0以后，java就内建了正则表达式包， java.utile.regex,它的API毫不复杂（可以称得上简单），提供了强大而有创意的功能。对Unicode的支持很棒，文档清晰，运行速度也很快。它能够用来匹配CharSequence对象，所以使用起来非常方便。">
+<meta property="og:updated_time" content="2017-06-16T07:23:04.905Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java RegEx">
+<meta name="twitter:description" content="自java1.4.0以后，java就内建了正则表达式包， java.utile.regex,它的API毫不复杂（可以称得上简单），提供了强大而有创意的功能。对Unicode的支持很棒，文档清晰，运行速度也很快。它能够用来匹配CharSequence对象，所以使用起来非常方便。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> Java RegEx | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java RegEx
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-21T20:31:14+08:00" content="2016-07-21">
+              2016-07-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>自java1.4.0以后，java就内建了正则表达式包， java.utile.regex,它的API毫不复杂（可以称得上简单），提供了强大而有创意的功能。<br>对Unicode的支持很棒，文档清晰，运行速度也很快。<br>它能够用来匹配CharSequence对象，所以使用起来非常方便。<br><a id="more"></a></p>
+<h1 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h1><h2 id="函数式"><a href="#函数式" class="headerlink" title="函数式"></a>函数式</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//数据检测</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String CHECK_UPLOAD_REGEX = <span class="string">"^\\&#123;.*\"success\"\\:true.*&#125;$"</span>;</div><div class="line"><span class="comment">//数据</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String response_data = <span class="string">"&#123;\"success\":true,\"fileid\":[\"2\"],\"filePath\":\"2016/07/19/17/5006828089.jpg\"&#125;"</span>;</div><div class="line"><span class="keyword">if</span>(Pattern.matches(CHECK_UPLOAD_REGEX,response_data))&#123;</div><div class="line">	<span class="comment">//matched</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//文本替换</span></div><div class="line"><span class="comment">//不使用正则，普通替换</span></div><div class="line">String url = <span class="string">"editUrl=\"~/entities/Temp4/edit\""</span>;</div><div class="line">String replace = url.replace(<span class="string">"~/entities/Temp4"</span>, <span class="string">"~/entities/temp1"</span>);</div><div class="line">System.out.println(replace);</div><div class="line"></div><div class="line"><span class="comment">//点号可以匹配行结束符</span></div><div class="line">String CABLE_AREA_REGEX = <span class="string">"(?s)&lt;!-- cable --&gt;.*?&lt;!-- /cable --&gt;"</span>;</div><div class="line"><span class="comment">//使用正则，不区分大小写替换</span></div><div class="line">String replaceAll = url.replaceAll(<span class="string">"(?i)~/entities/temp4"</span>, <span class="string">"~/entities/temp1"</span>);</div><div class="line">System.out.println(replaceAll);</div></pre></td></tr></table></figure>
+<h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//捕获文件路径正则</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String CAPTURE_FILEPATH_REGEX = <span class="string">"\"filePath\":(\"[^\"]*\")"</span>;</div><div class="line"><span class="comment">//数据</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String response_data = <span class="string">"&#123;\"success\":true,\"fileid\":[\"2\"],\"filePath\":\"2016/07/19/17/5006828089.jpg\"&#125;"</span>;</div><div class="line"><span class="comment">//定义并编译正则</span></div><div class="line">Pattern capture_filepath_regex_compile = Pattern.compile(CAPTURE_FILEPATH_REGEX);</div><div class="line"><span class="comment">//进行数据匹配</span></div><div class="line">Matcher capture_filepath_regex_matcher = capture_filepath_regex_compile.matcher(response_data);</div><div class="line"><span class="keyword">if</span>(capture_filepath_regex_matcher.find())&#123;</div><div class="line">    <span class="comment">//返回由以前匹配操作所匹配的输入子序列</span></div><div class="line">    String matchedText = capture_filepath_regex_matcher.group();</div><div class="line">    </div><div class="line">    <span class="keyword">int</span> matchedFrom = capture_filepath_regex_matcher.start();</div><div class="line">    <span class="keyword">int</span> matchedTo = capture_filepath_regex_matcher.end();</div><div class="line">    System.out.println(<span class="string">"matched [ "</span> + matchedText + <span class="string">" ] from "</span>+ matchedFrom + <span class="string">" to "</span>+ matchedTo + <span class="string">"."</span>);</div><div class="line"></div><div class="line">    </div><div class="line">    <span class="comment">//捕获组是从 1 开始从左到右的索引。组零表示整个模式，因此表达式 m.group(0) 等效于 m.group()</span></div><div class="line">    String filePath = capture_filepath_regex_matcher.group(<span class="number">1</span>);</div><div class="line">    System.out.println(filePath);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>matched [“filePath”:”2016/07/19/17/5006828089.jpg”] from 31 to 72.<br>“2016/07/19/17/5006828089.jpg”</p>
+</blockquote>
+<h1 id="java-util-regex使用"><a href="#java-util-regex使用" class="headerlink" title="java.util.regex使用"></a>java.util.regex使用</h1><p>java.util.regex.Pattern 是编译好的正则表达式<br>java.util.regex.Matcher 对应单独的实例，表示正则表达式应用到某个具体的目标字符串上,用来进行实际的匹配尝试（使用find），以及查询结果（使用group、start和end方法）</p>
+<h2 id="Matcher对象"><a href="#Matcher对象" class="headerlink" title="Matcher对象"></a>Matcher对象</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//每组捕获型括号对应的信息，通过group(num)、start(num)、end(num)方法获取</span></div><div class="line"><span class="comment">//匹配的输入子序列</span></div><div class="line">String java.util.regex.MatchResult.group()</div><div class="line"><span class="comment">//编号num的捕获型括号匹配的内容,group(0) 等于group()</span></div><div class="line">String java.util.regex.MatchResult.group(<span class="keyword">int</span> num)</div><div class="line"></div><div class="line"><span class="comment">//匹配的初始索引</span></div><div class="line"><span class="keyword">int</span> java.util.regex.MatchResult.start()</div><div class="line"><span class="comment">//编号num的捕获型括号起点，start(0) 等于start()</span></div><div class="line"><span class="keyword">int</span> java.util.regex.MatchResult.start(<span class="keyword">int</span> num)</div><div class="line"></div><div class="line"><span class="comment">//匹配的结束索引</span></div><div class="line"><span class="keyword">int</span> java.util.regex.MatchResult.end()</div><div class="line"><span class="comment">//编号num的捕获型括号终点，end(0) 等于end()</span></div><div class="line"><span class="keyword">int</span> java.util.regex.MatchResult.end(<span class="keyword">int</span> num)</div><div class="line"></div><div class="line"><span class="comment">//获取当前使用的pattern</span></div><div class="line">Pattern java.util.regex.Matcher.pattern()</div><div class="line"><span class="comment">//更改pattern</span></div><div class="line">Matcher java.util.regex.Matcher.usePattern(Pattern)</div><div class="line"></div><div class="line"><span class="comment">//尝试匹配，每次都在上次尝试之后尝试新的匹配</span></div><div class="line"><span class="keyword">boolean</span> java.util.regex.Matcher.find()</div><div class="line"><span class="comment">// 重置此匹配器(检索范围为整个目标字符)，然后从距离开头offset个字符的位置开始查找</span></div><div class="line"><span class="keyword">boolean</span> java.util.regex.Matcher.find(<span class="keyword">int</span> offset)</div><div class="line"></div><div class="line"><span class="comment">// pattern捕获型括号数目</span></div><div class="line"><span class="keyword">int</span> java.util.regex.Matcher.groupCount()</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 正在表达式能否`完全`匹配当前检索范围的那段文本</span></div><div class="line"><span class="keyword">boolean</span> java.util.regex.Matcher.matches()</div><div class="line"></div><div class="line"><span class="comment">// 从当前目标字符串开头开始，能否在当前检索范围内找到匹配</span></div><div class="line">java.util.regex.Matcher.lookingAt()</div><div class="line"></div><div class="line"><span class="comment">//返回此匹配器的匹配状态</span></div><div class="line"><span class="comment">//包含group、start、end、groupCount方法</span></div><div class="line">MatchResult MatchResult java.util.regex.Matcher.toMatchResult()</div></pre></td></tr></table></figure>
+<h2 id="替换"><a href="#替换" class="headerlink" title="替换"></a>替换</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">String regex = <span class="string">"(\\w)132"</span>;</div><div class="line">String text = <span class="string">"wangdz13230321524sunday132545"</span>;</div><div class="line">System.out.println(<span class="string">"text:"</span>+text);</div><div class="line"><span class="comment">//定义并编译正则</span></div><div class="line">Pattern pattern = Pattern.compile(regex);</div><div class="line"><span class="comment">//进行数据匹配</span></div><div class="line">Matcher matcher = pattern.matcher(text);</div><div class="line"></div><div class="line"></div><div class="line">String replaceAll = matcher.replaceAll(<span class="string">"$1182"</span>);</div><div class="line">System.out.println(<span class="string">"replaceAll:"</span>+replaceAll);</div><div class="line"></div><div class="line"></div><div class="line">String replaceFirst = matcher.replaceFirst(<span class="string">"$1182"</span>);</div><div class="line">System.out.println(<span class="string">"replaceFirst:"</span>+replaceFirst);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>text:wangdz13230321524sunday132545<br>replaceAll:wangdz18230321524sunday182545<br>replaceFirst:wangdz18230321524sunday132545</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//替换目标字符串中与正则匹配的全部子串，放回替换之后的副本</span></div><div class="line">String java.util.regex.Matcher.replaceAll(String replacement)</div><div class="line"></div><div class="line">String.replaceAll(regex, replacement)</div><div class="line">等于 Pattern.compile(regex).matcher(text).replaceAll(replacement)</div><div class="line"></div><div class="line"><span class="comment">//仅对第一次匹配（如果存在）进行替换，String也提供了replaceFirst方法</span></div><div class="line">String java.util.regex.Matcher.replaceFirst(String replacement)</div></pre></td></tr></table></figure>
+<h2 id="replacement-参数"><a href="#replacement-参数" class="headerlink" title="replacement 参数"></a>replacement 参数</h2><p>replacement参数在插入到匹配结果之前，会进行特殊处理</p>
+<p>$1、$2之类会替换为对应编号的捕获型括号匹配的文本（$0 表示所有匹配的文本）<br>如果<code>只有3组</code>捕获型括号，则$25被视为$2然后是’5’<br>如果有12组捕获型括号，如果希望使用<code>第一组</code>捕获型括号，然后是’2’，应该这样’$1\2’</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//对replacement中的特殊字符添加转义，避免特殊处理</span></div><div class="line">String java.util.regex.Matcher.quoteReplacement(String replacement)</div></pre></td></tr></table></figure>
+<h2 id="高级查找-替换"><a href="#高级查找-替换" class="headerlink" title="高级查找-替换"></a>高级查找-替换</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">String text = <span class="string">"--&gt;one+test&lt;&lt;--"</span>;</div><div class="line">String regex = <span class="string">"\\w+"</span>;</div><div class="line">StringBuffer result = <span class="keyword">new</span> StringBuffer();</div><div class="line"></div><div class="line">Pattern compile = Pattern.compile(regex);</div><div class="line">Matcher matcher = compile.matcher(text);</div><div class="line"></div><div class="line"><span class="keyword">while</span>(matcher.find())&#123;</div><div class="line">    matcher.appendReplacement(result, <span class="string">"XXX"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">matcher.appendTail(result);</div><div class="line"></div><div class="line">System.out.println(<span class="string">"result:"</span>+result);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>result:–&gt;XXX+XXX&lt;&lt;–</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//正则表达式应用成功后（通常是find）马上调用appendReplacement，会把两个字符串添加到StringBuffer</span></div><div class="line"><span class="comment">//第一个，目标字符串匹配之前的文本</span></div><div class="line"><span class="comment">//第二个，特殊处理的replacement字符串</span></div><div class="line">Matcher java.util.regex.Matcher.appendReplacement(StringBuffer sb, String replacement)</div><div class="line"></div><div class="line"><span class="comment">//匹配停止后，将剩下的文本附加到StringBuffer</span></div><div class="line">StringBuffer java.util.regex.Matcher.appendTail(StringBuffer sb)</div></pre></td></tr></table></figure>
+<h2 id="原地查找-替换"><a href="#原地查找-替换" class="headerlink" title="原地查找-替换"></a>原地查找-替换</h2><p>Matcher使用于任何实现了CharSequence接口的类，能够对目标文本实时地、原地（in place）的修改。</p>
+<p>StringBuffer和StringBuilder是两种常见的实现了CharSequence接口的类</p>
+<p>等长替换</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">StringBuilder text = <span class="keyword">new</span> StringBuilder(<span class="string">"It's SO very RUDE to shout!"</span>);  </div><div class="line"><span class="comment">//\p&#123;Lu&#125;大写字母</span></div><div class="line"><span class="comment">//\p&#123;Lt&#125;单词开头的字母</span></div><div class="line">Matcher matcher = Pattern.compile(<span class="string">"\\b[\\p&#123;Lu&#125;\\p&#123;Lt&#125;]+\\b"</span>).matcher(text);</div><div class="line"><span class="keyword">while</span>(matcher.find())&#123;</div><div class="line">    text.replace(matcher.start(), matcher.end(), matcher.group().toLowerCase());</div><div class="line">&#125;</div><div class="line">System.out.println(text);</div></pre></td></tr></table></figure>
+<h2 id="长度变化的替换"><a href="#长度变化的替换" class="headerlink" title="长度变化的替换"></a>长度变化的替换</h2><p>长度变化的替换，需要调整“匹配指针”（在目标字符串中进行下一次find的开始位置）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">StringBuilder text = <span class="keyword">new</span> StringBuilder(<span class="string">"It's SO very RUDE to shout!"</span>);</div><div class="line"></div><div class="line">Matcher matcher = Pattern.compile(<span class="string">"\\b[\\p&#123;Lu&#125;\\p&#123;Lt&#125;]+\\b"</span>).matcher(text);</div><div class="line"><span class="keyword">int</span> matchPointer = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="comment">//java.util.regex.Matcher.find(int start)</span></div><div class="line"><span class="comment">//重置此匹配器，然后尝试查找匹配该模式、从指定索引开始的输入序列的下一个子序列。</span></div><div class="line"><span class="keyword">while</span> (matcher.find(matchPointer)) &#123;</div><div class="line">    String replaceString = <span class="string">"&lt;b&gt;"</span> + matcher.group().toLowerCase() + <span class="string">"&lt;/b&gt;"</span>;</div><div class="line">    text.replace(matcher.start(), matcher.end(), replaceString);</div><div class="line">    <span class="comment">//调整匹配指针位置</span></div><div class="line">    matchPointer = matcher.start() + replaceString.length();</div><div class="line">&#125;</div><div class="line"></div><div class="line">System.out.println(text);</div></pre></td></tr></table></figure>
+<h2 id="元字符"><a href="#元字符" class="headerlink" title="元字符"></a>元字符</h2><p>Java的正则流派，java.util.regex使用传统型NFA</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>作用 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(?: … )</td>
+<td>非捕获型括号</td>
+</tr>
+<tr>
+<td>?+ 、*+ 、++ 、 {m,n}+</td>
+<td>占有优先量词</td>
+</tr>
+<tr>
+<td>\b</td>
+<td>单词分解符</td>
+</tr>
+</tbody>
+</table>
+<h3 id="字符缩略表示法"><a href="#字符缩略表示法" class="headerlink" title="字符缩略表示法"></a>字符缩略表示法</h3><p>\a    报警。ASCII中<bel>字符，八进制编码007<br>\b    退格。ASCII中<bs>字符，八进制编码010（许多流派中，\b只有在字符组内部才表示这样的意义，否则代表单词分解符）<br>\e    Escape字符。ASCII中<esc>字符，八进制编码033<br>\f    进纸符。ASCII中<ff>字符，八进制编码014<br>\n    换行符。Unix和DOS/Windows中，ASCII中<lf>字符，八进制编码012。MacOS中，对应ASCII中<cr>字符，十进制编码015。java中，不论什么平台，都对应ASCII中<code>&lt;LF&gt;</code>字符。<br>\r    回车。Unix和DOS/Windows中，ASCII的<cr>字符。MacOS中，对应ASCII中<lf>字符。java中，不论什么平台，都对应ASCII的<code>&lt;CR&gt;</code>字符<br>\t    水平制表符。ASCII中<ht>字符，八进制编码011<br>\v    垂直制表符。ASCII中<vt>字符，八进制编码013</vt></ht></lf></cr></cr></lf></ff></esc></bs></bel></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/RegEX/" rel="tag"># RegEX</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/29/redis-install/" rel="next" title="Redis Install On CentOS">
+                <i class="fa fa-chevron-left"></i> Redis Install On CentOS
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/30/gradle-note/" rel="prev" title="Gradle Note">
+                Gradle Note <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">18515286469@163.com</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快速开始"><span class="nav-number">1.</span> <span class="nav-text">快速开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数式"><span class="nav-number">1.1.</span> <span class="nav-text">函数式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面向对象"><span class="nav-number">1.2.</span> <span class="nav-text">面向对象</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java-util-regex使用"><span class="nav-number">2.</span> <span class="nav-text">java.util.regex使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Matcher对象"><span class="nav-number">2.1.</span> <span class="nav-text">Matcher对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#替换"><span class="nav-number">2.2.</span> <span class="nav-text">替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#replacement-参数"><span class="nav-number">2.3.</span> <span class="nav-text">replacement 参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级查找-替换"><span class="nav-number">2.4.</span> <span class="nav-text">高级查找-替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原地查找-替换"><span class="nav-number">2.5.</span> <span class="nav-text">原地查找-替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#长度变化的替换"><span class="nav-number">2.6.</span> <span class="nav-text">长度变化的替换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元字符"><span class="nav-number">2.7.</span> <span class="nav-text">元字符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符缩略表示法"><span class="nav-number">2.7.1.</span> <span class="nav-text">字符缩略表示法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

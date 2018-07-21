@@ -91,7 +91,7 @@
 <meta property="og:url" content="http://xiaozhuang.github.io/2016/05/29/redis-install/index.html">
 <meta property="og:site_name" content="Communicat &amp; Happy Together">
 <meta property="og:description" content="版本信息：  CentOS 6.5x64 Redis 3.2.0">
-<meta property="og:updated_time" content="2017-06-19T13:35:48.782Z">
+<meta property="og:updated_time" content="2017-09-03T12:01:46.674Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis Install On CentOS">
 <meta name="twitter:description" content="版本信息：  CentOS 6.5x64 Redis 3.2.0">
@@ -365,8 +365,17 @@
 <p>注：该文章中yum -y update和yum -y upgrade命令，本人以为不可取</p>
 </blockquote>
 </li>
-<li><a href="http://stackoverflow.com/questions/23396336/shutdown-redis-server-from-command-line" title="receive the error (error) NOAUTH Authentication required." target="_blank" rel="external">receive the error (error) NOAUTH Authentication required.</a></li>
+<li><a href="http://stackoverflow.com/questions/23396336/shutdown-redis-server-from-command-line" title="receive the error (error) NOAUTH Authentication required." target="_blank" rel="external">receive the error (error) NOAUTH Authentication required.</a>
+</li>
 </ul>
+<h1 id="Redis-集群"><a href="#Redis-集群" class="headerlink" title="Redis 集群"></a>Redis 集群</h1><h2 id="Redis-集群的优势"><a href="#Redis-集群的优势" class="headerlink" title="Redis 集群的优势:"></a>Redis 集群的优势:</h2><p>自动分割数据到不同的节点上。<br>整个集群的部分节点失败或者不可达的情况下能够继续处理命令。</p>
+<h2 id="Redis-集群的数据分片"><a href="#Redis-集群的数据分片" class="headerlink" title="Redis 集群的数据分片"></a>Redis 集群的数据分片</h2><p>Redis 集群没有使用一致性hash, 而是引入了 哈希槽的概念.<br>Redis 集群有16384个哈希槽,每个key通过CRC16校验后对16384取模来决定放置哪个槽.集群的每个节点负责一部分hash槽</p>
+<h2 id="Redis-集群的主从复制模型"><a href="#Redis-集群的主从复制模型" class="headerlink" title="Redis 集群的主从复制模型"></a>Redis 集群的主从复制模型</h2><p>集群使用了主从复制模型,每个节点都会有N-1个slave.</p>
+<h2 id="搭建并使用Redis集群"><a href="#搭建并使用Redis集群" class="headerlink" title="搭建并使用Redis集群"></a>搭建并使用Redis集群</h2><h3 id="配置节点"><a href="#配置节点" class="headerlink" title="配置节点"></a>配置节点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">port 7000</div><div class="line">cluster-enabled yes</div><div class="line"># 节点配置文件的路径</div><div class="line">cluster-config-file nodes.conf</div><div class="line">cluster-node-timeout 5000</div><div class="line">appendonly yes</div></pre></td></tr></table></figure>
+<p>要让集群正常运作至少需要三个主节点，不过在刚开始试用集群功能时， 强烈建议使用六个节点： 其中三个为主节点， 而其余三个则是各个主节点的从节点。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 启动节点</span></div><div class="line">../redis-server ./redis.conf</div></pre></td></tr></table></figure>
+<h3 id="配置集群"><a href="#配置集群" class="headerlink" title="配置集群"></a>配置集群</h3><p>redis-trib 配置集群</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 建一个新的集群</span></div><div class="line"><span class="comment"># –replicas 1 表示为集群中的每个主节点创建一个从节点</span></div><div class="line">./redis-trib.rb create --replicas 1 127.0.0.1:7000 127.0.0.1:7001 \</div><div class="line">127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -408,8 +417,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/07/21/Java-RegEx/" rel="prev" title="Java RegEx">
-                Java RegEx <i class="fa fa-chevron-right"></i>
+              <a href="/2016/06/16/ChocolateyInstall/" rel="prev" title="Chocolatey Install">
+                Chocolatey Install <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -473,12 +482,12 @@
                src="/images/avatar.png"
                alt="Sunday" />
           <p class="site-author-name" itemprop="name">Sunday</p>
-          <p class="site-description motion-element" itemprop="description">18515286469@163.com</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">55</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -495,7 +504,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">41</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -526,7 +535,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载并编译Redis"><span class="nav-number">2.</span> <span class="nav-text">下载并编译Redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改Redis配置文件"><span class="nav-number">3.</span> <span class="nav-text">修改Redis配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Redis"><span class="nav-number">4.</span> <span class="nav-text">安装Redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动"><span class="nav-number">5.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#停止"><span class="nav-number">6.</span> <span class="nav-text">停止</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">7.</span> <span class="nav-text">参考文档:</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#下载并编译Redis"><span class="nav-number">2.</span> <span class="nav-text">下载并编译Redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改Redis配置文件"><span class="nav-number">3.</span> <span class="nav-text">修改Redis配置文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装Redis"><span class="nav-number">4.</span> <span class="nav-text">安装Redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动"><span class="nav-number">5.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#停止"><span class="nav-number">6.</span> <span class="nav-text">停止</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">7.</span> <span class="nav-text">参考文档:</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-集群"><span class="nav-number">8.</span> <span class="nav-text">Redis 集群</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-集群的优势"><span class="nav-number">8.1.</span> <span class="nav-text">Redis 集群的优势:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-集群的数据分片"><span class="nav-number">8.2.</span> <span class="nav-text">Redis 集群的数据分片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis-集群的主从复制模型"><span class="nav-number">8.3.</span> <span class="nav-text">Redis 集群的主从复制模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建并使用Redis集群"><span class="nav-number">8.4.</span> <span class="nav-text">搭建并使用Redis集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置节点"><span class="nav-number">8.4.1.</span> <span class="nav-text">配置节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置集群"><span class="nav-number">8.4.2.</span> <span class="nav-text">配置集群</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -546,7 +555,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

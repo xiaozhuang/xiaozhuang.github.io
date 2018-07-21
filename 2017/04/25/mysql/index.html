@@ -1,0 +1,1171 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="MySQL 笔记">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高性能 MySQL">
+<meta property="og:url" content="http://xiaozhuang.github.io/2017/04/25/mysql/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="MySQL 笔记">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/25/mysql/btreeIndexBtree.png">
+<meta property="og:updated_time" content="2018-07-21T11:00:59.631Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="高性能 MySQL">
+<meta name="twitter:description" content="MySQL 笔记">
+<meta name="twitter:image" content="http://xiaozhuang.github.io/2017/04/25/mysql/btreeIndexBtree.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> 高性能 MySQL | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                高性能 MySQL
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-25T16:38:57+08:00" content="2017-04-25">
+              2017-04-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>MySQL 笔记<br><a id="more"></a></p>
+<h1 id="创建高性能的索引"><a href="#创建高性能的索引" class="headerlink" title="创建高性能的索引"></a>创建高性能的索引</h1><p>索引是存储引擎用于快速找到记录的一种数据结构。</p>
+<p>索引能够轻易将查询性能提高<code>几个数量级</code>，<br>“最优”的索引有时比一个“好的”索引性能好<code>两个数量级</code>。</p>
+<p>创建一个真正“最优”的索引经常需要重写查询。</p>
+<h2 id="索引基础"><a href="#索引基础" class="headerlink" title="索引基础"></a>索引基础</h2><h3 id="索引的类型"><a href="#索引的类型" class="headerlink" title="索引的类型"></a>索引的类型</h3><p>MySQL中，索引是在存储引擎层而不是服务器层实现的。</p>
+<h4 id="B-Tree索引"><a href="#B-Tree索引" class="headerlink" title="B-Tree索引"></a>B-Tree索引</h4><p>InnoDB使用B+Tree<br><img src="/2017/04/25/mysql/btreeIndexBtree.png" alt="btreeIndexBtree.png" title=""><br><blockquote><footer><strong>图片来源</strong><cite><a href="http://zhongmingmao.me/2017/05/13/innodb-btree-index/" target="_blank" rel="external">InnoDB备忘录B+Tree索引</a></cite></footer></blockquote></p>
+<p>B+Tree，即每一个叶子节点都包含指向下一个叶子节点的指针，从而方便叶子节点的范围遍历。</p>
+<p>B-Tree对索引列是<code>顺序</code>存储的，很适合查找范围数据。</p>
+<p>B-Tree索引的查询类型：</p>
+<ul>
+<li>全值匹配</li>
+<li>匹配最左前缀（只使用索引第一列）</li>
+<li>匹配列前缀（只使用某一列索引开头部分）</li>
+<li>匹配范围值</li>
+<li>精确匹配某一列并范围匹配另外一列</li>
+</ul>
+<p>B-Tree索引的限制：</p>
+<ul>
+<li>不是按最左列开始查找，则无法使用索引</li>
+<li>不能跳过索引中的列</li>
+<li>查询中有某个列的范围查询，则其右边所有列都无法使用索引（可通过多个等于条件替换范围条件）</li>
+</ul>
+<blockquote>
+<p>优化性能的时候，可能需要使用<code>相同的列</code>但<code>顺序不同</code>的索引来满足不同类型的查询需求</p>
+</blockquote>
+<h4 id="哈希索引"><a href="#哈希索引" class="headerlink" title="哈希索引"></a>哈希索引</h4><p>哈希索引基于哈希表实现</p>
+<p>MySQL中只有Memory存储引擎显式支持哈希索引</p>
+<p>哈希索引本身只需存储对应的哈希值和行指针，索引结构十分紧凑，<code>查找速度非常快</code>。</p>
+<p>哈希索引限制：</p>
+<ul>
+<li>哈希索引只包含哈希值和行指针，不存储字段值，不能使用索引中的值避免读取行（性能影响不明显）</li>
+<li>哈希索引数据不是按照<code>索引值顺序</code>存储的，也就无法用于排序</li>
+<li>哈希索引不支持<code>部分索引列</code>匹配查找，因为哈希索引使用索引列全部内容计算哈希值</li>
+<li>哈希索引只支持等值比较查询（包括=、IN()、&lt;=&gt;），不支持范围查询</li>
+<li>哈希冲突很多的话，索引维护代价很高，查询速度降低</li>
+</ul>
+<blockquote>
+<p><code>&lt;=&gt;</code> is MySQL’s null-safe “equal to” operator</p>
+</blockquote>
+<p>自定义哈希索引：<br>在B-Tree基础上创建伪哈希索引。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> <span class="keyword">url</span> <span class="keyword">where</span> <span class="keyword">url</span>=<span class="string">"http://www.mysql.com"</span>;</div></pre></td></tr></table></figure>
+<p>新增一个被索引的url_crc列，使用CRC32做哈希(可以使用触发器实现)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> <span class="keyword">url</span> <span class="keyword">where</span> <span class="keyword">url</span>=<span class="string">"http://www.mysql.com"</span></div><div class="line">	<span class="keyword">and</span> url_crc=<span class="keyword">CRC32</span>(<span class="string">"http://www.mysql.com"</span>)</div></pre></td></tr></table></figure>
+<p>避免CRC32产生大量冲突，可以使用FNV64()作为哈希函数</p>
+<blockquote>
+<p>FNV64() 移植自PerconaServer的函数，<br>可以以插件的方式在任何MySQL版本中使用</p>
+</blockquote>
+<h2 id="索引的优点"><a href="#索引的优点" class="headerlink" title="索引的优点"></a>索引的优点</h2><ul>
+<li>大大减少的服务器需要扫描的数据量</li>
+<li>帮助服务器避免排序和临时表</li>
+<li>将随机IO变为顺序IO</li>
+</ul>
+<p>如何评价一个索引是否合适某个查询（三星系统）：</p>
+<ul>
+<li>索引将<code>相关记录放在一起</code>则获得一星；</li>
+<li>索引中数据顺序和查找中的排列顺序一致 则获得二星；</li>
+<li>索引中的列 包含了查询中需要的全部列 则获得三星；</li>
+</ul>
+<p>索引是最好的解决方案吗?<br>非常小的表，全表扫描更高效<br>中到大型表，索引非常有效<br>TB级别的数据，定位单条记录的意义不大，经常使用块级别元数据技术替代索引。</p>
+<h2 id="高性能的索引策略"><a href="#高性能的索引策略" class="headerlink" title="高性能的索引策略"></a>高性能的索引策略</h2><h3 id="独立的列"><a href="#独立的列" class="headerlink" title="独立的列"></a>独立的列</h3><p>如果查询中的列不是独立的，则MySQL就不会使用索引。</p>
+<p>“独立的列”指索引列不能是表达式的一部分，也不能是函数的参数。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- where TO_DAYS(create_data) = 'xxx'</span></div><div class="line"><span class="keyword">SELECT</span> actor_id	</div><div class="line"><span class="keyword">FROM</span> actor</div><div class="line"><span class="keyword">WHERE</span> actor_id + <span class="number">1</span> = <span class="number">5</span></div></pre></td></tr></table></figure>
+<h3 id="前缀索引和索引选择性"><a href="#前缀索引和索引选择性" class="headerlink" title="前缀索引和索引选择性"></a>前缀索引和索引选择性</h3><p>索引很长的字符列，会让索引变得大且慢。</p>
+<p>可索引开始的部分字符，以大大节约索引空间，从而提高索引效率。</p>
+<p>对于blob、text或很长的varchar类型的列，必须使用前缀索引。</p>
+<p>选择足够长的前缀以保证较高的选择性。</p>
+<p>选择性：不重复的索引值和数据表的记录总数的比值。</p>
+<p>使前缀选择性接近完整列选择性：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 计算完整列选择性</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="keyword">DISTINCT</span> city)/<span class="keyword">COUNT</span>(*) <span class="keyword">from</span> sakila.city_demo;</div><div class="line"></div><div class="line"><span class="comment">-- 计算前缀选择性</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">COUNT</span>(<span class="keyword">DISTINCT</span> <span class="keyword">LEFT</span>(city, <span class="number">6</span>))/<span class="keyword">COUNT</span>(*) <span class="keyword">as</span> sel6,</div><div class="line"><span class="keyword">COUNT</span>(<span class="keyword">DISTINCT</span> <span class="keyword">LEFT</span>(city, <span class="number">7</span>))/<span class="keyword">COUNT</span>(*) <span class="keyword">as</span> sel7</div><div class="line"><span class="keyword">from</span> sakila.city_demo;</div></pre></td></tr></table></figure>
+<p>创建前缀索引：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alert table sakila.city_demo ADD Key (city(7));</div></pre></td></tr></table></figure>
+<blockquote>
+<p>有时候后缀索引也有用途，如查找某个域名的所有电子邮件；<br>MySQL不支持反向索引，需把字符串反转后存储，并建立索引，可使用触发器实现。</p>
+</blockquote>
+<h3 id="多列索引"><a href="#多列索引" class="headerlink" title="多列索引"></a>多列索引</h3><p>在多个列上建立独立的单列索引大部分情况下并不能提高MySQL的查询性能。</p>
+<p>MySQL5.0及更新版本引入了“索引合并”策略，<br>查询能够使用两个单列索引进行扫描，并将结果进行合并。</p>
+<p>通过Explain的Extra列可以看到嵌套操作。</p>
+<p>索引合并策略有时候是一种优化结果，<br>更多时候说明表上的索引建立的很糟糕。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 关闭索引合并优化</span></div><div class="line"><span class="keyword">set</span> <span class="keyword">global</span> optimizer_switch=<span class="string">"index_merge=off"</span></div><div class="line"></div><div class="line"><span class="comment">-- 禁止某个索引（force index(索引名或者主键PRI)）</span></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">ignore</span> <span class="keyword">index</span>(PRI) <span class="keyword">limit</span> <span class="number">2</span>;</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">ignore</span> <span class="keyword">index</span>(ziduan1_index) <span class="keyword">limit</span> <span class="number">2</span>;</div><div class="line"></div><div class="line"><span class="comment">-- 强制使用索引（force index(索引名或者主键PRI)）</span></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">force</span> <span class="keyword">index</span>(PRI) <span class="keyword">limit</span> <span class="number">2</span>;</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">table</span> <span class="keyword">force</span> <span class="keyword">index</span>(ziduan1_index) <span class="keyword">limit</span> <span class="number">2</span>;</div></pre></td></tr></table></figure>
+<h3 id="选择合适的索引顺序"><a href="#选择合适的索引顺序" class="headerlink" title="选择合适的索引顺序"></a>选择合适的索引顺序</h3><p>当不需要考虑排序和分组时，将选择性最高的列放在最前面通常是很好的。</p>
+<p>可能需要根据运行频率最高的查询来调整索引列的顺序，<br>让这种情况下索引的选择性最高。</p>
+<h3 id="聚簇索引"><a href="#聚簇索引" class="headerlink" title="聚簇索引"></a>聚簇索引</h3><p>聚簇索引是一种数据存储方式。</p>
+<p>InnoDB的聚簇索引实际上在<code>同一结构</code>中保存了B-Tree<code>索引</code>和<code>数据行</code>。</p>
+<p>表有聚簇索引时，它的<code>数据行</code>实际上存放在索引的<code>叶子页</code>中。</p>
+<p>InnoDB通过主键聚集数据，二级索引的叶子节点存储的不是“行指针”而是主键值。</p>
+<h4 id="聚簇索引优点："><a href="#聚簇索引优点：" class="headerlink" title="聚簇索引优点："></a>聚簇索引优点：</h4><ul>
+<li>可以把相关数据放在一起</li>
+<li>数据访问更快（索引和数据保存在同一个B-Tree中）</li>
+<li>覆盖索引扫描的查询可以直接使用叶子节点中的主键值</li>
+</ul>
+<h4 id="聚簇索引缺点："><a href="#聚簇索引缺点：" class="headerlink" title="聚簇索引缺点："></a>聚簇索引缺点：</h4><ul>
+<li>插入速度严重依赖插入顺序</li>
+<li>更新主键代价高（InnoDB会将每个被更新行移动到新位置）</li>
+<li>插入新行或更新主键，可能面临“页分裂”问题</li>
+<li>可能导致全表扫描变慢</li>
+<li>二级索引可能较大（包含引用行主键）</li>
+<li>二级索引访问需要两次索引查找</li>
+</ul>
+<h4 id="InnoDB表中按主键顺序插入行"><a href="#InnoDB表中按主键顺序插入行" class="headerlink" title="InnoDB表中按主键顺序插入行"></a>InnoDB表中按主键顺序插入行</h4><p>InnoDB按主键顺序插入数据速度最快。</p>
+<p>使用auto_increment自增列可以保证数据行按顺序写入，<br>根据主键做关联操作性能也会更好。</p>
+<p>InnoDB默认的填充因子为页大小的15/16，留出部分空间用于以后修改。</p>
+<p>InnoDB应该尽可能按主键顺序插入数据，<br>并尽可能使用单调递增的主键插入新行。</p>
+<h4 id="UUID聚簇索引缺点"><a href="#UUID聚簇索引缺点" class="headerlink" title="UUID聚簇索引缺点"></a>UUID聚簇索引缺点</h4><ul>
+<li>写入的目标页可能不在缓存中，导致大量随机I/O</li>
+<li>写入是乱序的，InnoDB频繁做页分裂操作，以便为新行分配空间（页分裂导致移动大量数据）</li>
+<li>频繁页分裂，页会变得稀疏并不规则地填充，最终会有碎片</li>
+</ul>
+<p>从性能角度考虑，使用UUID作为聚簇索引会很糟糕（空间占用、页分裂、碎片）。<br>不按主键顺序插入数据，完成后最好使用optimize table命令重新组织一下表。</p>
+<h3 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h3><p>一个索引包含所有需要查询的字段的值，称之为“覆盖索引”</p>
+<p>由于InnoDB的聚簇索引，覆盖索引对InnnoDB表特别有用。<br>二级索引叶子节点保存行的主键，<br>如果二级索引能够覆盖查询，可以避免对主键索引的二次查询。</p>
+<p>MySQL只能使用B-Tree索引做覆盖索引。</p>
+<p>索引覆盖查询，在explain的extra列可以看到<code>Using Index</code>信息。</p>
+<p>InnoDB二级索引叶子节点包含主键值，<br>二级索引可以有效地利用这些“额外”的主键来覆盖查询。</p>
+<p>延迟关联：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> *</div><div class="line"><span class="keyword">from</span> products</div><div class="line"><span class="keyword">where</span> actor = <span class="string">'SEAN CARREY'</span></div><div class="line"><span class="keyword">AND</span> title <span class="keyword">like</span> <span class="string">'%APOLLO%'</span></div></pre></td></tr></table></figure>
+<p>MySQL能在索引中做<code>最左前缀</code>匹配的LIKE比较（通配符开头LIKE不使用索引），<br>故该SQL只是用actor索引。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> *</div><div class="line"><span class="keyword">from</span> <span class="string">`products`</span></div><div class="line"><span class="keyword">JOIN</span>(</div><div class="line">	<span class="keyword">select</span> <span class="string">`prod_id`</span></div><div class="line">	<span class="keyword">from</span> <span class="string">`products`</span></div><div class="line">	<span class="string">`actor`</span> = <span class="string">'SEAN CARREY'</span> <span class="keyword">AND</span> <span class="string">`title`</span> <span class="keyword">like</span> <span class="string">'%APOLLO%'</span></div><div class="line">) <span class="keyword">as</span> t1 <span class="keyword">on</span> (t1.<span class="string">`prod_id`</span> = <span class="string">`products`</span>.<span class="string">`prod_id`</span>)</div></pre></td></tr></table></figure>
+<p>子查询使用覆盖索引（actor、title、prod_id）执行like过滤，较少数据行访问</p>
+<p>使用延迟关联优化limit分页：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="string">`cols`</span> <span class="keyword">from</span> <span class="keyword">profiles</span> <span class="keyword">JOIN</span>(</div><div class="line">	<span class="keyword">select</span> <span class="string">`primary_key`</span> <span class="keyword">from</span> <span class="keyword">profiles</span></div><div class="line">	<span class="keyword">where</span> <span class="string">`x`</span>.<span class="string">`sex`</span> = <span class="string">'M'</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> rating <span class="keyword">limit</span> <span class="number">10000</span>, <span class="number">10</span> </div><div class="line">) <span class="keyword">AS</span> <span class="string">`x`</span> <span class="keyword">USING</span>(<span class="string">'primary_key'</span>)</div></pre></td></tr></table></figure>
+<h3 id="使用索引扫描来做排序"><a href="#使用索引扫描来做排序" class="headerlink" title="使用索引扫描来做排序"></a>使用索引扫描来做排序</h3><p>MySQL中两种方式生成有序结果：</p>
+<ul>
+<li>排序操作</li>
+<li>按索引顺序扫描</li>
+</ul>
+<p>只有当索引的列顺序和ORDER BY子句的顺序<code>完全一致</code>，并且所有列的排序方向都一样时，<br>才能够使用索引来对结果做排序。</p>
+<p>查询需要关联多张表，只有当ORDER BY子句引用的字段<code>全部为第一个表</code>时，才能使用索引做排序。</p>
+<blockquote>
+<p>索引列都是正序排序的</p>
+</blockquote>
+<h3 id="冗余和重复索引"><a href="#冗余和重复索引" class="headerlink" title="冗余和重复索引"></a>冗余和重复索引</h3><p>重复索引：<code>相同列</code>上按照<code>相同的顺序</code>创建的相同类型的索引。</p>
+<p>应该避免创建重复索引，发现时也应该立即移除。</p>
+<p>大多数情况下都不需要冗余索引，应该尽量扩展已有索引而不是创建新索引。</p>
+<p>表中索引越多插入速度越慢。</p>
+<h3 id="未使用的索引"><a href="#未使用的索引" class="headerlink" title="未使用的索引"></a>未使用的索引</h3><p>pt-index-usage分析查询日志，找出未使用的索引</p>
+<h3 id="索引和锁"><a href="#索引和锁" class="headerlink" title="索引和锁"></a>索引和锁</h3><p>索引可以让查询锁定更少的行</p>
+<p>InnoDB只有访问行时才会加锁，索引能减少InnoDB访问的行数</p>
+<p>InnoDB在二级索引上使用共享锁，访问主键索引需要排他锁</p>
+<h3 id="索引注意事项"><a href="#索引注意事项" class="headerlink" title="索引注意事项"></a>索引注意事项</h3><p>查询类型不一致，隐式类型转换，不走索引；</p>
+<h2 id="索引案例学习"><a href="#索引案例学习" class="headerlink" title="索引案例学习"></a>索引案例学习</h2><h3 id="支持多种过滤条件"><a href="#支持多种过滤条件" class="headerlink" title="支持多种过滤条件"></a>支持多种过滤条件</h3><p>可以在索引中加入更多列，并通过IN()的方式覆盖那些不在WHERE子句中的列。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 通过添加覆盖所有值的in条件，以满足不跳过索引中列的条件</span></div><div class="line">where `sex` IN('M' , 'F')</div></pre></td></tr></table></figure>
+<blockquote>
+<p>IN()列很多时，会影响查询优化器效率</p>
+</blockquote>
+<h3 id="避免多个范围条件"><a href="#避免多个范围条件" class="headerlink" title="避免多个范围条件"></a>避免多个范围条件</h3><p>如：查询几周上线过的用户，可以事先计算好active列，并由定时任务维护。</p>
+<h1 id="查询性能优化"><a href="#查询性能优化" class="headerlink" title="查询性能优化"></a>查询性能优化</h1><p>查询生命周期：<br>从客户端到服务器，在服务器上进行解析，生成执行计划，执行，并返回结果给客户端。</p>
+<h2 id="慢查询基础：优化数据访问"><a href="#慢查询基础：优化数据访问" class="headerlink" title="慢查询基础：优化数据访问"></a>慢查询基础：优化数据访问</h2><h3 id="取出全部列"><a href="#取出全部列" class="headerlink" title="取出全部列"></a>取出全部列</h3><p>使用<code>select *</code>时需确认是否真的需要全部列</p>
+<p>如果程序使用某种缓存机制，获取超过需要的数据可能有其好处。</p>
+<h3 id="是否在扫描额外的记录"><a href="#是否在扫描额外的记录" class="headerlink" title="是否在扫描额外的记录"></a>是否在扫描额外的记录</h3><p>衡量查询开销的三个指标：</p>
+<ul>
+<li>响应时间</li>
+<li>扫描的行数</li>
+<li>返回的行数</li>
+</ul>
+<p>MySQL应用where条件的三种方式，从好到坏依次是：</p>
+<ul>
+<li>索引中使用where条件过滤不匹配元素</li>
+<li>覆盖索引扫描返回记录，然后过滤（Extra，Using index）</li>
+<li>从数据表返回数据，然后过滤（Extra，Using where）</li>
+</ul>
+<h2 id="重构查询的方式"><a href="#重构查询的方式" class="headerlink" title="重构查询的方式"></a>重构查询的方式</h2><h3 id="切分查询"><a href="#切分查询" class="headerlink" title="切分查询"></a>切分查询</h3><p>定期清除大量数据：一次删除1w行一般来说是比较高效而且对服务器影响较小的做法。</p>
+<p>每次删除数据后，暂停一会儿，可将原本一次性的压力分散到一个很长的时间段中。</p>
+<h3 id="分解关联查询"><a href="#分解关联查询" class="headerlink" title="分解关联查询"></a>分解关联查询</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`tag`</span></div><div class="line">	<span class="keyword">JOIN</span> <span class="string">`tag_post`</span> <span class="keyword">ON</span> <span class="string">`tag_post`</span>.<span class="string">`tag_id`</span> = <span class="string">`tag`</span>.<span class="string">`id`</span></div><div class="line">	<span class="keyword">JOIN</span> <span class="string">`post`</span> <span class="keyword">ON</span> <span class="string">`tag_post`</span>.<span class="string">`id`</span> = <span class="string">`post`</span>.<span class="string">`id`</span></div><div class="line"><span class="keyword">Where</span> <span class="string">`tag`</span>.<span class="string">`tag`</span> = <span class="string">'mysql'</span></div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="string">`tag`</span> <span class="keyword">where</span> <span class="string">`tag`</span> = <span class="string">'mysql'</span>;</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="string">`tag_post`</span> <span class="keyword">where</span> <span class="string">`tag_id`</span> = <span class="string">'1234'</span>;</div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="string">`post`</span> <span class="keyword">where</span> <span class="string">`post`</span>.<span class="string">`id`</span> <span class="keyword">in</span> (<span class="number">123</span>, <span class="number">356</span>, <span class="number">567</span>, <span class="number">9098</span>, <span class="number">8904</span>);</div></pre></td></tr></table></figure>
+<p><code>分解关联查询</code>优势：</p>
+<ul>
+<li>让缓存更高效（许多应用可以方便地缓存<code>单表查询</code>的结果对象）</li>
+<li>分解后，执行单个查询减少锁竞争</li>
+<li>在应用层做关联，容易对数据库进行拆分</li>
+<li>相当于在应用中实现哈希关联</li>
+</ul>
+<p>应用场景：</p>
+<ul>
+<li>能够方便缓存单个查询结果时</li>
+<li>可以将数据分布到不同MySQL服务器上时</li>
+<li>能够使用IN()替换关联查询时</li>
+<li>使用同一数据表时</li>
+</ul>
+<h2 id="查询执行的基础"><a href="#查询执行的基础" class="headerlink" title="查询执行的基础"></a>查询执行的基础</h2><h3 id="MySQL客户端-服务器通信协议"><a href="#MySQL客户端-服务器通信协议" class="headerlink" title="MySQL客户端/服务器通信协议"></a>MySQL客户端/服务器通信协议</h3><p>通信协议是<code>半双工</code>的:要么服务器向客户端发送数据，要么客户端向服务器发送数据。</p>
+<p>客户端用一个<code>单独的</code>数据包将查询传递给服务器。<br>查询语句很长时，参数<code>max_allowed_packet</code>就特别重要了。</p>
+<p>服务器响应给客户的数据通常很多，由<code>多个数据包</code>组成。<br>服务器开始响应客户端请求时，客户端必须完整地接收整个返回结果，而不能简单的只取前几条结果。</p>
+<p>客户端从服务器取数据时，实际上是MySQL向客户端<code>推送</code>数据的过程。</p>
+<h3 id="查询优化器"><a href="#查询优化器" class="headerlink" title="查询优化器"></a>查询优化器</h3><p>优化器将合法的语法树，转化成执行计划。</p>
+<p>一条查询可以有很<code>多种执行方式</code>，最后返回相同结果。优化器的作用是找到其中最好的执行计划。</p>
+<p>查询当前会话的<code>last_query_cost</code>，得知MySQL计算的当前查询的成本</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> SQL_NO_CACHE <span class="keyword">COUNT</span>(*) <span class="keyword">FROM</span> <span class="string">`person`</span></div><div class="line"></div><div class="line"><span class="keyword">SHOW</span> <span class="keyword">STATUS</span> <span class="keyword">LIKE</span> <span class="string">'last_query_cost'</span></div></pre></td></tr></table></figure>
+<p>MySQL如何执行关联查询：<code>嵌套循环关联</code><br>MySQL先在一个表中循环取出单条数据，然后再嵌套循环到下一个表中寻找匹配的行，<br>以此下去，直到找到所有表中匹配的行为止。<br>然后根据各个表匹配的行，返回查询中所需要的各个列。</p>
+<h3 id="排序优化"><a href="#排序优化" class="headerlink" title="排序优化"></a>排序优化</h3><p>MySQL中两种排序算法：</p>
+<p>两次传输排序（旧版本使用）：<br>读取行指针和需要排序的字段，对其进行排序，然后再根据排序后的结果读取所需要的数据行。</p>
+<p>单次传输排序（新版本使用）：<br>先读取查询所需的所有列，然后再根据给定的列进行排序，最后直接返回排序结果。</p>
+<p>当查询需要所有列的总长度不超过参数<code>max_length_for_sort_data</code>,MySQL则使用<code>单次传输排序</code></p>
+<p>MySQL进行文件排序时需要使用的<code>临时存储空间</code>可能<code>比想象的要大得多</code>。<br>MySQL在排序时，对每一个排序记录都会分配一个足够长的<code>定长空间</code>来存放，<br>这个定长空间必须足够长以容纳其中<code>最长</code>的字符串。</p>
+<p>MySQL中分两种情况处理关联查询文件排序：<br>ORDER BY子句中所有列都来自关联的第一个表，关联处理第一个表的时候进行文件排序（Extra，Using filesort）。</p>
+<p>除此之外的所有情况，MySQL先将关联的结果存放到一个临时表，再进行文件排序（Extra，Using temporary；Using filesort）。</p>
+<h2 id="MySQL查询优化器的局限性"><a href="#MySQL查询优化器的局限性" class="headerlink" title="MySQL查询优化器的局限性"></a>MySQL查询优化器的局限性</h2><h3 id="关联子查询"><a href="#关联子查询" class="headerlink" title="关联子查询"></a>关联子查询</h3><h4 id="最糟糕的一类查询是WHERE条件中包含IN-的子查询语句"><a href="#最糟糕的一类查询是WHERE条件中包含IN-的子查询语句" class="headerlink" title="最糟糕的一类查询是WHERE条件中包含IN()的子查询语句"></a>最糟糕的一类查询是WHERE条件中包含IN()的子查询语句</h4><p><code>《高性能MySQL第3版》示例，MySQL5.6.26、5.7.11实验未复现</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="string">`film`</span>.* <span class="keyword">FROM</span> <span class="string">`sakila`</span>.<span class="string">`film`</span></div><div class="line"><span class="keyword">WHERE</span> <span class="string">`film_id`</span> <span class="keyword">IN</span> (</div><div class="line">  <span class="keyword">SELECT</span> <span class="string">`film_id`</span> <span class="keyword">FROM</span> <span class="string">`sakila`</span>.<span class="string">`film_actor`</span> <span class="keyword">WHERE</span> <span class="string">`actor_id`</span> = <span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p>IN子查询会被MySQL改写，且因为第二个子查询使用第一个查询film_id，导致第一个表全扫描</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="string">`film`</span>.* <span class="keyword">FROM</span> <span class="string">`sakila`</span>.<span class="string">`film`</span></div><div class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span> (</div><div class="line">  <span class="keyword">SELECT</span> <span class="string">`film_id`</span> <span class="keyword">FROM</span> <span class="string">`sakila`</span>.<span class="string">`film_actor`</span> <span class="keyword">WHERE</span> <span class="string">`actor_id`</span> = <span class="number">1</span></div><div class="line">  <span class="keyword">AND</span> <span class="string">`film`</span>.<span class="string">`film_id`</span> = <span class="string">`film_actor`</span>.<span class="string">`film_id`</span>)</div></pre></td></tr></table></figure>
+<p>优化方式1（内连接）：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="string">`film`</span>.*</div><div class="line"><span class="keyword">FROM</span> <span class="string">`sakila`</span>.<span class="string">`film`</span></div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> <span class="string">`sakila`</span>.<span class="string">`film_actor`</span> <span class="keyword">USING</span>(film_id)</div><div class="line"><span class="keyword">WHERE</span> actor_id = <span class="number">1</span>;</div></pre></td></tr></table></figure>
+<p>优化方式2（GROUP_CONCAT）：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`sakila`</span>.<span class="string">`film`</span></div><div class="line"><span class="keyword">WHERE</span> FIND_IN_SET(<span class="string">`film_id`</span>,</div><div class="line">  (<span class="keyword">SELECT</span> <span class="keyword">GROUP_CONCAT</span>(<span class="string">`film_id`</span>) <span class="keyword">FROM</span> <span class="string">`sakila`</span>.<span class="string">`film_actor`</span> <span class="keyword">WHERE</span> <span class="string">`actor_id`</span> = <span class="number">1</span>))</div></pre></td></tr></table></figure>
+<h4 id="如何用好关联子查询"><a href="#如何用好关联子查询" class="headerlink" title="如何用好关联子查询"></a>如何用好关联子查询</h4><p>如果有人跟你说：“别用关联子查询”，那么不要理他。<br>先测试，然后做出自己的判断。</p>
+<p>很多时候，关联子查询是一种非常合理、自然，甚至性能最好的写法。</p>
+<p>查询有演员的电影：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line">  <span class="keyword">DISTINCT</span> <span class="string">`film`</span>.<span class="string">`film_id`</span></div><div class="line"><span class="keyword">FROM</span></div><div class="line">  <span class="string">`sakila`</span>.<span class="string">`film`</span></div><div class="line">  <span class="keyword">INNER</span> <span class="keyword">JOIN</span> <span class="string">`sakila`</span>.<span class="string">`film_actor`</span> <span class="keyword">USING</span> (<span class="string">`film_id`</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span></div><div class="line">  <span class="string">`film`</span>.<span class="string">`film_id`</span></div><div class="line"><span class="keyword">FROM</span></div><div class="line">  <span class="string">`sakila`</span>.<span class="string">`film`</span></div><div class="line"><span class="keyword">WHERE</span> <span class="keyword">EXISTS</span>(</div><div class="line">   <span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="string">`sakila`</span>.<span class="string">`film_actor`</span> <span class="keyword">WHERE</span> <span class="string">`film_actor`</span>.<span class="string">`film_id`</span> = <span class="string">`film`</span>.<span class="string">`film_id`</span></div><div class="line">)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>《高性能MySQL第3版》介绍，关联子查询效率更高；EXPLAIN显示第一个查询用到了临时表</p>
+</blockquote>
+<ul>
+<li>不需要听取那些关于子查询的<code>“绝对真理”</code></li>
+<li>应该用<code>测试验证</code>对子查询的执行计划和响应时间的假设</li>
+</ul>
+<h3 id="同一个表上同时查询和更新"><a href="#同一个表上同时查询和更新" class="headerlink" title="同一个表上同时查询和更新"></a>同一个表上同时查询和更新</h3><p>MySQL不允许对同一张表同时进行查询和更新。</p>
+<p>可使用<code>生成表</code>的形势绕过该限制。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">update</span> tb1</div><div class="line">	<span class="keyword">inner</span> <span class="keyword">join</span> (</div><div class="line">		<span class="keyword">select</span> <span class="string">`type`</span>, <span class="keyword">count</span>(*) <span class="keyword">AS</span> <span class="keyword">count</span></div><div class="line">		<span class="keyword">from</span> <span class="string">`tb1`</span></div><div class="line">		<span class="keyword">group</span> <span class="keyword">by</span> <span class="string">`type`</span>) <span class="keyword">as</span> <span class="string">`der`</span> <span class="keyword">using</span>(<span class="string">`type`</span>)</div><div class="line"><span class="keyword">set</span> <span class="string">`tb1`</span>.<span class="string">`cnt`</span> = <span class="string">`der`</span>.<span class="string">`cnt`</span>;</div></pre></td></tr></table></figure>
+<p>执行了2个查询：</p>
+<ul>
+<li>子查询中SELECT语句</li>
+<li>多表关联UPDATE，关联的表时临时表</li>
+</ul>
+<h2 id="优化特定类型的查询"><a href="#优化特定类型的查询" class="headerlink" title="优化特定类型的查询"></a>优化特定类型的查询</h2><h3 id="优化COUNT-查询"><a href="#优化COUNT-查询" class="headerlink" title="优化COUNT()查询"></a>优化COUNT()查询</h3><p>COUNT()的作用：</p>
+<ul>
+<li>统计某列值的数量</li>
+<li>统计行数</li>
+</ul>
+<p>统计列值时，要求列值<code>是非空的</code>（不统计NULL）</p>
+<p>COUNT(*) 会忽略所有列的值，直接统计所有的行数</p>
+<p>统计颜色数量：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 1.使用sum()</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">SUM</span>(<span class="keyword">IF</span>(<span class="string">`color`</span> = <span class="string">'blue'</span>, <span class="number">1</span>, <span class="number">0</span>)) <span class="keyword">AS</span> <span class="string">`blue`</span>, <span class="keyword">SUM</span>(<span class="keyword">IF</span>(<span class="string">`color`</span> = <span class="string">'red'</span>, <span class="number">1</span>, <span class="number">0</span>)) <span class="keyword">AS</span> <span class="string">`red`</span></div><div class="line"><span class="keyword">FROM</span> <span class="string">`items`</span></div><div class="line"></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">SUM</span>(<span class="string">`color`</span> = <span class="string">'blue'</span>) <span class="keyword">AS</span> <span class="string">`blue`</span>, <span class="keyword">SUM</span>(<span class="string">`color`</span> = <span class="string">'red'</span>) <span class="keyword">AS</span> <span class="string">`red`</span></div><div class="line"><span class="keyword">FROM</span> <span class="string">`items`</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">-- 2.使用count()</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(<span class="string">`color`</span> = <span class="string">'blue'</span> <span class="keyword">OR</span> <span class="literal">NULL</span>), <span class="keyword">COUNT</span>(<span class="string">`color`</span> = <span class="string">'red'</span> <span class="keyword">OR</span> <span class="literal">NULL</span>)</div><div class="line"><span class="keyword">FROM</span> <span class="string">`items`</span></div></pre></td></tr></table></figure>
+<h3 id="优化关联查询"><a href="#优化关联查询" class="headerlink" title="优化关联查询"></a>优化关联查询</h3><ul>
+<li>确保on或者using子句中的列上有索引（一般只需关联顺序中<code>第二个表</code>相应列上创建索引）</li>
+<li>确保任何group by和order by表达式只涉及一个表中的列（这样才能使用索引优化）</li>
+</ul>
+<h3 id="优化子查询"><a href="#优化子查询" class="headerlink" title="优化子查询"></a>优化子查询</h3><p>建议: 尽可能使用关联查询替代。</p>
+<p>子查询需要创建和填充<code>临时表</code>，而子查询中创建的临时表是<code>没有任何索引</code>的。</p>
+<h3 id="优化group-by-和-distinct"><a href="#优化group-by-和-distinct" class="headerlink" title="优化group by 和 distinct"></a>优化group by 和 distinct</h3><p>采用查找表的<code>标识列</code>分组的效率会比其他列更高。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="string">`actor`</span>.<span class="string">`first_name`</span>,<span class="string">`actor`</span>.<span class="string">`last_name`</span>,<span class="keyword">COUNT</span>(*)</div><div class="line"><span class="keyword">FROM</span> <span class="string">`film_actor`</span></div><div class="line"><span class="keyword">INNER</span> <span class="keyword">JOIN</span> <span class="string">`actor`</span> <span class="keyword">USING</span>(<span class="string">`actor_id`</span>)</div><div class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="string">`actor`</span>.<span class="string">`first_name`</span>,<span class="string">`actor`</span>.<span class="string">`last_name`</span></div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="string">`actor`</span>.<span class="string">`first_name`</span>,<span class="string">`actor`</span>.<span class="string">`last_name`</span></div><div class="line"><span class="keyword">FROM</span> <span class="string">`actor`</span> <span class="keyword">INNER</span> <span class="keyword">JOIN</span> (</div><div class="line">   <span class="keyword">SELECT</span> <span class="string">`actor_id`</span>,<span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> <span class="string">`cnt`</span> <span class="keyword">FROM</span> <span class="string">`film_actor`</span> <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="string">`actor_id`</span></div><div class="line">)<span class="keyword">AS</span> <span class="string">`t2`</span> <span class="keyword">USING</span>(<span class="string">`actor_id`</span>)</div></pre></td></tr></table></figure>
+<p>分组查询的select中直接使用<code>非分组列</code>通常都不是什么好主意，<br>因为这样的结果通常是<code>不确定的</code>。</p>
+<p>建议将MySQL的SQL_MODE设置为：<code>ONLY_FULL_GROUP_BY</code></p>
+<p>使用group by子句时，若<code>无</code>order by子句，结果会按分组字段排序；<br>可在group by子句中使用desc或asc；<br>可使用order by null，不再进行排序；</p>
+<h3 id="优化LIMIT分页"><a href="#优化LIMIT分页" class="headerlink" title="优化LIMIT分页"></a>优化LIMIT分页</h3><p>方式1：使用覆盖索引扫描，然后关联操作返回所需列。（延迟关联）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="string">`cols`</span> <span class="keyword">from</span> <span class="keyword">profiles</span> <span class="keyword">JOIN</span>(</div><div class="line">	<span class="keyword">select</span> <span class="string">`primary_key`</span> <span class="keyword">from</span> <span class="keyword">profiles</span></div><div class="line">	<span class="keyword">where</span> <span class="string">`x`</span>.<span class="string">`sex`</span> = <span class="string">'M'</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> rating <span class="keyword">limit</span> <span class="number">10000</span>, <span class="number">10</span> </div><div class="line">) <span class="keyword">AS</span> <span class="string">`x`</span> <span class="keyword">USING</span>(<span class="string">'primary_key'</span>)</div></pre></td></tr></table></figure>
+<p>方式2：存储排名</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="string">`film_id`</span>,<span class="string">`description`</span></div><div class="line"><span class="keyword">FROM</span> <span class="string">`sakila`</span>.<span class="string">`film`</span></div><div class="line"><span class="keyword">WHERE</span> <span class="string">`position`</span> <span class="keyword">BETWEEN</span> <span class="number">50</span> <span class="keyword">AND</span> <span class="number">54</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="string">`position`</span></div></pre></td></tr></table></figure>
+<h3 id="优化union查询"><a href="#优化union查询" class="headerlink" title="优化union查询"></a>优化union查询</h3><p>MySQL<code>总是</code>通过创建并填充<code>临时表</code>的方式来执行UNION查询。</p>
+<p>除非确实需要服务器消除重复行，否则一定要使用<code>union all</code>。</p>
+<p>如果没有ALL关键字，MySQL会给临时表加上distinct，导致临时表的数据做唯一性检查。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> aid,title <span class="keyword">FROM</span> article </div><div class="line"><span class="keyword">UNION</span> ALL </div><div class="line"><span class="keyword">SELECT</span> bid,title <span class="keyword">FROM</span> blog</div></pre></td></tr></table></figure>
+<h3 id="静态查询分析"><a href="#静态查询分析" class="headerlink" title="静态查询分析"></a>静态查询分析</h3><p>pt-query-advisor分析查询日志、分析查询模式，<br>然后给出所有可能存在潜在问题的查询，并给出足够详细的建议。</p>
+<h3 id="使用用户自定义变量"><a href="#使用用户自定义变量" class="headerlink" title="使用用户自定义变量"></a>使用用户自定义变量</h3><p>用户自定义变量是一个用来存储内容的<code>临时容器</code>，在连接MySQL的整个过程中都存在。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SET</span> @min_actor := (<span class="keyword">SELECT</span> <span class="keyword">MIN</span>(<span class="string">`actor_id`</span>) <span class="keyword">FROM</span> <span class="string">`actor`</span>);</div></pre></td></tr></table></figure>
+<p>避免重复查询刚刚更新的数据：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">UPDATE</span> <span class="string">`person`</span> <span class="keyword">SET</span> <span class="string">`last_update`</span> = <span class="keyword">NOW</span>() <span class="keyword">WHERE</span> <span class="string">`id`</span> = <span class="string">'4'</span> <span class="keyword">AND</span> @tmp_name := <span class="keyword">NOW</span>();</div><div class="line"><span class="comment">-- 查询用户自定义变量，不用查询任何数据表，速度很快</span></div><div class="line"><span class="keyword">SELECT</span> @tmp_name;</div></pre></td></tr></table></figure>
+<h1 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h1><h2 id="查看建表语句"><a href="#查看建表语句" class="headerlink" title="查看建表语句"></a>查看建表语句</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 查看数据库表</span></div><div class="line"><span class="keyword">show</span> <span class="keyword">tables</span>;</div><div class="line"><span class="comment">-- 查看建表语句</span></div><div class="line"><span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">table</span> &lt;table_neme&gt;</div></pre></td></tr></table></figure>
+<h1 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h1><h2 id="ROUND"><a href="#ROUND" class="headerlink" title="ROUND()"></a>ROUND()</h2><p>四舍五入</p>
+<h2 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h2><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NOW()</td>
+<td>2008-12-29 16:25:46</td>
+</tr>
+<tr>
+<td>CURDATE()</td>
+<td>2008-12-29</td>
+</tr>
+<tr>
+<td>CURTIME()</td>
+<td>16:25:46</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ts_e = ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)</div></pre></td></tr></table></figure>
+<h2 id="时间计算"><a href="#时间计算" class="headerlink" title="时间计算"></a>时间计算</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> (<span class="keyword">NOW</span>()-<span class="built_in">INTERVAL</span> <span class="number">10</span> <span class="keyword">MINUTE</span>)</div></pre></td></tr></table></figure>
+<h2 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h2><h3 id="建表添加分区"><a href="#建表添加分区" class="headerlink" title="建表添加分区"></a>建表添加分区</h3><p>分区字段与Id作联合主键</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`waybill_sync_task`</span> (</div><div class="line">  <span class="string">`SYNC_TASK_ID`</span> <span class="built_in">BIGINT</span> (<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT,</div><div class="line">  <span class="string">`WAYBILL_CODE`</span> <span class="built_in">VARCHAR</span> (<span class="number">128</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`OPERATE_TYPE`</span> <span class="built_in">INT</span> (<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`TASK_DATA`</span> <span class="built_in">VARCHAR</span> (<span class="number">4096</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`TASK_EXE_COUNT`</span> <span class="built_in">INT</span> (<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`STATUS`</span> <span class="built_in">INT</span> (<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`CREATE_TIME`</span> DATETIME <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0000-00-00 00:00:00'</span>,</div><div class="line">  <span class="string">`UPDATE_TIME`</span> DATETIME <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`REMARK`</span> <span class="built_in">VARCHAR</span> (<span class="number">200</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`YN`</span> <span class="built_in">INT</span> (<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`FROM_METHOD`</span> <span class="built_in">VARCHAR</span> (<span class="number">64</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`UNIQUE_HASHCODE`</span> <span class="built_in">VARCHAR</span> (<span class="number">64</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`QUEUE_ID`</span> <span class="built_in">VARCHAR</span> (<span class="number">64</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'??????'</span>,</div><div class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`SYNC_TASK_ID`</span>, <span class="string">`CREATE_TIME`</span>),</div><div class="line">  <span class="keyword">UNIQUE</span> <span class="keyword">KEY</span> <span class="string">`UNQ_WAYBILL_SYNC_TASK_HCODE`</span> (</div><div class="line">    <span class="string">`UNIQUE_HASHCODE`</span>,</div><div class="line">    <span class="string">`CREATE_TIME`</span></div><div class="line">  ),</div><div class="line">  <span class="keyword">KEY</span> <span class="string">`IND_WAYBILL_SYNC_TASK_STATUS`</span> (<span class="string">`STATUS`</span>),</div><div class="line">  <span class="keyword">KEY</span> <span class="string">`idx_qid_sta`</span> (<span class="string">`QUEUE_ID`</span>, <span class="string">`STATUS`</span>)</div><div class="line">) <span class="keyword">ENGINE</span> = <span class="keyword">INNODB</span> AUTO_INCREMENT = <span class="number">18566180</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> = utf8 <span class="comment">/*!50500 PARTITION BY RANGE COLUMNS(CREATE_TIME) (</span></div><div class="line"> PARTITION P201705 VALUES LESS THAN ('2017-06-01 00:00:00') ENGINE = InnoDB,</div><div class="line"> PARTITION P201706 VALUES LESS THAN ('2017-07-01 00:00:00') ENGINE = InnoDB,</div><div class="line"> PARTITION P201707 VALUES LESS THAN ('2017-08-01 00:00:00') ENGINE = InnoDB,</div><div class="line"> PARTITION P201708 VALUES LESS THAN ('2017-09-01 00:00:00') ENGINE = InnoDB,</div><div class="line"> PARTITION P201709 VALUES LESS THAN ('2017-10-01 00:00:00') ENGINE = InnoDB,</div><div class="line"> PARTITION P201710 VALUES LESS THAN ('2017-11-01 00:00:00') ENGINE = InnoDB,</div><div class="line"> PARTITION P201711 VALUES LESS THAN ('2017-12-01 00:00:00') ENGINE = InnoDB,</div><div class="line"> PARTITION P201712 VALUES LESS THAN ('2018-01-01 00:00:00') ENGINE = InnoDB)*/;</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`pickup_goods_0`</span> (</div><div class="line">  <span class="string">`PICKUP_GOOD_ID`</span> <span class="built_in">BIGINT</span> (<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`PICKUP_CODE`</span> <span class="built_in">VARCHAR</span> (<span class="number">30</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'取件单编码'</span>,</div><div class="line">  <span class="string">`PRODUCT_NAME`</span> <span class="built_in">VARCHAR</span> (<span class="number">2000</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`PRODUCT_COUNT`</span> <span class="built_in">INT</span> (<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'商品数量'</span>,</div><div class="line">  <span class="string">`PRODUCT_SOURCE`</span> <span class="built_in">INT</span> (<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'商品来源 1为京东、2为千寻、3为好药师、4为奢侈品360Top'''</span>,</div><div class="line">  <span class="string">`PRODUCT_TYPE`</span> <span class="built_in">INT</span> (<span class="number">20</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'商品类型 1-普通商品、2-大家电商品、3-奢侈品商品、4-为合约订单商品、5-发票商品名称为发票号、6-发票复印件商品名称为发票号、7-外包装、8-检测报告、9-附件明细商品名称为附件明细'</span>,</div><div class="line">  <span class="string">`PRODUCT_WEIGHT`</span> <span class="keyword">DOUBLE</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'商品重量'</span>,</div><div class="line">  <span class="string">`PRODUCT_VOLUME`</span> <span class="keyword">DOUBLE</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'商品体积'</span>,</div><div class="line">  <span class="string">`REMARK`</span> <span class="built_in">VARCHAR</span> (<span class="number">400</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`CREATE_TIME`</span> <span class="keyword">TIMESTAMP</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'0000-00-00 00:00:00'</span>,</div><div class="line">  <span class="string">`YN`</span> <span class="built_in">INT</span> (<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span>,</div><div class="line">  <span class="string">`SKU`</span> <span class="built_in">VARCHAR</span> (<span class="number">200</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'取件单商品编号'</span>,</div><div class="line">  <span class="string">`UPDATE_TIME`</span> <span class="keyword">TIMESTAMP</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'更新时间'</span>,</div><div class="line">  <span class="string">`PRODUCT_ATTRIBUTE`</span> <span class="built_in">VARCHAR</span> (<span class="number">50</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'商品属性名'</span>,</div><div class="line">  <span class="string">`HALF_RECEIVE_REASON`</span> <span class="built_in">INT</span> (<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'半收原因 1：少货2：错货3：破损4：临保5：包装破损6：内物破损'</span>,</div><div class="line">  <span class="string">`serial_no`</span> <span class="built_in">VARCHAR</span> (<span class="number">50</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'SN或69码'</span>,</div><div class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`PICKUP_GOOD_ID`</span>, <span class="string">`CREATE_TIME`</span>),</div><div class="line">  <span class="keyword">KEY</span> <span class="string">`PICKUP_CODE`</span> (<span class="string">`PICKUP_CODE`</span>)</div><div class="line">) <span class="keyword">ENGINE</span> = <span class="keyword">INNODB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span> = utf8 <span class="comment">/*!50100 PARTITION BY RANGE ( UNIX_TIMESTAMP(CREATE_TIME)) (</span></div><div class="line"> PARTITION p201601 VALUES LESS THAN (1451577600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201602 VALUES LESS THAN (1454169600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201603 VALUES LESS THAN (1456761600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201604 VALUES LESS THAN (1459353600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201605 VALUES LESS THAN (1461945600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201606 VALUES LESS THAN (1464537600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201607 VALUES LESS THAN (1467129600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201608 VALUES LESS THAN (1469721600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201609 VALUES LESS THAN (1472313600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201610 VALUES LESS THAN (1474905600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201611 VALUES LESS THAN (1477497600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201612 VALUES LESS THAN (1480089600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201701 VALUES LESS THAN (1482681600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201702 VALUES LESS THAN (1485273600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201703 VALUES LESS THAN (1487865600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201704 VALUES LESS THAN (1490457600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201705 VALUES LESS THAN (1493049600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201706 VALUES LESS THAN (1495641600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201707 VALUES LESS THAN (1498233600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201708 VALUES LESS THAN (1500825600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201709 VALUES LESS THAN (1503417600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201710 VALUES LESS THAN (1506009600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201711 VALUES LESS THAN (1508601600) ENGINE = InnoDB,</div><div class="line"> PARTITION p201712 VALUES LESS THAN (1511193600) ENGINE = InnoDB)*/;</div></pre></td></tr></table></figure>
+<h3 id="添加分区"><a href="#添加分区" class="headerlink" title="添加分区"></a>添加分区</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 原分区将被覆盖更新</span></div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`waybill_c_0`</span> <span class="keyword">PARTITION</span> <span class="keyword">BY</span> <span class="keyword">RANGE</span>(<span class="keyword">UNIX_TIMESTAMP</span>(CREATE_TIME))</div><div class="line">(<span class="keyword">PARTITION</span> p201701 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1485878400</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201702 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1488297600</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201703 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1490976000</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201704 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1493568000</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201705 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1496246400</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201706 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1498838400</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201707 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1501516800</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201708 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1504195200</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201709 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1506787200</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201710 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1509465600</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201711 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1512057600</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201712 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1514736000</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201801 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1517414400</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201802 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1519833600</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201803 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1522512000</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201804 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1525104000</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201805 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1527782400</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201806 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1530374400</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201807 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1533052800</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201808 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1535731200</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201809 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1538323200</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201810 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1541001600</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201811 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1543593600</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>,</div><div class="line"> <span class="keyword">PARTITION</span> p201812 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1546272000</span>) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>);</div><div class="line"></div><div class="line"><span class="comment">-- 添加分区</span></div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`waybill_extend_0`</span></div><div class="line">	<span class="keyword">ADD</span> <span class="keyword">PARTITION</span> (</div><div class="line">		<span class="keyword">PARTITION</span> p201801 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1517414400</span>),</div><div class="line">		<span class="keyword">PARTITION</span> p201802 <span class="keyword">VALUES</span> <span class="keyword">LESS</span> <span class="keyword">THAN</span> (<span class="number">1519833600</span>));</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">alter</span> <span class="keyword">table</span> waybill_extend_0 <span class="keyword">drop</span> <span class="keyword">partition</span> p201801</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">-- 查询分区数据量</span></div><div class="line"><span class="keyword">SELECT</span> PARTITION_NAME,TABLE_ROWS</div><div class="line"><span class="keyword">FROM</span> INFORMATION_SCHEMA.PARTITIONS</div><div class="line"><span class="keyword">WHERE</span> TABLE_NAME = <span class="string">'common_task_mq'</span>;</div><div class="line"></div><div class="line"><span class="comment">-- 表information_schema</span></div><div class="line"><span class="comment">-- 对InnoDB表统计信息持久化时，表的row发生变化大于10%(counter &gt; n_rows / 10 /* 10%)并且innodb_stats_auto_recalc=on，统计信信息会更新</span></div><div class="line"><span class="keyword">SELECT</span> TABLE_SCHEMA,TABLE_NAME,PARTITION_NAME,PARTITION_DESCRIPTION,TABLE_ROWS</div><div class="line"><span class="keyword">FROM</span> INFORMATION_SCHEMA.PARTITIONS</div><div class="line"><span class="keyword">WHERE</span> TABLE_NAME = <span class="string">'waybill_c'</span> <span class="keyword">AND</span> TABLE_SCHEMA = <span class="string">'wmdb'</span>;</div></pre></td></tr></table></figure>
+<p>information_schema.partitions中数据项<br>TABLE_SCHEMA  库名<br>TABLE_NAME  表名<br>PARTITION_NAME  分区名<br>PARTITION_DESCRIPTION 分区范围的值<br>TABLE_ROWS  分区上数据行数</p>
+<h3 id="无分区表添加分区"><a href="#无分区表添加分区" class="headerlink" title="无分区表添加分区"></a>无分区表添加分区</h3><p>如果想在已经建好的表上进行分区，如果使用alter添加分区的话，mysql会提示错误：<br>ERROR 1505 <hy000> Partition management on a not partitioned table is not possible<br>正确的方法是新建一个具有分区的表，结构一致，然后用insert into 分区表 select * from 原始表</hy000></p>
+<h2 id="执行脚本文件"><a href="#执行脚本文件" class="headerlink" title="执行脚本文件"></a>执行脚本文件</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysql -h10.10.10.10 -P3306 -uroot -p123456 yourdatabase &lt; text_file &gt; out_file</div><div class="line"></div><div class="line">mysql -uroot -p123456 -P3306 -Ne <span class="string">"show create table `waybill_0`.`waybill_c_0`"</span> &gt; d:\a.txt</div></pre></td></tr></table></figure>
+<h2 id="导出数据库建表语句"><a href="#导出数据库建表语句" class="headerlink" title="导出数据库建表语句"></a>导出数据库建表语句</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">mysqldump -h192.168.137.155 -uroot -p123456 waybill_10 &gt; d:\waybill_10.sql</div><div class="line">mysqldump -h192.168.137.155 -uroot -p123456 --databases db1 db2 db3 &gt; d:\dump.sql</div><div class="line"></div><div class="line"><span class="comment"># --skip-add-locks Do not add locks</span></div><div class="line"><span class="comment"># --no-data Do not dump table contents</span></div><div class="line">mysqldump -h192.168.137.155 -uroot -p123456 --skip-add-locks --no-data waybill_10 &gt; d:\waybill_10.sql</div><div class="line">mysqldump -h192.168.137.155 -uroot -p123456 --port 3306 --skip-add-locks --no-data waybill_10 &gt; d:\waybill_10.sql</div><div class="line"></div><div class="line">mysqldump -h127.0.0.1 -uroot -p123456 --port 3307 --skip-add-locks --no-data --databases waybill_0 waybill_1 waybill_2 waybill_3 &gt; d:\waybill_1-4.sql</div></pre></td></tr></table></figure>
+<h2 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt; drop database &lt;db_name&gt;;</div></pre></td></tr></table></figure>
+<h2 id="事务验证"><a href="#事务验证" class="headerlink" title="事务验证"></a>事务验证</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">set</span> autocommit=0;</div><div class="line">begin;</div><div class="line"></div><div class="line">delete from `<span class="built_in">test</span>`.`num` <span class="built_in">where</span> number = <span class="string">'2'</span>;</div><div class="line">delete from `<span class="built_in">test</span>`.`num` <span class="built_in">where</span> number = <span class="string">'3'</span>;</div><div class="line"></div><div class="line">INSERT INTO `<span class="built_in">test</span>`.`num` (`number`, `content`) VALUES (<span class="string">'2'</span>, <span class="string">'content'</span>);</div><div class="line">INSERT INTO `<span class="built_in">test</span>`.`num` (`number`, `content`) VALUES (<span class="string">'3'</span>, <span class="string">'content'</span>);</div><div class="line"></div><div class="line">commit;</div></pre></td></tr></table></figure>
+<h2 id="查看数据库版本"><a href="#查看数据库版本" class="headerlink" title="查看数据库版本"></a>查看数据库版本</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SHOW</span> <span class="keyword">VARIABLES</span> <span class="keyword">LIKE</span> <span class="string">"%version%"</span>;</div></pre></td></tr></table></figure>
+<h2 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> <span class="string">`waybill_task`</span> <span class="comment">/*!40100 DEFAULT CHARACTER SET utf8 */</span>;</div></pre></td></tr></table></figure>
+<h2 id="删除数据库-1"><a href="#删除数据库-1" class="headerlink" title="删除数据库"></a>删除数据库</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">drop</span> <span class="keyword">database</span> <span class="string">`waybill_task`</span>;</div></pre></td></tr></table></figure>
+<h2 id="添加唯一索引"><a href="#添加唯一索引" class="headerlink" title="添加唯一索引"></a>添加唯一索引</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`phone`</span> </div><div class="line"><span class="keyword">ADD</span> <span class="keyword">UNIQUE</span> <span class="keyword">INDEX</span> <span class="string">`ix_phone`</span> (<span class="string">`country`</span>, <span class="string">`area`</span>, <span class="string">`number`</span>, <span class="string">`extension`</span>);</div><div class="line"></div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> waybill_extend_0 <span class="keyword">ADD</span> <span class="keyword">UNIQUE</span> <span class="keyword">INDEX</span> idx_unq_waybill_code_data_key(waybill_code,data_key);</div><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`$&#123;dbName&#125;`</span>.<span class="string">`$&#123;tbName&#125;`</span> <span class="keyword">ADD</span> <span class="keyword">INDEX</span> idx_unq_waybill_code_data_key(waybill_code,data_key);</div></pre></td></tr></table></figure>
+<h2 id="添加普通索引"><a href="#添加普通索引" class="headerlink" title="添加普通索引"></a>添加普通索引</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`blocker_work_task_his`</span>   </div><div class="line">  <span class="keyword">ADD</span>  <span class="keyword">INDEX</span> <span class="string">`idx_ref_id`</span> (<span class="string">`ref_id`</span>);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>What are differences between Index v.s. Key in MySQL<br>There’s no difference. They are synonyms.</p>
+</blockquote>
+<h1 id="连接池配置"><a href="#连接池配置" class="headerlink" title="连接池配置"></a>连接池配置</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp.BasicDataSource"</span> <span class="attr">destroy-method</span>=<span class="string">"close"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"$&#123;db.driverClassName&#125;"</span>/&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"$&#123;db.url&#125;"</span>/&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"$&#123;db.username&#125;"</span>/&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"$&#123;db.password&#125;"</span>/&gt;</span> </div><div class="line"><span class="comment">&lt;!--initialSize: 初始化连接--&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"initialSize"</span> <span class="attr">value</span>=<span class="string">"5"</span>/&gt;</span> </div><div class="line"><span class="comment">&lt;!--maxIdle: 最大空闲连接--&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxIdle"</span> <span class="attr">value</span>=<span class="string">"10"</span>/&gt;</span> </div><div class="line"><span class="comment">&lt;!--minIdle: 最小空闲连接--&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"minIdle"</span> <span class="attr">value</span>=<span class="string">"5"</span>/&gt;</span> </div><div class="line"><span class="comment">&lt;!--maxActive: 最大连接数量--&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxActive"</span> <span class="attr">value</span>=<span class="string">"15"</span>/&gt;</span> </div><div class="line"><span class="comment">&lt;!--removeAbandoned: 是否自动回收超时连接--&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"removeAbandoned"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span> </div><div class="line"><span class="comment">&lt;!--removeAbandonedTimeout: 超时时间(以秒数为单位)--&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"removeAbandonedTimeout"</span> <span class="attr">value</span>=<span class="string">"55"</span>/&gt;</span> </div><div class="line"><span class="comment">&lt;!--maxWait: 超时等待时间以毫秒为单位 6000毫秒/1000等于6秒--&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxWait"</span> <span class="attr">value</span>=<span class="string">"3000"</span>/&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"validationQuery"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>SELECT 1<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"testOnBorrow"</span>&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span> </div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">waybill.main.datasource.driverClassName=com.mysql.jdbc.Driver</div><div class="line">waybill.main.datasource.url=jdbc:mysql://qlwyoth.mysql.jddb.com:3358/waybill_oth?characterEncoding=UTF-8</div><div class="line">waybill.main.datasource.defaultAutoCommit=true</div><div class="line">waybill.main.datasource.maxActive=10</div><div class="line">waybill.main.datasource.maxIdle=5</div><div class="line">waybill.main.datasource.maxWait=3000</div><div class="line">waybill.main.datasource.initialSize=2</div><div class="line">waybill.main.datasource.minIdle=2</div><div class="line">waybill.main.datasource.minEvictableIdleTimeMillis=300000</div><div class="line">waybill.main.datasource.timeBetweenEvictionRunsMillis=120000</div><div class="line">waybill.main.datasource.removeAbandoned=true</div><div class="line">waybill.main.datasource.removeAbandonedTimeout=120</div><div class="line">waybill.main.datasource.logAbandoned=true</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>默认值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>validationQuery</code></td>
+<td>SQL查询</td>
+<td>用来验证从连接池取出的连接,在将连接返回给调用者之前.如果指定,则查询必须是一个SQL SELECT并且必须返回至少一行记录</td>
+</tr>
+<tr>
+<td>timeBetweenEvictionRunsMillis</td>
+<td>-1</td>
+<td>在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位.如果设置为非正数,则不运行空闲连接回收器线程</td>
+</tr>
+<tr>
+<td>testWhileIdle</td>
+<td>false</td>
+<td>指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除.注意:设置为true后如果要生效,validationQuery参数必须设置为非空字符串</td>
+</tr>
+<tr>
+<td>testOnReturn</td>
+<td>false</td>
+<td>指明是否在归还到池中前进行检验。注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串</td>
+</tr>
+<tr>
+<td><code>testOnBorrow</code></td>
+<td>true</td>
+<td>指明是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个.注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串</td>
+</tr>
+<tr>
+<td><code>removeAbandonedTimeout</code></td>
+<td>300</td>
+<td>泄露的连接可以被删除的超时值,单位秒</td>
+</tr>
+<tr>
+<td><code>removeAbandoned</code></td>
+<td>false</td>
+<td>标记是否删除泄露的连接,如果他们超过了removeAbandonedTimout的限制.如果设置为true,连接被认为是被泄露并且可以被删除,如果空闲时间超过removeAbandonedTimeout.设置为true可以为写法糟糕的没有关闭连接的程序修复数据库连接.</td>
+</tr>
+<tr>
+<td>poolPreparedStatements</td>
+<td>false</td>
+<td>开启池的prepared statement池功能</td>
+</tr>
+<tr>
+<td>numTestsPerEvictionRun</td>
+<td>3</td>
+<td>在每次空闲连接回收器线程(如果有)运行时检查的连接数量</td>
+</tr>
+<tr>
+<td><code>minIdle</code></td>
+<td>0</td>
+<td>最小空闲连接:连接池中容许保持空闲状态的最小连接数量,低于这个数量将创建新的连接,如果设置为0则不创建</td>
+</tr>
+<tr>
+<td>minEvictableIdleTimeMillis</td>
+<td>1000 <em> 60 </em> 30</td>
+<td>连接在池中保持空闲而不被空闲连接回收器线程，(如果有)回收的最小时间值，单位毫秒</td>
+</tr>
+<tr>
+<td><code>maxWait</code></td>
+<td>-1</td>
+<td>最大等待时间:当没有可用连接时,连接池等待连接被归还的最大时间(以毫秒计数),超过时间则抛出异常,如果设置为-1表示无限等待</td>
+</tr>
+<tr>
+<td>maxOpenPreparedStatements</td>
+<td>不限制</td>
+<td>statement池能够同时分配的打开的statements的最大数量,如果设置为0表示不限制</td>
+</tr>
+<tr>
+<td><code>maxIdle</code></td>
+<td>8</td>
+<td>最大空闲连接:连接池中容许保持空闲状态的最大连接数量,超过的空闲连接将被释放,如果设置为负数表示不限制</td>
+</tr>
+<tr>
+<td><code>maxActive</code></td>
+<td>8</td>
+<td>最大活动连接:连接池在同一时间能够分配的最大活动连接的数量, 如果设置为非正数则表示不限制</td>
+</tr>
+<tr>
+<td>logAbandoned</td>
+<td>false</td>
+<td>标记当Statement或连接被泄露时是否打印程序的stack traces日志。被泄露的Statements和连接的日志添加在每个连接打开或者生成新的Statement,因为需要生成stack trace。</td>
+</tr>
+<tr>
+<td><code>initialSize</code></td>
+<td>0</td>
+<td>初始化连接:连接池启动时创建的初始化连接数量,1.2版本后支持</td>
+</tr>
+</tbody>
+</table>
+<h1 id="间隙锁"><a href="#间隙锁" class="headerlink" title="间隙锁"></a>间隙锁</h1><p>当我们通过一个参数去删除或者更新一条记录的时候， 如果参数在数据库中存在， 那么这个时候产生的是普通行锁， 锁住这个记录， 然后删除， 然后释放锁。</p>
+<p>如果这条记录不存在，问题就来了， 数据库会扫描索引，发现这个记录不存在， 这个时候的delete或者update语句获取到的就是一个间隙锁，然后数据库会向左扫描扫到第一个比给定参数小的值， 向右扫描扫描到第一个比给定参数大的值， 然后以此为界，构建一个区间， 锁住整个区间内的数据</p>
+<p>如果此时另一个事务对锁住的区域进行写操作，一个特别容易出现死锁的间隙锁诞生了</p>
+<p>系统中存在一些老的代码，这些代码逻辑在接收到数据时直接先更新或者删除，然后使用返回结果，进行判断是否需要插入，在高并发情况下，如果同时操作了临近的数据，死锁就产生了。</p>
+<p>最优方案为修改程序中使用事务的代码，避免对不存在的数据进行delete或者update（可先使用查询明确数据是否存在，可使用redis避免查库）后执行insert</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/25/javase-jvm/" rel="next" title="JavaSE JVM">
+                <i class="fa fa-chevron-left"></i> JavaSE JVM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/04/redis-codis/" rel="prev" title="Redis Codis">
+                Redis Codis <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#创建高性能的索引"><span class="nav-number">1.</span> <span class="nav-text">创建高性能的索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#索引基础"><span class="nav-number">1.1.</span> <span class="nav-text">索引基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#索引的类型"><span class="nav-number">1.1.1.</span> <span class="nav-text">索引的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Tree索引"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">B-Tree索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#哈希索引"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">哈希索引</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引的优点"><span class="nav-number">1.2.</span> <span class="nav-text">索引的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高性能的索引策略"><span class="nav-number">1.3.</span> <span class="nav-text">高性能的索引策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#独立的列"><span class="nav-number">1.3.1.</span> <span class="nav-text">独立的列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前缀索引和索引选择性"><span class="nav-number">1.3.2.</span> <span class="nav-text">前缀索引和索引选择性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多列索引"><span class="nav-number">1.3.3.</span> <span class="nav-text">多列索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择合适的索引顺序"><span class="nav-number">1.3.4.</span> <span class="nav-text">选择合适的索引顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#聚簇索引"><span class="nav-number">1.3.5.</span> <span class="nav-text">聚簇索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#聚簇索引优点："><span class="nav-number">1.3.5.1.</span> <span class="nav-text">聚簇索引优点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#聚簇索引缺点："><span class="nav-number">1.3.5.2.</span> <span class="nav-text">聚簇索引缺点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#InnoDB表中按主键顺序插入行"><span class="nav-number">1.3.5.3.</span> <span class="nav-text">InnoDB表中按主键顺序插入行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UUID聚簇索引缺点"><span class="nav-number">1.3.5.4.</span> <span class="nav-text">UUID聚簇索引缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖索引"><span class="nav-number">1.3.6.</span> <span class="nav-text">覆盖索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用索引扫描来做排序"><span class="nav-number">1.3.7.</span> <span class="nav-text">使用索引扫描来做排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冗余和重复索引"><span class="nav-number">1.3.8.</span> <span class="nav-text">冗余和重复索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#未使用的索引"><span class="nav-number">1.3.9.</span> <span class="nav-text">未使用的索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引和锁"><span class="nav-number">1.3.10.</span> <span class="nav-text">索引和锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引注意事项"><span class="nav-number">1.3.11.</span> <span class="nav-text">索引注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引案例学习"><span class="nav-number">1.4.</span> <span class="nav-text">索引案例学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支持多种过滤条件"><span class="nav-number">1.4.1.</span> <span class="nav-text">支持多种过滤条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免多个范围条件"><span class="nav-number">1.4.2.</span> <span class="nav-text">避免多个范围条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询性能优化"><span class="nav-number">2.</span> <span class="nav-text">查询性能优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#慢查询基础：优化数据访问"><span class="nav-number">2.1.</span> <span class="nav-text">慢查询基础：优化数据访问</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#取出全部列"><span class="nav-number">2.1.1.</span> <span class="nav-text">取出全部列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#是否在扫描额外的记录"><span class="nav-number">2.1.2.</span> <span class="nav-text">是否在扫描额外的记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重构查询的方式"><span class="nav-number">2.2.</span> <span class="nav-text">重构查询的方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#切分查询"><span class="nav-number">2.2.1.</span> <span class="nav-text">切分查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分解关联查询"><span class="nav-number">2.2.2.</span> <span class="nav-text">分解关联查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询执行的基础"><span class="nav-number">2.3.</span> <span class="nav-text">查询执行的基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL客户端-服务器通信协议"><span class="nav-number">2.3.1.</span> <span class="nav-text">MySQL客户端/服务器通信协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询优化器"><span class="nav-number">2.3.2.</span> <span class="nav-text">查询优化器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序优化"><span class="nav-number">2.3.3.</span> <span class="nav-text">排序优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL查询优化器的局限性"><span class="nav-number">2.4.</span> <span class="nav-text">MySQL查询优化器的局限性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关联子查询"><span class="nav-number">2.4.1.</span> <span class="nav-text">关联子查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#最糟糕的一类查询是WHERE条件中包含IN-的子查询语句"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">最糟糕的一类查询是WHERE条件中包含IN()的子查询语句</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何用好关联子查询"><span class="nav-number">2.4.1.2.</span> <span class="nav-text">如何用好关联子查询</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同一个表上同时查询和更新"><span class="nav-number">2.4.2.</span> <span class="nav-text">同一个表上同时查询和更新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化特定类型的查询"><span class="nav-number">2.5.</span> <span class="nav-text">优化特定类型的查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优化COUNT-查询"><span class="nav-number">2.5.1.</span> <span class="nav-text">优化COUNT()查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化关联查询"><span class="nav-number">2.5.2.</span> <span class="nav-text">优化关联查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化子查询"><span class="nav-number">2.5.3.</span> <span class="nav-text">优化子查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化group-by-和-distinct"><span class="nav-number">2.5.4.</span> <span class="nav-text">优化group by 和 distinct</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化LIMIT分页"><span class="nav-number">2.5.5.</span> <span class="nav-text">优化LIMIT分页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化union查询"><span class="nav-number">2.5.6.</span> <span class="nav-text">优化union查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态查询分析"><span class="nav-number">2.5.7.</span> <span class="nav-text">静态查询分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用用户自定义变量"><span class="nav-number">2.5.8.</span> <span class="nav-text">使用用户自定义变量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL"><span class="nav-number">3.</span> <span class="nav-text">SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查看建表语句"><span class="nav-number">3.1.</span> <span class="nav-text">查看建表语句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数"><span class="nav-number">4.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ROUND"><span class="nav-number">4.1.</span> <span class="nav-text">ROUND()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间"><span class="nav-number">4.2.</span> <span class="nav-text">时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间计算"><span class="nav-number">4.3.</span> <span class="nav-text">时间计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分区"><span class="nav-number">4.4.</span> <span class="nav-text">分区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建表添加分区"><span class="nav-number">4.4.1.</span> <span class="nav-text">建表添加分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加分区"><span class="nav-number">4.4.2.</span> <span class="nav-text">添加分区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无分区表添加分区"><span class="nav-number">4.4.3.</span> <span class="nav-text">无分区表添加分区</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#执行脚本文件"><span class="nav-number">4.5.</span> <span class="nav-text">执行脚本文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导出数据库建表语句"><span class="nav-number">4.6.</span> <span class="nav-text">导出数据库建表语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除数据库"><span class="nav-number">4.7.</span> <span class="nav-text">删除数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务验证"><span class="nav-number">4.8.</span> <span class="nav-text">事务验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看数据库版本"><span class="nav-number">4.9.</span> <span class="nav-text">查看数据库版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建数据库"><span class="nav-number">4.10.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除数据库-1"><span class="nav-number">4.11.</span> <span class="nav-text">删除数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加唯一索引"><span class="nav-number">4.12.</span> <span class="nav-text">添加唯一索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加普通索引"><span class="nav-number">4.13.</span> <span class="nav-text">添加普通索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#连接池配置"><span class="nav-number">5.</span> <span class="nav-text">连接池配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#间隙锁"><span class="nav-number">6.</span> <span class="nav-text">间隙锁</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

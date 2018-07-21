@@ -1,0 +1,948 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="centos6,linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="CentOS（Community Enterprise Operating System，中文意思是：社区企业操作系统）是Linux发行版之一，它是来自于Red Hat Enterprise Linux依照开放源代码规定释出的源代码所编译而成。">
+<meta name="keywords" content="centos6,linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos6 Note">
+<meta property="og:url" content="http://xiaozhuang.github.io/2017/03/16/centos6-note/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="CentOS（Community Enterprise Operating System，中文意思是：社区企业操作系统）是Linux发行版之一，它是来自于Red Hat Enterprise Linux依照开放源代码规定释出的源代码所编译而成。">
+<meta property="og:updated_time" content="2018-07-21T10:37:29.946Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Centos6 Note">
+<meta name="twitter:description" content="CentOS（Community Enterprise Operating System，中文意思是：社区企业操作系统）是Linux发行版之一，它是来自于Red Hat Enterprise Linux依照开放源代码规定释出的源代码所编译而成。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> Centos6 Note | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Centos6 Note
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-16T13:53:49+08:00" content="2017-03-16">
+              2017-03-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CentOS（Community Enterprise Operating System，中文意思是：社区企业操作系统）是Linux发行版之一，它是来自于Red Hat Enterprise Linux依照开放源代码规定释出的源代码所编译而成。<br><a id="more"></a></p>
+<h1 id="Linxu-基础"><a href="#Linxu-基础" class="headerlink" title="Linxu 基础"></a>Linxu 基础</h1><h2 id="服务器特点"><a href="#服务器特点" class="headerlink" title="服务器特点"></a>服务器特点</h2><ul>
+<li>稳定</li>
+<li>安全</li>
+</ul>
+<blockquote>
+<p>服务器不会装图形界面</p>
+</blockquote>
+<h2 id="Linux与window的不同"><a href="#Linux与window的不同" class="headerlink" title="Linux与window的不同"></a>Linux与window的不同</h2><ul>
+<li>Linux 严格区分大小写</li>
+<li>Linxu 所有内容以文件形式保存，包括硬件</li>
+<li>Linxu不靠扩展名区分文件类型（靠权限区分）</li>
+</ul>
+<p>Linux约定扩展名：<br>格式 | 扩展名<br>————|————–<br>压缩包 | <em>.gz </em>.bz <em>.tar.bz2 </em>.tgz<br>二进制 | .rpm<br>脚本 | .sh<br>配置文件 | .config</p>
+<h2 id="字符界面优势"><a href="#字符界面优势" class="headerlink" title="字符界面优势"></a>字符界面优势</h2><ul>
+<li>字符界面占用系统资源更少</li>
+<li>字符界面减少出错、被攻击的可能性（启动程序越多，出错可能越大）</li>
+</ul>
+<h2 id="系统分区"><a href="#系统分区" class="headerlink" title="系统分区"></a>系统分区</h2><!-- TODO -->
+<h2 id="Linux安装"><a href="#Linux安装" class="headerlink" title="Linux安装"></a>Linux安装</h2><p>VMware中，新建虚拟机</p>
+<ul>
+<li>“典型”</li>
+<li>安装来源，”稍后安装操作系统”（选择CentOS安装，将简化安装过程，故不选这种方式）</li>
+<li>选择系统：Linux，版本：CentOS</li>
+<li>硬盘</li>
+<li>虚拟机设置（网络视频器：桥接模式，虚拟机将获取与真实主机同一网段ip）</li>
+</ul>
+<p>安装过程：</p>
+<ul>
+<li>Install or upgrade an existing system (安装或升级现有系统)</li>
+<li>跳过镜像检测</li>
+<li>语言，中文</li>
+<li>键盘，美国英语式</li>
+<li>存储设备，基本存储设备</li>
+<li>存储设备可能包含数据警告，忽略所有数据</li>
+<li>主机名，Linux不通过主机名，在局域网内访问，保持默认</li>
+<li>时区，亚洲/上海（包含北京时区）</li>
+<li>设置管理员密码</li>
+<li>分区方式，自定义（参考下方自定义分区）</li>
+<li>格式化</li>
+<li>软件包选择，（minimal：最小化安装；BasicServer 基本服务器）</li>
+<li>重启</li>
+</ul>
+<p>自定义分区：(创建分区，标准分区)<br>/home    上传默认目录（2G）    ext4<br>/boot    启动分区（200M）    ext4<br>无        交换分区（内存2倍）    swap<br>/        根分区（全部可用）    ext4</p>
+<h2 id="安装日志"><a href="#安装日志" class="headerlink" title="安装日志"></a>安装日志</h2><!-- TODO -->
+<h1 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h1><h2 id="命令基本格式"><a href="#命令基本格式" class="headerlink" title="命令基本格式"></a>命令基本格式</h2><!-- TODO -->
+<h2 id="关机"><a href="#关机" class="headerlink" title="关机"></a>关机</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">shutdown -h now</div></pre></td></tr></table></figure>
+<h2 id="文件搜索"><a href="#文件搜索" class="headerlink" title="文件搜索"></a>文件搜索</h2><h3 id="locate"><a href="#locate" class="headerlink" title="locate"></a>locate</h3><p>在后台数据库中<code>按文件名</code>搜索，搜索速度快，</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Centos6 Minimal安装，没有安装locate</span></div><div class="line">yum install mlocate</div><div class="line"><span class="comment">#locate 文件名</span></div><div class="line">locate my.cnf</div></pre></td></tr></table></figure>
+<p>locate搜索数据库的文件信息，一天更新一次</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#手动更新文件数据库</span></div><div class="line">updatedb</div></pre></td></tr></table></figure>
+<h2 id="tar-gz"><a href="#tar-gz" class="headerlink" title=".tar.gz"></a>.tar.gz</h2><h3 id="打包：tar-zcvf-打包文件名-源文件"><a href="#打包：tar-zcvf-打包文件名-源文件" class="headerlink" title="打包：tar -zcvf 打包文件名 源文件"></a>打包：tar -zcvf 打包文件名 源文件</h3><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-z</td>
+<td>压缩为.tar.gz格式</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>打包</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示过程</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>指定打包后的文件名</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#压缩</span></div><div class="line">tar -czvf mysql_install.tar.gz [path1 path2]</div></pre></td></tr></table></figure>
+<h3 id="解打包：tar-xzvf-打包文件名"><a href="#解打包：tar-xzvf-打包文件名" class="headerlink" title="解打包：tar -xzvf 打包文件名"></a>解打包：tar -xzvf 打包文件名</h3><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-z</td>
+<td>解压缩.tar.gz格式</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>解打包</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#解压缩</span></div><div class="line">tar -xzvf file.tar.gz</div><div class="line"><span class="comment">#解压缩到指定目录</span></div><div class="line">tar -xzvf file.tar.gz -C /home/aaa</div></pre></td></tr></table></figure>
+<h3 id="查看：tar-tzvf-打包文件名"><a href="#查看：tar-tzvf-打包文件名" class="headerlink" title="查看：tar -tzvf 打包文件名"></a>查看：tar -tzvf 打包文件名</h3><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-t</td>
+<td>查看打包文件</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -tzvf mongodb-linux-x86_64-rhel62-3.2.9.tgz</div></pre></td></tr></table></figure>
+<h1 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">yum install zip unzip</div><div class="line"><span class="comment"># 打包目录</span></div><div class="line">zip -r backup.zip /root/backup</div></pre></td></tr></table></figure>
+<h2 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h2><h2 id="rpm包"><a href="#rpm包" class="headerlink" title="rpm包"></a>rpm包</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#安装</span></div><div class="line"><span class="comment"># -i  (install)安装</span></div><div class="line"><span class="comment"># -v  (verbose)显示详细信息</span></div><div class="line"><span class="comment"># -h  (hash)显示进度</span></div><div class="line"><span class="comment"># --nodeps 不检测依赖性</span></div><div class="line">rpm -ivh 包全名</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 查询是否安装</span></div><div class="line">rpm -q 包名</div><div class="line"><span class="comment"># 查询所有已装包</span></div><div class="line">rpm -qa</div><div class="line"></div><div class="line"><span class="comment"># 查询rpm包安装信息</span></div><div class="line">rpm -qi 包名</div><div class="line"></div><div class="line"><span class="comment"># 查询系统文件属于哪个软件</span></div><div class="line">rpm -qf 系统文件名</div><div class="line"></div><div class="line"><span class="comment"># 查询包依赖性</span></div><div class="line">rpm -qr 包名</div><div class="line"></div><div class="line"><span class="comment"># 校验</span></div><div class="line">rpm -v 包名</div></pre></td></tr></table></figure>
+<h2 id="yum在线安装"><a href="#yum在线安装" class="headerlink" title="yum在线安装"></a>yum在线安装</h2><p>RPM包在线安装方法，解决了RPM包依赖问题</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum install -y wget</div><div class="line">yum install zip unzip</div></pre></td></tr></table></figure>
+<h3 id="查询安装包"><a href="#查询安装包" class="headerlink" title="查询安装包"></a>查询安装包</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum search key_word</div></pre></td></tr></table></figure>
+<h3 id="修改yum源为163-yum源"><a href="#修改yum源为163-yum源" class="headerlink" title="修改yum源为163 yum源"></a>修改yum源为163 yum源</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> /etc/yum.repos.d</div><div class="line">mv CentOS-Base.repo CentOS-Base.repo.bak</div><div class="line">wget http://mirrors.163.com/.<span class="built_in">help</span>/CentOS6-Base-163.repo</div><div class="line">mv CentOS6-Base-163.repo CentOS-Base.repo</div><div class="line">yum clean all</div></pre></td></tr></table></figure>
+<h3 id="修改aliyun-yum源"><a href="#修改aliyun-yum源" class="headerlink" title="修改aliyun yum源"></a>修改aliyun yum源</h3><a href="http://mirrors.aliyun.com/help/centos?spm=5176.bbsr150321.0.0.d6ykiD" title="参考文档" target="_blank" rel="external">参考文档</a>
+<ul>
+<li>备份</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</div></pre></td></tr></table></figure>
+<ul>
+<li>下载新的CentOS-Base.repo 到/etc/yum.repos.d/</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># CentOS 5</span></div><div class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-5.repo</div><div class="line"><span class="comment"># CentOS 6</span></div><div class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo</div><div class="line"><span class="comment"># CentOS 7</span></div><div class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</div></pre></td></tr></table></figure>
+<ul>
+<li>运行<code>yum clean all</code>, <code>yum makecache</code>生成缓存</li>
+</ul>
+<h2 id="查看系统版本"><a href="#查看系统版本" class="headerlink" title="查看系统版本"></a>查看系统版本</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cat /etc/redhat-release</div><div class="line"><span class="comment">#或</span></div><div class="line">rpm -q centos-release</div></pre></td></tr></table></figure>
+<h2 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h2><h3 id="查看用户登录记录"><a href="#查看用户登录记录" class="headerlink" title="查看用户登录记录"></a>查看用户登录记录</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">who</div></pre></td></tr></table></figure>
+<h3 id="查看系统中有哪些用户："><a href="#查看系统中有哪些用户：" class="headerlink" title="查看系统中有哪些用户："></a>查看系统中有哪些用户：</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cut -d : -f 1 /etc/passwd</div></pre></td></tr></table></figure>
+<h3 id="查看可以登录系统的用户："><a href="#查看可以登录系统的用户：" class="headerlink" title="查看可以登录系统的用户："></a>查看可以登录系统的用户：</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /etc/passwd | grep -v /sbin/nologin | cut -d : -f 1</div></pre></td></tr></table></figure>
+<h2 id="scp-远程拷贝文件的命令"><a href="#scp-远程拷贝文件的命令" class="headerlink" title="scp 远程拷贝文件的命令"></a>scp 远程拷贝文件的命令</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">scp local_file remote_username@remote_ip:remote_folder</div><div class="line">scp -r local_folder remote_username@remote_ip:remote_folder</div></pre></td></tr></table></figure>
+<h2 id="SSH"><a href="#SSH" class="headerlink" title="SSH"></a>SSH</h2><p>SSH为Secure Shell的缩写，是创建在应用层和传输层基础上的安全协议。</p>
+<h3 id="ssh远程登录"><a href="#ssh远程登录" class="headerlink" title="ssh远程登录"></a>ssh远程登录</h3><p>格式：ssh 用户名@ip</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#安装ssh</span></div><div class="line">yum -y install openssh-clients</div><div class="line"><span class="comment">#使用ssh远程连接其他主机</span></div><div class="line"><span class="comment">#执行命令后，提示下载目标主机公钥</span></div><div class="line">ssh root@192.168.47.129cd</div></pre></td></tr></table></figure>
+<h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><h3 id="权限修改"><a href="#权限修改" class="headerlink" title="权限修改"></a>权限修改</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#修改文件或目录所属的用户</span></div><div class="line">chown qq /home/qq</div><div class="line"></div><div class="line"><span class="comment">#修改文件或目录所属的组</span></div><div class="line">chgrp qq /home/qq</div></pre></td></tr></table></figure>
+<h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><h3 id="查看系统进程"><a href="#查看系统进程" class="headerlink" title="查看系统进程"></a>查看系统进程</h3><p>ps -ef | grep java</p>
+<h3 id="终止进程"><a href="#终止进程" class="headerlink" title="终止进程"></a>终止进程</h3><p>kill -15 [PID]</p>
+<h2 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h2><h3 id="开端口"><a href="#开端口" class="headerlink" title="开端口"></a>开端口</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 添加：</span></div><div class="line"><span class="comment"># (删除iptables -D chain rulenum,如：删除INPUT里序号为8的规则-&gt;iptables -D INPUT 8)</span></div><div class="line"><span class="comment"># (删除指定端口规则:iptables -D  INPUT -p tcp -m tcp --dport "3306" -j ACCEPT)</span></div><div class="line">iptables -I INPUT -p tcp --dport 8080 -j ACCEPT</div><div class="line"></div><div class="line"><span class="comment"># 保存：</span></div><div class="line">service iptables save</div><div class="line"></div><div class="line"><span class="comment"># 查看：</span></div><div class="line">/etc/init.d/iptables status</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 防火墙开关：</span></div><div class="line"><span class="comment"># 	1)永久性生效，重启后不会复原 </span></div><div class="line"><span class="comment"># 	开启： chkconfig iptables on 关闭： chkconfig iptables off </span></div><div class="line"><span class="comment"># 	2)即时生效，重启后复原 </span></div><div class="line"><span class="comment"># 	开启： service iptables start 关闭： service iptables stop</span></div></pre></td></tr></table></figure>
+<h1 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h1><p>添加定时任务</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">crontab -e</div><div class="line"><span class="comment"># 每5分钟执行一次</span></div><div class="line">*/5 * * * * /home/hexo_sh/hexo_checkout_svn.sh</div></pre></td></tr></table></figure>
+<h1 id="开机运行"><a href="#开机运行" class="headerlink" title="开机运行"></a>开机运行</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vi /etc/rc.local</div><div class="line">/home/hexo_sh/hexo_generate_watch.sh</div></pre></td></tr></table></figure>
+<h1 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h1><h2 id="源码包安装位置"><a href="#源码包安装位置" class="headerlink" title="源码包安装位置"></a>源码包安装位置</h2><p>/usr/local</p>
+<h1 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#仅当前回话有效</span></div><div class="line"><span class="comment">#以jdk为例</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/jdk7/bin:<span class="variable">$PATH</span></div></pre></td></tr></table></figure>
+<p>生效方法：立即生效<br>有效期限：临时改变，只能在当前的终端窗口中有效，当前窗口关闭后就会恢复原有的path配置<br>用户局限：仅对当前用户</p>
+<h1 id="性能监控"><a href="#性能监控" class="headerlink" title="性能监控"></a>性能监控</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vmstat</div></pre></td></tr></table></figure>
+<p>procs ———–memory———- —swap– —–io—- –system– —–cpu—–<br> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st<br> 0  0      0 813472  11720 141636    0    0    22    18   16   15  0  0 99  0  0    </p>
+<ul>
+<li>us用户态cpu使用率， sy系统态cpu使用率， id空闲率</li>
+<li>第一列为 调度程序运行队列长度</li>
+<li>si 和 so 分别表示内存页面换入和换出的量</li>
+</ul>
+<h2 id="监控锁竞争"><a href="#监控锁竞争" class="headerlink" title="监控锁竞争"></a>监控锁竞争</h2><p><code>sysstat</code>包中的pidstat命令监控锁竞争</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 每秒让步式上下文切换</span></div><div class="line">pidstat -w</div><div class="line"></div><div class="line"><span class="comment"># 每5秒监控进程id为9391的应用</span></div><div class="line">pidstat -w -I -p 9391 -5</div></pre></td></tr></table></figure>
+<p>01时34分40秒       PID   cswch/s nvcswch/s  Command<br>01时34分40秒         1      0.11      0.01  init<br>01时34分40秒         2      0.01      0.00  kthreadd<br>01时34分40秒         3      0.00      0.00  migration/0<br>01时34分40秒         4      0.05      0.00  ksoftirqd/0<br>01时34分40秒         5      0.00      0.00  stopper/0</p>
+<p>cswch/s是让步上下文切换<br>cswch/s是总的让步式上下文切换数，除以虚拟处理器数目为每cup让步式上下文切换数</p>
+<p>让步式上下文切换耗费的时钟周期代价非常高，通常高达<code>80 000</code>个时钟周期</p>
+<blockquote>
+<p>如果让步式上下文切换占去5%或更多的时钟周期，说明它可能遇到锁竞争<br>3.0GHz处理器每秒能执行3 000 000 000个时钟周期</p>
+</blockquote>
+<p>nvcswch/s是抢占式上下文切换<br>抢占式上下文切换率高表明预备运行的线程数多于可用的虚拟处理器</p>
+<p>减少抢占式上下文切换的策略：</p>
+<ul>
+<li>创建处理器组</li>
+<li>减少运行的应用线程数</li>
+</ul>
+<p>Linux上使用teskset创建处理器组，并将应用分配给这些处理器组。</p>
+<h2 id="磁盘IO使用率"><a href="#磁盘IO使用率" class="headerlink" title="磁盘IO使用率"></a>磁盘IO使用率</h2><p><code>sysstat</code>包中的iostat命令查看磁盘IO使用率</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iostat -xm</div></pre></td></tr></table></figure>
+<h1 id="rpm卸载"><a href="#rpm卸载" class="headerlink" title="rpm卸载"></a>rpm卸载</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">rpm -q dsc20</div><div class="line">rpm -q cassandra20</div><div class="line"></div><div class="line">rpm -e dsc20</div><div class="line">rpm -e cassandra20</div></pre></td></tr></table></figure>
+<h1 id="Systemctl"><a href="#Systemctl" class="headerlink" title="Systemctl"></a>Systemctl</h1><p>Systemctl是一个systemd工具，主要负责控制systemd系统和服务管理器。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<h1 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h1><h2 id="拷贝虚拟机后无法联网"><a href="#拷贝虚拟机后无法联网" class="headerlink" title="拷贝虚拟机后无法联网"></a>拷贝虚拟机后无法联网</h2><p>ifcfg-eth0已经配置了开机启动<br>执行service network restart报错：device eth0 does not seem to be present, delaying initialization</p>
+<p>引起原因：ifcfg-eth0的配置文件里保存了以前的MAC地址</p>
+<p>解决方法：<br>删除ifcfg-eth0中MAC地址信息<br>/etc/sysconfig/network-scripts/ifcfg-eth0<br>删除文件：<br>/etc/udev/rules.d/70-persistent-net.rules 删除后重启机器</p>
+<h1 id="rsync命令"><a href="#rsync命令" class="headerlink" title="rsync命令"></a>rsync命令</h1><p>rsync命令是一个远程数据同步工具，可通过LAN/WAN快速同步多台主机间的文件。rsync使用所谓的“rsync算法”来使本地和远程两个主机之间的文件达到同步，这个算法只传送两个文件的不同部分，而不是每次都整份传送，因此速度相当快。</p>
+<h1 id="清屏"><a href="#清屏" class="headerlink" title="清屏"></a>清屏</h1><p>clear</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/centos6/" rel="tag"># centos6</a>
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/11/rabbit-mq/" rel="next" title="RabbitMQ">
+                <i class="fa fa-chevron-left"></i> RabbitMQ
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/23/javase-collection/" rel="prev" title="JavaSE集合">
+                JavaSE集合 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linxu-基础"><span class="nav-number">1.</span> <span class="nav-text">Linxu 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务器特点"><span class="nav-number">1.1.</span> <span class="nav-text">服务器特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux与window的不同"><span class="nav-number">1.2.</span> <span class="nav-text">Linux与window的不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符界面优势"><span class="nav-number">1.3.</span> <span class="nav-text">字符界面优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统分区"><span class="nav-number">1.4.</span> <span class="nav-text">系统分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux安装"><span class="nav-number">1.5.</span> <span class="nav-text">Linux安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装日志"><span class="nav-number">1.6.</span> <span class="nav-text">安装日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本命令"><span class="nav-number">2.</span> <span class="nav-text">基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#命令基本格式"><span class="nav-number">2.1.</span> <span class="nav-text">命令基本格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关机"><span class="nav-number">2.2.</span> <span class="nav-text">关机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件搜索"><span class="nav-number">2.3.</span> <span class="nav-text">文件搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#locate"><span class="nav-number">2.3.1.</span> <span class="nav-text">locate</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tar-gz"><span class="nav-number">2.4.</span> <span class="nav-text">.tar.gz</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打包：tar-zcvf-打包文件名-源文件"><span class="nav-number">2.4.1.</span> <span class="nav-text">打包：tar -zcvf 打包文件名 源文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解打包：tar-xzvf-打包文件名"><span class="nav-number">2.4.2.</span> <span class="nav-text">解打包：tar -xzvf 打包文件名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看：tar-tzvf-打包文件名"><span class="nav-number">2.4.3.</span> <span class="nav-text">查看：tar -tzvf 打包文件名</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#zip"><span class="nav-number">3.</span> <span class="nav-text">zip</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vim"><span class="nav-number">3.1.</span> <span class="nav-text">vim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpm包"><span class="nav-number">3.2.</span> <span class="nav-text">rpm包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yum在线安装"><span class="nav-number">3.3.</span> <span class="nav-text">yum在线安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查询安装包"><span class="nav-number">3.3.1.</span> <span class="nav-text">查询安装包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改yum源为163-yum源"><span class="nav-number">3.3.2.</span> <span class="nav-text">修改yum源为163 yum源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改aliyun-yum源"><span class="nav-number">3.3.3.</span> <span class="nav-text">修改aliyun yum源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看系统版本"><span class="nav-number">3.4.</span> <span class="nav-text">查看系统版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户"><span class="nav-number">3.5.</span> <span class="nav-text">用户</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看用户登录记录"><span class="nav-number">3.5.1.</span> <span class="nav-text">查看用户登录记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看系统中有哪些用户："><span class="nav-number">3.5.2.</span> <span class="nav-text">查看系统中有哪些用户：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看可以登录系统的用户："><span class="nav-number">3.5.3.</span> <span class="nav-text">查看可以登录系统的用户：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scp-远程拷贝文件的命令"><span class="nav-number">3.6.</span> <span class="nav-text">scp 远程拷贝文件的命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH"><span class="nav-number">3.7.</span> <span class="nav-text">SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ssh远程登录"><span class="nav-number">3.7.1.</span> <span class="nav-text">ssh远程登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件操作"><span class="nav-number">3.8.</span> <span class="nav-text">文件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#权限修改"><span class="nav-number">3.8.1.</span> <span class="nav-text">权限修改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程"><span class="nav-number">3.9.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看系统进程"><span class="nav-number">3.9.1.</span> <span class="nav-text">查看系统进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#终止进程"><span class="nav-number">3.9.2.</span> <span class="nav-text">终止进程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#防火墙"><span class="nav-number">3.10.</span> <span class="nav-text">防火墙</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开端口"><span class="nav-number">3.10.1.</span> <span class="nav-text">开端口</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定时任务"><span class="nav-number">4.</span> <span class="nav-text">定时任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开机运行"><span class="nav-number">5.</span> <span class="nav-text">开机运行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最佳实践"><span class="nav-number">6.</span> <span class="nav-text">最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#源码包安装位置"><span class="nav-number">6.1.</span> <span class="nav-text">源码包安装位置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#环境变量"><span class="nav-number">7.</span> <span class="nav-text">环境变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能监控"><span class="nav-number">8.</span> <span class="nav-text">性能监控</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#监控锁竞争"><span class="nav-number">8.1.</span> <span class="nav-text">监控锁竞争</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘IO使用率"><span class="nav-number">8.2.</span> <span class="nav-text">磁盘IO使用率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rpm卸载"><span class="nav-number">9.</span> <span class="nav-text">rpm卸载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Systemctl"><span class="nav-number">10.</span> <span class="nav-text">Systemctl</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题记录"><span class="nav-number">11.</span> <span class="nav-text">问题记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#拷贝虚拟机后无法联网"><span class="nav-number">11.1.</span> <span class="nav-text">拷贝虚拟机后无法联网</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rsync命令"><span class="nav-number">12.</span> <span class="nav-text">rsync命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#清屏"><span class="nav-number">13.</span> <span class="nav-text">清屏</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

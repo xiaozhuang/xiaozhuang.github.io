@@ -1,0 +1,803 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,Spring,MyBatis," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Java高并发秒杀，学习笔记http://www.imooc.com/learn/587">
+<meta name="keywords" content="Java,Spring,MyBatis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Seckill">
+<meta property="og:url" content="http://xiaozhuang.github.io/2016/12/10/seckill/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="Java高并发秒杀，学习笔记http://www.imooc.com/learn/587">
+<meta property="og:updated_time" content="2017-09-03T12:01:46.701Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Seckill">
+<meta name="twitter:description" content="Java高并发秒杀，学习笔记http://www.imooc.com/learn/587">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> Seckill | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Seckill
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-10T14:57:23+08:00" content="2016-12-10">
+              2016-12-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Java高并发秒杀，学习笔记<br><a href="http://www.imooc.com/learn/587" target="_blank" rel="external">http://www.imooc.com/learn/587</a><br><a id="more"></a></p>
+<h1 id="秒杀业务分析"><a href="#秒杀业务分析" class="headerlink" title="秒杀业务分析"></a>秒杀业务分析</h1><p>秒杀业务核心 –&gt; 库存处理</p>
+<p>减库存 &amp; 购买明细 –&gt; 完整事务 –&gt; 数据落地</p>
+<p>事务机制是目前最可靠的落地方案</p>
+<p>MySQL实现秒杀 –&gt; 事务 + 行级锁<br>Start Transaction<br><code>Update 库存数量</code><br>Insert 购买明细<br>Commit</p>
+<p>竞争出现在减库存（update）上</p>
+<p>秒杀功能： 秒杀接口暴露 –&gt; 执行秒杀 –&gt; 相关查询</p>
+<h1 id="DAO"><a href="#DAO" class="headerlink" title="DAO"></a>DAO</h1><h2 id="MyBatis-Mapper自动实现DAO接口"><a href="#MyBatis-Mapper自动实现DAO接口" class="headerlink" title="MyBatis Mapper自动实现DAO接口"></a>MyBatis Mapper自动实现DAO接口</h2><p>定义DAO接口，并配置Dao接口SQl，由MyBatis自动实现接口，并将实现类注入Spring</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--配置扫描Dao接口包，动态实现Dao接口，注入Spring容器--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.mybatis.spring.mapper.MapperScannerConfigurer"</span> &gt;</span></div><div class="line">    <span class="comment">&lt;!--注入sqlSessionFactory--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"sqlSessionFactoryBeanName"</span> <span class="attr">value</span>=<span class="string">"sqlSessionFactory"</span>/&gt;</span></div><div class="line">    <span class="comment">&lt;!--扫描Dao接口包--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"basePackage"</span> <span class="attr">value</span>=<span class="string">"org.seckill.dao"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="MyBatis-扫描SQL配置和类别名"><a href="#MyBatis-扫描SQL配置和类别名" class="headerlink" title="MyBatis 扫描SQL配置和类别名"></a>MyBatis 扫描SQL配置和类别名</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--配置SqlSessionFactory对象--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"sqlSessionFactory"</span> <span class="attr">class</span>=<span class="string">"org.mybatis.spring.SqlSessionFactoryBean"</span>&gt;</span></div><div class="line">    <span class="comment">&lt;!--注入数据库连接池--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span>/&gt;</span></div><div class="line">    <span class="comment">&lt;!--MyBatis全局配置文件--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"configLocation"</span> <span class="attr">value</span>=<span class="string">"classpath:mybatis-config"</span> /&gt;</span></div><div class="line">    <span class="comment">&lt;!--扫描entity包 使用别名--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"typeAliasesPackage"</span> <span class="attr">value</span>=<span class="string">"org.seckill.entity"</span> /&gt;</span></div><div class="line">    <span class="comment">&lt;!--扫描sql配置文件：mapper需要的xml文件--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"mapperLocations"</span> <span class="attr">value</span>=<span class="string">"classpath:mapper/*.xml"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="MyBatis接口多参数"><a href="#MyBatis接口多参数" class="headerlink" title="MyBatis接口多参数"></a>MyBatis接口多参数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 根据偏移量查询秒杀商品列表</div><div class="line"> * <span class="doctag">@param</span> offet</div><div class="line"> * <span class="doctag">@param</span> limit</div><div class="line"> * <span class="doctag">@return</span></div><div class="line"> */</div><div class="line"><span class="function">List&lt;Seckill&gt; <span class="title">queryAll</span><span class="params">(@Param(<span class="string">"offet"</span>)</span> <span class="keyword">int</span> offet, @<span class="title">Param</span><span class="params">(<span class="string">"limit"</span>)</span> <span class="keyword">int</span> limit)</span>;</div></pre></td></tr></table></figure>
+<p>@Param注解，指定形参在MyBatis Sql配置中绑定的参数</p>
+<h2 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h2><h3 id="Spring-xml配置中使用properties配置"><a href="#Spring-xml配置中使用properties配置" class="headerlink" title="Spring xml配置中使用properties配置"></a>Spring xml配置中使用properties配置</h3><p>配置${username}被替换为系统用户名</p>
+<h3 id="数据库连接警告"><a href="#数据库连接警告" class="headerlink" title="数据库连接警告"></a>数据库连接警告</h3><p>Fri Dec 11 18:28:21 CST 2015 WARN: Establishing SSL connection without server’s identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn’t set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to ‘false’. You need either to explicitly disable SSL by setting useSSL=false, or set useSSL=true and provide truststore for server certificate verification.</p>
+<p>数据库连接地址添加：useSSL=false</p>
+<h3 id="idea-warning"><a href="#idea-warning" class="headerlink" title="idea warning"></a>idea warning</h3><p>Warning:java: 源值1.5已过时, 将在未来所有发行版中删除</p>
+<p>solution:<br>maven settings.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">profiles</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">profile</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">id</span>&gt;</span>jdk-1.8<span class="tag">&lt;/<span class="name">id</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">activation</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">activeByDefault</span>&gt;</span>true<span class="tag">&lt;/<span class="name">activeByDefault</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">jdk</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">jdk</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">activation</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">maven.compiler.compilerVersion</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">maven.compiler.compilerVersion</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">profile</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">profiles</span>&gt;</span></div></pre></td></tr></table></figure>
+<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><p>Service层接口，站在“使用者”角度设计接口<br>三个方面：方法定义粒度、参数、返回类型</p>
+<h2 id="Spring注解事务"><a href="#Spring注解事务" class="headerlink" title="Spring注解事务"></a>Spring注解事务</h2><p><code>Spring注解事务，只有非受检异常才执行事务回滚</code></p>
+<p>事务方法嵌套,默认传播行为，若已有事务，则加入已有事务；否则，开启事务；</p>
+<p>使用注解控制事务：<br>1.明确标注事务方法的编程风格<br>2.保证事务方法的执行时间尽可能短，不要穿插其他网络操作RPC/HTTP请求或剥离到事务方法之外<br>3.不是所有方法都需要事务，只有一条修改操作不需要事务</p>
+<p>DTO(data transfer object):数据传输对象<br>负责web与service间的数据传递,其实是service接口返回数据的封装</p>
+<h1 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h1><p>@RequestMapping注解</p>
+<ul>
+<li>支持标准URL</li>
+<li>ant风格URL（即？、<em> 和 *</em>等字符）</li>
+<li>在{xxx}站位符的URL</li>
+</ul>
+<p>重定向：”redirect:/seckill/list”<br>请求转发：”forword:/seckill/list”</p>
+<p>@RequestMapping<br>添加请求头：produces={“application/json;charset=UTF-8”}</p>
+<h2 id="问题记录-1"><a href="#问题记录-1" class="headerlink" title="问题记录"></a>问题记录</h2><h3 id="web-xml"><a href="#web-xml" class="headerlink" title="web.xml"></a>web.xml</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee"</span></span></div><div class="line">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://xmlns.jcp.org/xml/ns/javaee</span></div><div class="line">                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"</div><div class="line">         <span class="attr">version</span>=<span class="string">"3.1"</span></div><div class="line">         <span class="attr">metadata-complete</span>=<span class="string">"true"</span>&gt;</div></pre></td></tr></table></figure>
+<p>servlet配置报错：element servletname is not allowed here<br>原因：Servlet 3.1可以实现无xml配置SpringMVC</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+            <a href="/tags/MyBatis/" rel="tag"># MyBatis</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/20/guava-note/" rel="next" title="Guava Note">
+                <i class="fa fa-chevron-left"></i> Guava Note
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/10/intellij-idea/" rel="prev" title="IntelliJ IDEA使用笔记">
+                IntelliJ IDEA使用笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#秒杀业务分析"><span class="nav-number">1.</span> <span class="nav-text">秒杀业务分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DAO"><span class="nav-number">2.</span> <span class="nav-text">DAO</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis-Mapper自动实现DAO接口"><span class="nav-number">2.1.</span> <span class="nav-text">MyBatis Mapper自动实现DAO接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis-扫描SQL配置和类别名"><span class="nav-number">2.2.</span> <span class="nav-text">MyBatis 扫描SQL配置和类别名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis接口多参数"><span class="nav-number">2.3.</span> <span class="nav-text">MyBatis接口多参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题记录"><span class="nav-number">2.4.</span> <span class="nav-text">问题记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-xml配置中使用properties配置"><span class="nav-number">2.4.1.</span> <span class="nav-text">Spring xml配置中使用properties配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库连接警告"><span class="nav-number">2.4.2.</span> <span class="nav-text">数据库连接警告</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#idea-warning"><span class="nav-number">2.4.3.</span> <span class="nav-text">idea warning</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Service"><span class="nav-number">3.</span> <span class="nav-text">Service</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring注解事务"><span class="nav-number">3.1.</span> <span class="nav-text">Spring注解事务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Web"><span class="nav-number">4.</span> <span class="nav-text">Web</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题记录-1"><span class="nav-number">4.1.</span> <span class="nav-text">问题记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#web-xml"><span class="nav-number">4.1.1.</span> <span class="nav-text">web.xml</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

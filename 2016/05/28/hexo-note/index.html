@@ -91,10 +91,12 @@
 <meta property="og:url" content="http://xiaozhuang.github.io/2016/05/28/hexo-note/index.html">
 <meta property="og:site_name" content="Communicat &amp; Happy Together">
 <meta property="og:description" content="Hexo 是高效的静态站点生成框架，基于 Node.js。 通过 Hexo 可以轻松地使用 Markdown 编写文章，除 Markdown 本身的语法之外，还可以使用 Hexo 提供的 标签插件 快速的插入特定形式的内容">
-<meta property="og:updated_time" content="2017-06-19T13:35:48.760Z">
+<meta property="og:image" content="http://xiaozhuang.github.io/2016/05/28/hexo-note/github.png">
+<meta property="og:updated_time" content="2017-09-03T12:01:46.132Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo 学习笔记">
 <meta name="twitter:description" content="Hexo 是高效的静态站点生成框架，基于 Node.js。 通过 Hexo 可以轻松地使用 Markdown 编写文章，除 Markdown 本身的语法之外，还可以使用 Hexo 提供的 标签插件 快速的插入特定形式的内容">
+<meta name="twitter:image" content="http://xiaozhuang.github.io/2016/05/28/hexo-note/github.png">
 
 
 
@@ -360,9 +362,11 @@
 <h1 id="写作"><a href="#写作" class="headerlink" title="写作"></a>写作</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#创建文章</span></div><div class="line">hexo new [title]</div><div class="line"><span class="comment">#创建分类</span></div><div class="line">hexo new page tags</div><div class="line"><span class="comment">#创建标签</span></div><div class="line">hexo new page categories</div></pre></td></tr></table></figure>
 <h2 id="添加图片"><a href="#添加图片" class="headerlink" title="添加图片"></a>添加图片</h2><h3 id="文章资源文件夹"><a href="#文章资源文件夹" class="headerlink" title="文章资源文件夹"></a>文章资源文件夹</h3><p>Hexo提供了组织化的方式来管理资源,资源可以分布在各个文章上，通过将 <code>config.yml</code>文件中的 <code>post_asset_folder</code> 选项设为 <code>true</code> 来打开。<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></div></pre></td></tr></table></figure></p>
 <p>资源文件管理功能打开后，Hexo将会在每一次通过 hexo new title命令创建新文章时自动创建一个文件夹,这个资源文件夹与 markdown 文件同名。将所有与文章有关的资源放在这个关联文件夹中，可以通过相对路径来引用它们</p>
-<h3 id="相对路径引用"><a href="#相对路径引用" class="headerlink" title="相对路径引用"></a>相对路径引用</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;% asset_img slug [title] %&#125;</div><div class="line">&#123;% asset_link slug [title] %&#125;</div><div class="line">&#123;% asset_path slug %&#125;</div><div class="line">&#123;% link text url title %&#125;</div></pre></td></tr></table></figure>
-<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3>
+<h3 id="相对路径引用"><a href="#相对路径引用" class="headerlink" title="相对路径引用"></a>相对路径引用</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;% asset_img slug [title] %&#125;</div><div class="line">资源链接</div><div class="line">&#123;% asset_link slug [title] %&#125;</div><div class="line">&#123;% asset_path slug %&#125;</div><div class="line">&#123;% link text url title %&#125;</div></pre></td></tr></table></figure>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><img src="/2016/05/28/hexo-note/github.png" alt="github Logo image" title="github Logo image">
 
+<blockquote><p>NEW: DevDocs now comes with syntax highlighting. <a href="http://devdocs.io" target="_blank" rel="external">http://devdocs.io</a></p>
+<footer><strong>@DevDocs</strong><cite><a href="https://twitter.com/devdocs/status/356095192085962752" target="_blank" rel="external">twitter.com/devdocs/status/356095192085962752</a></cite></footer></blockquote>
 <h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><table>
 <thead>
 <tr>
@@ -489,12 +493,12 @@
                src="/images/avatar.png"
                alt="Sunday" />
           <p class="site-author-name" itemprop="name">Sunday</p>
-          <p class="site-description motion-element" itemprop="description">18515286469@163.com</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">55</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -511,7 +515,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">41</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -562,7 +566,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

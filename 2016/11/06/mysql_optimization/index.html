@@ -1,0 +1,915 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mysql," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="《性能优化之MySQL优化》课程学习笔记http://www.imooc.com/learn/194/">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL性能优化">
+<meta property="og:url" content="http://xiaozhuang.github.io/2016/11/06/mysql_optimization/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="《性能优化之MySQL优化》课程学习笔记http://www.imooc.com/learn/194/">
+<meta property="og:updated_time" content="2018-06-25T09:21:43.403Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL性能优化">
+<meta name="twitter:description" content="《性能优化之MySQL优化》课程学习笔记http://www.imooc.com/learn/194/">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> MySQL性能优化 | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MySQL性能优化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-06T21:48:48+08:00" content="2016-11-06">
+              2016-11-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>《性能优化之MySQL优化》课程学习笔记<br><a href="http://www.imooc.com/learn/194/" target="_blank" rel="external">http://www.imooc.com/learn/194/</a><br><a id="more"></a></p>
+<h1 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h1><p>版本:MySQL5.5<br>实例数据库:sakila database(<a href="http://dev.mysql.com/doc/index-other.html" target="_blank" rel="external">http://dev.mysql.com/doc/index-other.html</a>)</p>
+<h1 id="优化目的"><a href="#优化目的" class="headerlink" title="优化目的"></a>优化目的</h1><h2 id="避免出现页面错误"><a href="#避免出现页面错误" class="headerlink" title="避免出现页面错误"></a>避免出现页面错误</h2><ul>
+<li>数据库连接超时</li>
+<li>慢查询导致无法加载</li>
+<li>阻塞造成数据无法提交</li>
+</ul>
+<h2 id="增加数据库稳定性"><a href="#增加数据库稳定性" class="headerlink" title="增加数据库稳定性"></a>增加数据库稳定性</h2><ul>
+<li>很多数据库问题由于低效查询引起</li>
+</ul>
+<h2 id="优化用户体验"><a href="#优化用户体验" class="headerlink" title="优化用户体验"></a>优化用户体验</h2><ul>
+<li>页面访问速度</li>
+</ul>
+<h1 id="优化途径"><a href="#优化途径" class="headerlink" title="优化途径"></a>优化途径</h1><p>成本：低  –&gt;  高<br>效果：高  –&gt;  低<br>SQL及索引 -&gt; 数据库表结构 -&gt; 系统配置 -&gt; 硬件</p>
+<p>系统配置：linux打开文件数配置<br>硬件：CPU、内存、IO</p>
+<h1 id="SQL及索引"><a href="#SQL及索引" class="headerlink" title="SQL及索引"></a>SQL及索引</h1><h2 id="发现有问题SQL"><a href="#发现有问题SQL" class="headerlink" title="发现有问题SQL"></a>发现有问题SQL</h2><h3 id="开启慢查询日志"><a href="#开启慢查询日志" class="headerlink" title="开启慢查询日志"></a>开启慢查询日志</h3><p>通过sql开启的慢查询日志，立即生效，重启后不再有效</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 查询日志配置</span></div><div class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'%log%'</span></div><div class="line"><span class="comment">-- 慢查询日志是否开启</span></div><div class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'slow_query_log'</span></div><div class="line"><span class="comment">-- 慢查询界定时间</span></div><div class="line"><span class="keyword">show</span> <span class="keyword">variables</span> <span class="keyword">like</span> <span class="string">'long_query_time'</span></div><div class="line"></div><div class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> slow_query_log_file=<span class="string">'e:\\mysql-5.7.11-winx64\\log\\mysql-slow.log'</span></div><div class="line"><span class="comment">-- set global slow_query_log_file='/usr/home/mysql/sql_log/mysql-slow.log'</span></div><div class="line"></div><div class="line"><span class="comment">-- 记录未使用索引的查询</span></div><div class="line"><span class="keyword">set</span> <span class="keyword">global</span> log_queries_not_using_indexes=<span class="keyword">on</span></div><div class="line"></div><div class="line"><span class="comment">-- 1s</span></div><div class="line"><span class="comment">-- 设置long_query_time后，查询获取的long_query_time没变；断开当前mysql回话，重新连接，查询获取的long_query_time，显示设置后值</span></div><div class="line"><span class="keyword">set</span> <span class="keyword">global</span> long_query_time=<span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment">-- 开启慢查询日志</span></div><div class="line"><span class="keyword">set</span> <span class="keyword">global</span> slow_query_log=<span class="keyword">on</span></div><div class="line"></div><div class="line"><span class="comment">-- 测试慢查询日志记录</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">sleep</span>(<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment">-- linux命令，查看日志：tail -50 /usr/home/mysql/sql_log/mysql-slow.log</span></div></pre></td></tr></table></figure>
+<h3 id="日志内容"><a href="#日志内容" class="headerlink" title="日志内容"></a>日志内容</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">执行时间</div><div class="line"># Time: 2016-11-07T13:57:37.774253Z</div><div class="line">执行SQL的主机信息</div><div class="line"># User@Host: root[root] @ localhost [127.0.0.1]  Id:     3</div><div class="line">SQL执行信息</div><div class="line"># Query_time: 0.000000  Lock_time: 0.000000 Rows_sent: 12  Rows_examined: 108</div><div class="line">SQL内容</div><div class="line">use sakila;</div><div class="line">时间戳记录的执行时间</div><div class="line">SET timestamp=1478527057;</div></pre></td></tr></table></figure>
+<h3 id="慢查询日志分析工具"><a href="#慢查询日志分析工具" class="headerlink" title="慢查询日志分析工具"></a>慢查询日志分析工具</h3><h4 id="mysqldumpslow"><a href="#mysqldumpslow" class="headerlink" title="mysqldumpslow"></a>mysqldumpslow</h4><p>官方提供，默认安装，统计信息较少</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./mysqldumpslow -t 10 /usr/<span class="built_in">local</span>/mysql-5.7.11-glibc2.5-i686/data/localhost-slow.log</div></pre></td></tr></table></figure>
+<p>mysqldumpslow -h 查看帮助<br>-s 排序<br>-t 数量</p>
+<h4 id="pt-query-digest"><a href="#pt-query-digest" class="headerlink" title="pt-query-digest"></a>pt-query-digest</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pt-query-digest /usr/<span class="built_in">local</span>/mysql-5.7.11-glibc2.5-i686/data/localhost-slow.log | more</div></pre></td></tr></table></figure>
+<h3 id="通过慢查询日志发现有问题的SQL"><a href="#通过慢查询日志发现有问题的SQL" class="headerlink" title="通过慢查询日志发现有问题的SQL"></a>通过慢查询日志发现有问题的SQL</h3><h4 id="查询次数多且占用时间长的SQL"><a href="#查询次数多且占用时间长的SQL" class="headerlink" title="查询次数多且占用时间长的SQL"></a>查询次数多且占用时间长的SQL</h4><p>通常是pt-query-digest分析的前几个SQL</p>
+<h4 id="IO大的SQL"><a href="#IO大的SQL" class="headerlink" title="IO大的SQL"></a>IO大的SQL</h4><p>pt-query-digest分析中Row examine项</p>
+<h4 id="未命中索引的SQL"><a href="#未命中索引的SQL" class="headerlink" title="未命中索引的SQL"></a>未命中索引的SQL</h4><p>pt-query-digest分析中Row examine和Rows Send的对比</p>
+<h1 id="分析SQL和优化"><a href="#分析SQL和优化" class="headerlink" title="分析SQL和优化"></a>分析SQL和优化</h1><p>使用explain，查询SQL的执行计划<br>数据库中，先进行执行计划分析，再进行查询<br>执行计划从侧面反映SQL执行效率</p>
+<p>explain返回各列含义：</p>
+<ul>
+<li>table关于哪个表</li>
+<li>type连接使用何种类型，最好到最差的连接类型<br>  const(主键、唯一索引)<br>  eq_ref(主键、唯一索引范围查找)<br>  ref(索引查找)<br>  range(有限制的索引扫描)<br>  index(全索引扫描，按索引次序扫描表)<br>  all(全表扫描)</li>
+<li>possible_keys:可能应用的索引</li>
+<li>key:实际使用的索引</li>
+<li>key_len:使用索引的长度；不损失精确性的情况下，长度越短越好</li>
+<li>ref：显示索引的哪一列被使用了，常数最好</li>
+<li>rows：表扫描的行数</li>
+<li>Extra：<br>  Using filesort：查询需要优化；用到了文件排序，order by从句常见<br>  Using temporary：查询需要优化；对结果排序时用到了临时表，通常发生在对不同列集进行order by上<br>  Using index: 使用覆盖索引<br>  Using where：MySQL服务器在存储引擎检索行后再进行过滤</li>
+</ul>
+<h1 id="SQL语句优化"><a href="#SQL语句优化" class="headerlink" title="SQL语句优化"></a>SQL语句优化</h1><h2 id="优化Count-和-Max"><a href="#优化Count-和-Max" class="headerlink" title="优化Count() 和 Max()"></a>优化Count() 和 Max()</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">EXPLAIN</span> <span class="keyword">SELECT</span> <span class="keyword">MAX</span>(<span class="string">`payment_date`</span>) <span class="keyword">FROM</span> <span class="string">`payment`</span></div><div class="line"></div><div class="line"><span class="comment">--  在payment_date列，创建索引;</span></div><div class="line"><span class="comment">-- 创建索引后，能够进通过所以查询到结果</span></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> idx_paydate <span class="keyword">ON</span> payment(<span class="string">`payment_date`</span>)</div><div class="line"></div><div class="line"><span class="comment">-- 查询年份为2006的电影；</span></div><div class="line"><span class="comment">-- `year` = '2016'进行计数，否则返回NULL,count函数不对NULL进行计数</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(<span class="string">`year`</span> = <span class="string">'2016'</span> <span class="keyword">OR</span> <span class="literal">NULL</span>) <span class="keyword">FROM</span> t</div></pre></td></tr></table></figure>
+<h2 id="子查询优化"><a href="#子查询优化" class="headerlink" title="子查询优化"></a>子查询优化</h2><p>子查询优化为连接查询(join)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="string">`id`</span>,<span class="string">`year`</span> <span class="keyword">FROM</span> t <span class="keyword">WHERE</span> <span class="keyword">id</span> <span class="keyword">IN</span> (<span class="keyword">SELECT</span> t_id <span class="keyword">FROM</span> t1)</div><div class="line"></div><div class="line"><span class="keyword">SELECT</span> t.<span class="string">`id`</span>,t.<span class="string">`year`</span> <span class="keyword">FROM</span> t <span class="keyword">JOIN</span> t1 <span class="keyword">ON</span> t1.t_id = t.<span class="string">`id`</span></div><div class="line"><span class="comment">-- 存在一对多关系时，查询结果可能存在重复行，使用DISTINCT函数去重</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> t.<span class="string">`id`</span>,t.<span class="string">`year`</span> <span class="keyword">FROM</span> t <span class="keyword">JOIN</span> t1 <span class="keyword">ON</span> t1.t_id = t.<span class="string">`id`</span></div></pre></td></tr></table></figure>
+<h2 id="优化limit"><a href="#优化limit" class="headerlink" title="优化limit"></a>优化limit</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- type：All，Extra：Using filesort</span></div><div class="line"><span class="comment">-- 扫描1000行，使用文件排序</span></div><div class="line"><span class="keyword">SELECT</span> <span class="string">`film_id`</span>,<span class="string">`description`</span> <span class="keyword">FROM</span> <span class="string">`film`</span></div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="string">`title`</span> <span class="keyword">LIMIT</span> <span class="number">50</span>,<span class="number">5</span></div><div class="line"></div><div class="line"><span class="comment">-- 使用有索引的列或主键进行order by</span></div><div class="line"><span class="comment">-- type：index</span></div><div class="line"><span class="comment">-- 扫描55行，随之查询靠后，扫描行数变多，效率降低</span></div><div class="line"><span class="keyword">SELECT</span> <span class="string">`film_id`</span>,<span class="string">`description`</span> <span class="keyword">FROM</span> <span class="string">`film`</span></div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="string">`film_id`</span> <span class="keyword">LIMIT</span> <span class="number">50</span>,<span class="number">5</span></div><div class="line"></div><div class="line"><span class="comment">-- 使用主键过滤，避免数据量大时扫描过多的记录</span></div><div class="line"><span class="comment">-- 优化后，扫描行数仅为5行，效率固定</span></div><div class="line"><span class="comment">-- 依赖主键连续</span></div><div class="line"><span class="comment">-- 如果主键不连续，可以添加附加列(如：index_id)，保证附加列连续，并为附加列添加索引</span></div><div class="line"><span class="keyword">SELECT</span> <span class="string">`film_id`</span>,<span class="string">`description`</span></div><div class="line"><span class="keyword">FROM</span> <span class="string">`film`</span></div><div class="line"><span class="keyword">WHERE</span> <span class="string">`film_id`</span> &gt; <span class="number">50</span> <span class="keyword">AND</span> <span class="string">`film_id`</span> &lt;= <span class="number">55</span></div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="string">`film_id`</span> <span class="keyword">LIMIT</span> <span class="number">1</span>,<span class="number">5</span></div></pre></td></tr></table></figure>
+<h1 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h1><p>通常为where、group by、order by、on从句中使用列添加索引<br>有时会在select从句中添加索引</p>
+<p>索引包含查询中所有列，称为覆盖索引，查询通过索引的获取数据，不用查询表<br>对使用频率高，包含列较少的查询，可使用覆盖索引进行优化</p>
+<p>索引字段，越小越好（数据库中，数据以页为单位存储，一页中存储的数据越多，一次IO获取的数据量越大，IO效率越好）</p>
+<h2 id="联合索引优化"><a href="#联合索引优化" class="headerlink" title="联合索引优化"></a>联合索引优化</h2><p>联合索引，离散度高的列，放在联合索引的前面</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 离散度判断</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(<span class="keyword">DISTINCT</span> <span class="string">`customer_id`</span>),<span class="keyword">COUNT</span>(<span class="keyword">DISTINCT</span> <span class="string">`staff_id`</span>)</div><div class="line"><span class="keyword">FROM</span> <span class="string">`payment`</span></div></pre></td></tr></table></figure>
+<h2 id="重复及冗余索引"><a href="#重复及冗余索引" class="headerlink" title="重复及冗余索引"></a>重复及冗余索引</h2><p>查询分析时需要分析使用哪一索引进行查询，索引越多，分析越慢</p>
+<p>重复索引：相同列以相同顺序建立的同类型的索引；如primary key和Id列上唯一索引，主键已经是唯一索引。<br>冗余索引：多个索引的前缀相同或联合索引中包含了主键索引；Innodb特性：每个索引都会附加主键，如果联合索引添加了主键，则冗余。</p>
+<h3 id="使用工具分析重复和冗余索引"><a href="#使用工具分析重复和冗余索引" class="headerlink" title="使用工具分析重复和冗余索引"></a>使用工具分析重复和冗余索引</h3><p>pt-duplicate-key-checker<br>安装pt-query-digest之后，可以使用</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pt-duplicate-key-checker -uroot -p <span class="string">'123456'</span> -h 127.0.0.1</div><div class="line"></div><div class="line">pt-duplicate-key-checker -uroot -p <span class="string">'123456'</span> -h 127.0.0.1 --database=sakilapt</div></pre></td></tr></table></figure>
+<h3 id="删除不用的索引"><a href="#删除不用的索引" class="headerlink" title="删除不用的索引"></a>删除不用的索引</h3><p>通过慢查询日志配合pt-index-usage工具进行索引使用情况的分析</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pt-index-usage -uroot -p <span class="string">'123456'</span> --host 127.0.0.1 /usr/<span class="built_in">local</span>/mysql-5.7.11-glibc2.5-i686/data/localhost-slow.log</div></pre></td></tr></table></figure>
+<h1 id="表结构优化"><a href="#表结构优化" class="headerlink" title="表结构优化"></a>表结构优化</h1><p>选择合适的数据类型</p>
+<ul>
+<li>选择可以存下数据的最小的数据类型</li>
+<li>使用简单的数据类型（int比varchar类型简单）</li>
+<li>尽可能的使用not null定义字段，并设定默认值（Innodb存储特性，对非not null字段需要额外存储）</li>
+<li>尽少使用text类型，非用不可最好分表，通过附加表的方式，提高主表查询效率</li>
+</ul>
+<h2 id="使用int存储时间"><a href="#使用int存储时间" class="headerlink" title="使用int存储时间"></a>使用int存储时间</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">-- 日期转int</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">UNIX_TIMESTAMP</span>(<span class="string">'2014-06-01 13:12:00'</span>)</div><div class="line"></div><div class="line"><span class="comment">-- int转日期</span></div><div class="line"><span class="keyword">SELECT</span> FROM_UNIXTIME(<span class="string">'1401599520'</span>)</div></pre></td></tr></table></figure>
+<h2 id="ip地址存储"><a href="#ip地址存储" class="headerlink" title="ip地址存储"></a>ip地址存储</h2><p>使用bigint存储IP地址，节省空间，查询高效<br>varchar：15字节<br>bigint：7字节</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="keyword">INET_ATON</span>(<span class="string">'10.10.60.149'</span>)</div><div class="line"></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">INET_NTOA</span>(<span class="string">'168443029'</span>)</div></pre></td></tr></table></figure>
+<h1 id="范式化"><a href="#范式化" class="headerlink" title="范式化"></a>范式化</h1><p>目前范式化一般指第三范式<br>要求数据表中不存在非关键字段对任意候选关键字段的传递函数依赖</p>
+<p>如：<br>    商品名称 -&gt; 分类 -&gt; 分类描述</p>
+<p>不满足第三范式，存在的问题：<br>    1.数据冗余<br>    2.插入异常(添加没有商品分类)<br>    3.更新异常(更新分类，更新多列)<br>    4.删除异常(删除全部商品，同时删除了分类)</p>
+<p>解决方法：<br>拆分表，产品、分类、关系</p>
+<h1 id="反范式化"><a href="#反范式化" class="headerlink" title="反范式化"></a>反范式化</h1><p>反范式化指为提高查询效率，把原本符合第三范式的表适当的增加冗余，已达到优化查询效率的目的。<br>反范式化是一种以空间换取时间的操作。</p>
+<h1 id="表垂直拆分"><a href="#表垂直拆分" class="headerlink" title="表垂直拆分"></a>表垂直拆分</h1><p>垂直拆分：把原来一个有很多列的表拆分成多个表，解决表的宽度问题。</p>
+<p>垂直拆分原则：</p>
+<ul>
+<li>不常用的字段单独一个表</li>
+<li>大字段单独一个表</li>
+<li>经常一起使用的字段放到一起</li>
+</ul>
+<h1 id="水平拆分"><a href="#水平拆分" class="headerlink" title="水平拆分"></a>水平拆分</h1><p>水平拆分解决单表数据量过大的问题，水平拆分的表每一个表的结构都完全一致。</p>
+<p>常用方法：<br>    对id进行hash运算，不同的hashID存到不同的表中。</p>
+<p>挑战：<br>    跨分区表进行数据查询<br>    统计及后台报表操作（前台业务使用拆分表，后台业务使用汇总表查询）</p>
+<h1 id="系统配置优化"><a href="#系统配置优化" class="headerlink" title="系统配置优化"></a>系统配置优化</h1><h2 id="网络方面配置"><a href="#网络方面配置" class="headerlink" title="网络方面配置"></a>网络方面配置</h2><p>/etc/sysctl.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#增加tcp支持的队列数</div><div class="line">net.ipv4.tcp_max_syn_backlog = 65535</div><div class="line">#减少断开连接时，资源回收</div><div class="line">net.ipv4.tcp_max_tw_buckets = 8000</div><div class="line">net.ipv4.tcp_tw_reuse = 1</div><div class="line">net.ipv4.tcp_fin_timeout = 10</div></pre></td></tr></table></figure>
+<h2 id="修改打开文件数限制"><a href="#修改打开文件数限制" class="headerlink" title="修改打开文件数限制"></a>修改打开文件数限制</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#查看目录打开文件数</span></div><div class="line"><span class="built_in">ulimit</span> -a</div></pre></td></tr></table></figure>
+<p>修改/etc/security/limits.conf<br>添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">* soft nofile 65535 </div><div class="line">* hard nofile 65535</div></pre></td></tr></table></figure>
+<p>注：<br>soft nofile：单个用户可用的最大进程数量(软限制)<br>hard nofile：单个用户可用的最大进程数量(硬限制)</p>
+<h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><p>关闭iptables、selinux等防火墙软件，使用硬件防火墙代替</p>
+<h1 id="MySQL配置优化"><a href="#MySQL配置优化" class="headerlink" title="MySQL配置优化"></a>MySQL配置优化</h1><p>MySQL查找配置文件的顺序<br>如果在多个位置存在配置文件，后面的会覆盖前面的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/<span class="built_in">local</span>/mysql/bin/mysqld --verbose --<span class="built_in">help</span> | grep -A 1 <span class="string">'Default options'</span></div></pre></td></tr></table></figure>
+<h2 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">#innodb缓冲池大小，推荐配置总内存75%</div><div class="line">innodb_buffer_pool_size=128M</div><div class="line"></div><div class="line">#5.5新增配置，innodb缓冲池个数</div><div class="line">innodb_buffer_pool_instances=4</div><div class="line"></div><div class="line">#innodb log缓冲大小</div><div class="line">innodb_log_buffer_size=4M</div><div class="line"></div><div class="line">#数据库多长时间刷新到磁盘</div><div class="line">#1:每次提交刷新到磁盘,保证事务部丢失；</div><div class="line">#2:每次提交刷新到缓冲区，每一秒钟，把缓冲区刷新到磁盘</div><div class="line">#0:每次提交不刷新，每一秒钟刷新到磁盘</div><div class="line">#为了更好IO性能，推荐2</div><div class="line">innodb_flush_logs_at_trx_commit=2</div></pre></td></tr></table></figure>
+<h1 id="Fragments"><a href="#Fragments" class="headerlink" title="Fragments"></a>Fragments</h1><h2 id="MySQL-4种int类型"><a href="#MySQL-4种int类型" class="headerlink" title="MySQL 4种int类型"></a>MySQL 4种int类型</h2><ul>
+<li>bigint    从 -2^63 (-9223372036854775808) 到 2^63-1 (9223372036854775807) 的整型数据（所有数字）。存储大小为 8 个字节。</li>
+<li>int    从-2^31 (-2,147,483,648) 到 2^31 – 1 (2,147,483,647) 的整型数据（所有数字）。存储大小为 4 个字节</li>
+<li>smallint    从 -2^15 (-32,768) 到 2^15 – 1 (32,767) 的整型数据。存储大小为 2 个字节。</li>
+<li>tinyint    带符号的范围是-128到127。无符号的范围是0到255。存储大小为 1 字节。</li>
+</ul>
+<h2 id="向日期添加指定的时间间隔"><a href="#向日期添加指定的时间间隔" class="headerlink" title="向日期添加指定的时间间隔"></a>向日期添加指定的时间间隔</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">select</span> <span class="keyword">date_add</span>(<span class="keyword">now</span>(), <span class="built_in">interval</span> <span class="number">1</span> <span class="keyword">day</span>); <span class="comment">--加1天</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">date_add</span>(<span class="keyword">now</span>(), <span class="built_in">interval</span> <span class="number">1</span> <span class="keyword">hour</span>); <span class="comment">--加1小时</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">date_add</span>(<span class="keyword">now</span>(), <span class="built_in">interval</span> <span class="number">1</span> <span class="keyword">minute</span>); <span class="comment">--加1分钟</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">date_add</span>(<span class="keyword">now</span>(), <span class="built_in">interval</span> <span class="number">1</span> <span class="keyword">second</span>); <span class="comment">--加1秒</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">date_add</span>(<span class="keyword">now</span>(), <span class="built_in">interval</span> <span class="number">1</span> <span class="keyword">microsecond</span>); <span class="comment">--加1毫秒</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">date_add</span>(<span class="keyword">now</span>(), <span class="built_in">interval</span> <span class="number">1</span> <span class="keyword">week</span>); <span class="comment">--加1周</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">date_add</span>(<span class="keyword">now</span>(), <span class="built_in">interval</span> <span class="number">1</span> <span class="keyword">month</span>); <span class="comment">--加1月</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">date_add</span>(<span class="keyword">now</span>(), <span class="built_in">interval</span> <span class="number">1</span> <span class="keyword">quarter</span>); <span class="comment">--加1季</span></div><div class="line"><span class="keyword">select</span> <span class="keyword">date_add</span>(<span class="keyword">now</span>(), <span class="built_in">interval</span> <span class="number">1</span> <span class="keyword">year</span>); <span class="comment">--加1年</span></div><div class="line"></div><div class="line"><span class="keyword">select</span> <span class="keyword">date_add</span>(<span class="keyword">now</span>(), <span class="built_in">interval</span> <span class="number">-1</span> <span class="keyword">year</span>); <span class="comment">--减1年</span></div></pre></td></tr></table></figure>
+<h2 id="同一张表，两个TIMESTAMP字段，表创建报错"><a href="#同一张表，两个TIMESTAMP字段，表创建报错" class="headerlink" title="同一张表，两个TIMESTAMP字段，表创建报错"></a>同一张表，两个TIMESTAMP字段，表创建报错</h2><p>MySQL5.6可以创建多个timestamps字段（未验证）<br><a href="http://stackoverflow.com/questions/4851672/one-mysql-table-with-multiple-timestamp-columns" target="_blank" rel="external">http://stackoverflow.com/questions/4851672/one-mysql-table-with-multiple-timestamp-columns</a><br>With MySQL 5.6.5 multiple timestamps can be independently controlled in one table so the rules for this have changed.</p>
+<p>MySQL5.7.11，无法创建两个timestamps字段<br>In addition, you can initialize or update any TIMESTAMP column to the current date and time by assigning it a NULL value, unless it has been defined with the NULL attribute to permit NULL values.</p>
+<h1 id="数据库事务"><a href="#数据库事务" class="headerlink" title="数据库事务"></a>数据库事务</h1><p>数据库事务具备ACID特征</p>
+<ul>
+<li>原子性</li>
+<li>一致性</li>
+<li>隔离性</li>
+<li>持久性</li>
+</ul>
+<h1 id="Innodb中的事务隔离级别和锁"><a href="#Innodb中的事务隔离级别和锁" class="headerlink" title="Innodb中的事务隔离级别和锁"></a>Innodb中的事务隔离级别和锁</h1><p>InnoDB存储引擎既支持行级锁（row-level locking），也支持表级锁，但默认情况下是采用行级锁。</p>
+<blockquote>
+<p>数据库为了维护这些性质，尤其是一致性和隔离性，一般使用加锁这种方式。</p>
+</blockquote>
+<h2 id="两段锁"><a href="#两段锁" class="headerlink" title="两段锁"></a>两段锁</h2><p>数据库遵循的是两段锁协议，将事务分成两个阶段，<code>加锁阶段</code>和<code>解锁阶段</code>（所以叫两段锁）。<br>加锁阶段：在该阶段可以进行加锁操作。<br>在对任何数据进行读操作之前要申请并获得S锁（共享锁，其它事务可以继续加共享锁，但不能加排它锁）;<br>在进行写操作之前要申请并获得X锁（排它锁，其它事务不能再获得任何锁）。<br>加锁不成功，则事务进入等待状态，直到加锁成功才继续执行。<br>解锁阶段：当事务释放了一个封锁以后，事务进入解锁阶段，在该阶段只能进行解锁操作不能再进行加锁操作。</p>
+<table>
+<thead>
+<tr>
+<th>事务</th>
+<th>加锁/解锁处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>begin;</td>
+<td></td>
+</tr>
+<tr>
+<td>insert into test …..</td>
+<td>加insert对应的锁</td>
+</tr>
+<tr>
+<td>update test set…</td>
+<td>加update对应的锁</td>
+</tr>
+<tr>
+<td>delete from test ….</td>
+<td>加delete对应的锁</td>
+</tr>
+<tr>
+<td>commit;</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>两段锁协议可以保证事务的并发调度是串行化的。</p>
+<h2 id="事务的四种隔离级别"><a href="#事务的四种隔离级别" class="headerlink" title="事务的四种隔离级别"></a>事务的四种隔离级别</h2><p>效保证并发读取数据的正确性，提出的事务隔离级别。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">-- 查看当前会话隔离级别</span></div><div class="line"><span class="keyword">select</span> @@tx_isolation;</div><div class="line"></div><div class="line"><span class="comment">-- 查看系统当前隔离级别</span></div><div class="line"><span class="keyword">select</span> @@global.tx_isolation;</div><div class="line"></div><div class="line"><span class="comment">-- 设置当前会话隔离级别</span></div><div class="line"><span class="keyword">set</span> <span class="keyword">session</span> <span class="keyword">transaction</span> isolatin <span class="keyword">level</span> repeatable <span class="keyword">read</span>;</div><div class="line"><span class="comment">-- 设置系统当前隔离级别</span></div><div class="line"><span class="keyword">set</span> <span class="keyword">global</span> <span class="keyword">transaction</span> <span class="keyword">isolation</span> <span class="keyword">level</span> repeatable <span class="keyword">read</span>;</div></pre></td></tr></table></figure>
+<h2 id="悲观锁"><a href="#悲观锁" class="headerlink" title="悲观锁"></a>悲观锁</h2><p>SELECT … LOCK IN SHARE MODE</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> <span class="keyword">parent</span> <span class="keyword">WHERE</span> <span class="keyword">NAME</span> = <span class="string">'Jones'</span> <span class="keyword">LOCK</span> <span class="keyword">IN</span> <span class="keyword">SHARE</span> <span class="keyword">MODE</span>;</div></pre></td></tr></table></figure>
+<p>SELECT … FOR UPDATE</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> counter_field <span class="keyword">FROM</span> child_codes <span class="keyword">FOR</span> <span class="keyword">UPDATE</span>;</div><div class="line"><span class="keyword">UPDATE</span> child_codes <span class="keyword">SET</span> counter_field = counter_field + <span class="number">1</span>;</div></pre></td></tr></table></figure>
+<h1 id="字段类型"><a href="#字段类型" class="headerlink" title="字段类型"></a>字段类型</h1><h2 id="tinyint"><a href="#tinyint" class="headerlink" title="tinyint"></a>tinyint</h2><p>tinyint存储只是用一个字节,就是8位,只能存储2^8个数字,也就是256个数字,<br>在mysql实现中,有符号是-128-127,无符号是0-255</p>
+<p>tinyint后面的括号带的数字,以后称之为M,<br>和存贮的值没有任何关系,只是在某些情况下和显示的宽度有关系</p>
+<p>M其实没用,tinyint默认是4,其余的也有默认值,以后程序开发中,<br>涉及整形数字的M时,可以不必纠结,直接忽略,最后使用数据库默认的M值即可</p>
+<h1 id="ICP"><a href="#ICP" class="headerlink" title="ICP"></a>ICP</h1><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">set</span> @@optimizer_switch = <span class="string">"index_condition_pushdown=on"</span></div><div class="line"></div><div class="line"><span class="keyword">set</span> @@optimizer_switch = <span class="string">"index_condition_pushdown=off"</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/04/cpp/" rel="next" title="C++">
+                <i class="fa fa-chevron-left"></i> C++
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/07/js-note/" rel="prev" title="JavaScript Note">
+                JavaScript Note <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#版本"><span class="nav-number">1.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优化目的"><span class="nav-number">2.</span> <span class="nav-text">优化目的</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#避免出现页面错误"><span class="nav-number">2.1.</span> <span class="nav-text">避免出现页面错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增加数据库稳定性"><span class="nav-number">2.2.</span> <span class="nav-text">增加数据库稳定性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化用户体验"><span class="nav-number">2.3.</span> <span class="nav-text">优化用户体验</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优化途径"><span class="nav-number">3.</span> <span class="nav-text">优化途径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL及索引"><span class="nav-number">4.</span> <span class="nav-text">SQL及索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#发现有问题SQL"><span class="nav-number">4.1.</span> <span class="nav-text">发现有问题SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开启慢查询日志"><span class="nav-number">4.1.1.</span> <span class="nav-text">开启慢查询日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志内容"><span class="nav-number">4.1.2.</span> <span class="nav-text">日志内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#慢查询日志分析工具"><span class="nav-number">4.1.3.</span> <span class="nav-text">慢查询日志分析工具</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#mysqldumpslow"><span class="nav-number">4.1.3.1.</span> <span class="nav-text">mysqldumpslow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pt-query-digest"><span class="nav-number">4.1.3.2.</span> <span class="nav-text">pt-query-digest</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过慢查询日志发现有问题的SQL"><span class="nav-number">4.1.4.</span> <span class="nav-text">通过慢查询日志发现有问题的SQL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查询次数多且占用时间长的SQL"><span class="nav-number">4.1.4.1.</span> <span class="nav-text">查询次数多且占用时间长的SQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IO大的SQL"><span class="nav-number">4.1.4.2.</span> <span class="nav-text">IO大的SQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#未命中索引的SQL"><span class="nav-number">4.1.4.3.</span> <span class="nav-text">未命中索引的SQL</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析SQL和优化"><span class="nav-number">5.</span> <span class="nav-text">分析SQL和优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SQL语句优化"><span class="nav-number">6.</span> <span class="nav-text">SQL语句优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优化Count-和-Max"><span class="nav-number">6.1.</span> <span class="nav-text">优化Count() 和 Max()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子查询优化"><span class="nav-number">6.2.</span> <span class="nav-text">子查询优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化limit"><span class="nav-number">6.3.</span> <span class="nav-text">优化limit</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引优化"><span class="nav-number">7.</span> <span class="nav-text">索引优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#联合索引优化"><span class="nav-number">7.1.</span> <span class="nav-text">联合索引优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重复及冗余索引"><span class="nav-number">7.2.</span> <span class="nav-text">重复及冗余索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用工具分析重复和冗余索引"><span class="nav-number">7.2.1.</span> <span class="nav-text">使用工具分析重复和冗余索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除不用的索引"><span class="nav-number">7.2.2.</span> <span class="nav-text">删除不用的索引</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#表结构优化"><span class="nav-number">8.</span> <span class="nav-text">表结构优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用int存储时间"><span class="nav-number">8.1.</span> <span class="nav-text">使用int存储时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ip地址存储"><span class="nav-number">8.2.</span> <span class="nav-text">ip地址存储</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#范式化"><span class="nav-number">9.</span> <span class="nav-text">范式化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#反范式化"><span class="nav-number">10.</span> <span class="nav-text">反范式化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#表垂直拆分"><span class="nav-number">11.</span> <span class="nav-text">表垂直拆分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#水平拆分"><span class="nav-number">12.</span> <span class="nav-text">水平拆分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统配置优化"><span class="nav-number">13.</span> <span class="nav-text">系统配置优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络方面配置"><span class="nav-number">13.1.</span> <span class="nav-text">网络方面配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改打开文件数限制"><span class="nav-number">13.2.</span> <span class="nav-text">修改打开文件数限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭防火墙"><span class="nav-number">13.3.</span> <span class="nav-text">关闭防火墙</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL配置优化"><span class="nav-number">14.</span> <span class="nav-text">MySQL配置优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用参数"><span class="nav-number">14.1.</span> <span class="nav-text">常用参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fragments"><span class="nav-number">15.</span> <span class="nav-text">Fragments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-4种int类型"><span class="nav-number">15.1.</span> <span class="nav-text">MySQL 4种int类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#向日期添加指定的时间间隔"><span class="nav-number">15.2.</span> <span class="nav-text">向日期添加指定的时间间隔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同一张表，两个TIMESTAMP字段，表创建报错"><span class="nav-number">15.3.</span> <span class="nav-text">同一张表，两个TIMESTAMP字段，表创建报错</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据库事务"><span class="nav-number">16.</span> <span class="nav-text">数据库事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Innodb中的事务隔离级别和锁"><span class="nav-number">17.</span> <span class="nav-text">Innodb中的事务隔离级别和锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#两段锁"><span class="nav-number">17.1.</span> <span class="nav-text">两段锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务的四种隔离级别"><span class="nav-number">17.2.</span> <span class="nav-text">事务的四种隔离级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#悲观锁"><span class="nav-number">17.3.</span> <span class="nav-text">悲观锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字段类型"><span class="nav-number">18.</span> <span class="nav-text">字段类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tinyint"><span class="nav-number">18.1.</span> <span class="nav-text">tinyint</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ICP"><span class="nav-number">19.</span> <span class="nav-text">ICP</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

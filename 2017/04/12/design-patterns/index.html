@@ -1,0 +1,869 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Java 设计模式">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Design Patterns">
+<meta property="og:url" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="Java 设计模式">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/StrategyPattern.png">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/Observer.png">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/decorate.png">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/adapterPattern.png">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/facadePattern.png">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/templateMethod.png">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/StatePattern.png">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/proxyPattern.png">
+<meta property="og:updated_time" content="2017-09-03T12:01:45.989Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Design Patterns">
+<meta name="twitter:description" content="Java 设计模式">
+<meta name="twitter:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/StrategyPattern.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> Design Patterns | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Design Patterns
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-12T14:10:32+08:00" content="2017-04-12">
+              2017-04-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Java 设计模式<br><a id="more"></a></p>
+<h1 id="面向对象设计原则"><a href="#面向对象设计原则" class="headerlink" title="面向对象设计原则"></a>面向对象设计原则</h1><h2 id="单一职责原则"><a href="#单一职责原则" class="headerlink" title="单一职责原则"></a>单一职责原则</h2><p>类的职责要单一，不能将大多的职责放在一个类中。</p>
+<h2 id="开闭原则"><a href="#开闭原则" class="headerlink" title="开闭原则"></a>开闭原则</h2><p>软件实体对扩展是开放的，但对修改是关闭的。<br>即在不修改软件实体的基础上去扩展其功能。</p>
+<h2 id="里氏替换原则"><a href="#里氏替换原则" class="headerlink" title="里氏替换原则"></a>里氏替换原则</h2><p>在软件系统中，一个可以接受基类对象的地方，必然可以接受一个子类对象。</p>
+<h2 id="依赖倒转原则"><a href="#依赖倒转原则" class="headerlink" title="依赖倒转原则"></a>依赖倒转原则</h2><p>要针对抽象层编程，而不要针对具体类编程。</p>
+<h2 id="接口隔离原则"><a href="#接口隔离原则" class="headerlink" title="接口隔离原则"></a>接口隔离原则</h2><p>使用多个专门的接口来取代一个统一的接口。</p>
+<h2 id="合成复用原则"><a href="#合成复用原则" class="headerlink" title="合成复用原则"></a>合成复用原则</h2><p>在系统中应该尽量多使用组合和聚合关系，尽量少使用甚至不适用继承关系。</p>
+<h2 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a>迪米特法则</h2><p>一个软件实体对其他实体的引用越少越好，<br>或者说如果两个类不必彼此直接通信，<br>那么这两个类就不应当发生直接的相互作用，<br>而是通过引入一个第三者发生间接交互。</p>
+<h1 id="策略模式（Strategy-Pattern）"><a href="#策略模式（Strategy-Pattern）" class="headerlink" title="策略模式（Strategy Pattern）"></a>策略模式（Strategy Pattern）</h1><p>定义了算法族，分别封装起来，让他们之间可以相互替换，<br>此模式让算法的变化独立于使用算法的客户。</p>
+<img src="/2017/04/12/design-patterns/StrategyPattern.png" alt="StrategyPattern.png" title="">
+<h1 id="观察则模式"><a href="#观察则模式" class="headerlink" title="观察则模式"></a>观察则模式</h1><img src="/2017/04/12/design-patterns/Observer.png" alt="Observer.png" title="">
+<p>定义了对象之间的一对多依赖，当对象改变状态时，<br>依赖它的对象会收到通知，并自动更新。</p>
+<p>观察者模式让主题和观察者之间松耦合。</p>
+<p>使用场景（购票为核心业务）：</p>
+<ul>
+<li>购票后记录文本日志</li>
+<li>购票后记录数据库日志</li>
+<li>购票后发送短信</li>
+<li>购票送抵扣卷、兑换卷、积分</li>
+<li>其他各类活动等</li>
+</ul>
+<p>HeadFirst示例：气象站布告板</p>
+<p>Guava EventBus 观察者模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.google.common.eventbus.DeadEvent;</div><div class="line"><span class="keyword">import</span> com.google.common.eventbus.EventBus;</div><div class="line"><span class="keyword">import</span> com.google.common.eventbus.Subscribe;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObserverExample</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Logger log = LoggerFactory.getLogger(ObserverExample.class);</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">EventMessage</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> msgcode;</div><div class="line">        <span class="keyword">final</span> String msg;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">EventMessage</span><span class="params">(<span class="keyword">int</span> msgcode, String msg)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.msgcode = msgcode;</div><div class="line">            <span class="keyword">this</span>.msg = msg;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">"EventMessage [msgcode="</span> + msgcode + <span class="string">", msg="</span> + msg + <span class="string">"]"</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * DeadEvent：死信（没有订阅者关注的事件）对象</div><div class="line">     * EventBus会把所有发布后没有监听者处理的事件包装为DeadEvent</div><div class="line">     * <span class="doctag">@author</span> Sunday</div><div class="line">     *</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DeadEventsSubscriver</span> </span>&#123;</div><div class="line">        <span class="comment">//使用注解注册事件处理器</span></div><div class="line">        <span class="meta">@Subscribe</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDeadEvent</span><span class="params">(DeadEvent deadEvent)</span> </span>&#123;</div><div class="line">            log.error(<span class="string">"DEAD EVENT: &#123;&#125;"</span>, deadEvent.getEvent());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/**</span></div><div class="line">     * EventBus自动把事件分发给事件超类的监听者</div><div class="line">     * <span class="doctag">@author</span> Sunday</div><div class="line">     *</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">EventMessageSubscriver</span> </span>&#123;</div><div class="line">        <span class="comment">//处理方法必须要明确地声明参数类型——期望的事件类型（或事件的父类型）</span></div><div class="line">        <span class="meta">@Subscribe</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleEventMessageEvent</span><span class="params">(EventMessage eventMessage)</span> </span>&#123;</div><div class="line">            log.error(eventMessage.toString());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">            <span class="keyword">final</span> EventBus eventBus = <span class="keyword">new</span> EventBus(<span class="string">"example-events"</span>);</div><div class="line">            <span class="keyword">final</span> DeadEventsSubscriver deadEventsSubscriver = <span class="keyword">new</span> DeadEventsSubscriver();</div><div class="line">            EventMessageSubscriver eventMessageSubscriver = <span class="keyword">new</span> EventMessageSubscriver();</div><div class="line">            </div><div class="line">            eventBus.register(deadEventsSubscriver);</div><div class="line">            eventBus.register(eventMessageSubscriver);</div><div class="line">            </div><div class="line">            <span class="comment">// published</span></div><div class="line">            eventBus.post(<span class="string">"This is dead event"</span>);</div><div class="line">            eventBus.post(<span class="keyword">new</span> EventMessage(<span class="number">5000</span>, <span class="string">"This message from hoge"</span>));</div><div class="line">            eventBus.post(<span class="keyword">new</span> EventMessage(<span class="number">1000</span>, <span class="string">"This message from fuga"</span>)); </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h1><p>动态地将功能附加到对象上。</p>
+<img src="/2017/04/12/design-patterns/decorate.png" alt="decorate.png" title="">
+<p>使用组合和委托运行时动态扩展行为；</p>
+<p>使用场景：<br>Java I/O、Java线程安全结合包装器、RequestWrapper</p>
+<p>HeadFirst示例：星巴兹咖啡订单系统，包装添加不同调料的咖啡</p>
+<h1 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h1><h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><p>简单工厂模式由一个工厂决定创建出哪一种产品类的实例。</p>
+<h2 id="工厂方法模式"><a href="#工厂方法模式" class="headerlink" title="工厂方法模式"></a>工厂方法模式</h2><p>定义一个创建对象的接口，但由子类决定要实例化的类是哪一个。<br>工厂方法模式让类把实例化推迟到子类。</p>
+<p>工厂类不再负责所有产品的创建，而是将具体创建的工作交给子类。</p>
+<p>加入新产品，只需向系统中加入这个产品及其所对应的工厂类。</p>
+<p>HeadFirst示例：不同地区披萨店</p>
+<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><p>抽象工厂模式可以向客户端提供一个接口，使客户端在不指定产品的具体类型情况下，<br>创建多个产品族中的产品对象。</p>
+<p>提供一个接口，用于创建相关或依赖对象的家族，并不需要明确指定具体类。</p>
+<p>抽象工厂模式可以向客户端提供一个接口，使客户端在不指定产品的具体类型情况下，<br>创建多个产品族中的产品对象。</p>
+<p>使用场景：电脑配件工厂（pc、mac）<br>HeadFirst示例：不同地区披萨原料工厂</p>
+<h1 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h1><p>代码示例，参考《Effective Java》tip-71</p>
+<h1 id="适配器模式与外观模式"><a href="#适配器模式与外观模式" class="headerlink" title="适配器模式与外观模式"></a>适配器模式与外观模式</h1><h2 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h2><p>将一个类的接口，转换成客户期望的另一个接口。<br>适配器让原本接口不兼容的类可以合作无间。</p>
+<img src="/2017/04/12/design-patterns/adapterPattern.png" alt="adapterPattern.png" title="">
+<h2 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h2><p>提供一个统一的接口，用来访问子系统中的一群接口。<br>外观定义了一个高层接口，让子系统更容易使用。</p>
+<img src="/2017/04/12/design-patterns/facadePattern.png" alt="facadePattern.png" title="">
+<blockquote><footer><strong>图片来源</strong><cite><a href="https://sourcemaking.com/design_patterns/facade" target="_blank" rel="external">Facade Design Pattern</a></cite></footer></blockquote>
+<p>外观不只<code>简化</code>了接口，也将客户从组件的子系统中<code>解耦</code>。</p>
+<h1 id="模板方法模式"><a href="#模板方法模式" class="headerlink" title="模板方法模式"></a>模板方法模式</h1><p>在一个方法中定义一个<code>算法的骨架</code>，而将一些步骤延迟到子类中。<br>模板方法使得子类可以在不改变算法结构的情况下，重新定义算法中的某些步骤。</p>
+<img src="/2017/04/12/design-patterns/templateMethod.png" alt="templateMethod.png" title="">
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractClass</span></span>&#123;</div><div class="line">    <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">templateMethod</span><span class="params">()</span></span>&#123;</div><div class="line">        primitiveOperation1();</div><div class="line">        primitiveOperation2();</div><div class="line">        concreteOperation();</div><div class="line">        hook();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//抽象方法</span></div><div class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">primitiveOperation1</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">primitiveOperation2</span><span class="params">()</span></span>;</div><div class="line">    <span class="comment">//具体方法</span></div><div class="line">    <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">concreteOperation</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//钩子</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">hook</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>模板方法的抽象类可以定义<code>具体方法</code>、<code>抽象方法</code>和<code>钩子</code>。</p>
+<p>钩子可以不做任何事情或只做默认的事情。</p>
+<p>钩子可以让子类实现算法中<code>可选</code>的部分，<br>或让子类对模板中某些即将发生（或刚刚发生）的步骤作出反应。</p>
+<p>使用场景：SpringMVC HandlerMethodAdapter（子类RequestMappingHandlerAdapter）<br>Spring MVC ViewResolver（子类）</p>
+<h1 id="状态模式"><a href="#状态模式" class="headerlink" title="状态模式"></a>状态模式</h1><p>通过<code>改变对象内部状态</code>帮助对象<code>控制行为</code>。</p>
+<img src="/2017/04/12/design-patterns/StatePattern.png" alt="StatePattern.png" title="">
+<p>Context将行为委托给当前状态</p>
+<p>状态模式和策略模式类图一样，区别在于“意图”</p>
+<p>策略模式通常用行为类或算法来<code>配置</code>Content，<br>可作为除继承外的弹性替代方案。</p>
+<p>状态模式允许Context随状态的改变而<code>改变行为</code>，<br>可作为Context中放置很多<code>条件判断</code>的替代方案。</p>
+<blockquote>
+<p>使用抽象类实现状态模式，抽象类中容易添加新方法，<br>不需要打破具体状态实现。</p>
+<p>状态转换放置在状态类中的缺点：状态类之间产生依赖。<br>通过使用Context上的getter方法把依赖减到最小。</p>
+</blockquote>
+<p>使用场景：酒店房间，未预定状态、已预定状态</p>
+<p>HeadFirst示例：糖果机，等待投币、已投币、正在出售、已售罄</p>
+<h1 id="代理模式"><a href="#代理模式" class="headerlink" title="代理模式"></a>代理模式</h1><p>为另一个对象提供一个替身或占位符以控制对这个对象的访问。</p>
+<img src="/2017/04/12/design-patterns/proxyPattern.png" alt="proxyPattern.png" title="">
+<p>应用场景：</p>
+<ul>
+<li>远程代理</li>
+<li>虚拟代理</li>
+<li>保护代理</li>
+</ul>
+<blockquote>
+<p>虚拟代理：作为创建开销大的对象的代表。如：ImageProxy，图片加载完成前输出提示信息，加载完成刷新显示</p>
+</blockquote>
+<p>静态代理：代理类是在编译时就实现好的。代理类是一个实际的 class 文件。<br>动态代理：代理类是在运行时生成的。在<code>运行时动态生成的类字节码</code>，并加载到JVM中。</p>
+<p>1.使用动态代理，动态为接口生成实现类(仅写接口不写实现)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 接口</div><div class="line"> */</div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Subject</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">request</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 代理类的调用处理器</div><div class="line"> */</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProxyHandler</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        <span class="comment">// do something</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicProxyDemo</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="comment">// 1.创建调用处理器对象</span></div><div class="line">        ProxyHandler handler = <span class="keyword">new</span> ProxyHandler(); </div><div class="line">        <span class="comment">// 2.动态生成代理对象</span></div><div class="line">        Subject proxySubject = (Subject) Proxy.newProxyInstance(Subject.class.getClassLoader(),</div><div class="line">                <span class="keyword">new</span> Class[] &#123; Subject.class &#125;, handler); </div><div class="line">        <span class="comment">//3.调用接口方法</span></div><div class="line">        proxySubject.request();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.动态代理保护对象访问</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * 接口</div><div class="line"> */</div><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Subject2</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span></span>;</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Subject2Impl</span> <span class="keyword">implements</span> <span class="title">Subject2</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span> </span>&#123;</div><div class="line">        log();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Overrid</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span> </span>&#123;</div><div class="line">        log();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">()</span></span>&#123;</div><div class="line">        String className = <span class="keyword">this</span>.getClass().getName();</div><div class="line">        String methodName = Thread.currentThread().getStackTrace()[<span class="number">1</span>].getMethodName();</div><div class="line">        System.out.println(className + <span class="string">"."</span> + methodName + <span class="string">"() invoked."</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 代理类的调用处理器</div><div class="line"> */</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProxyHandler2</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> Subject2 subject2;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ProxyHandler2</span><span class="params">(Subject2 subject2)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.subject2 = subject2;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        <span class="comment">// do something</span></div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(method.getName().equals(<span class="string">"method1"</span>))&#123;</div><div class="line">            <span class="keyword">return</span> method.invoke(subject2, args);</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            System.out.println(<span class="string">"You Have No permissions Invoke This Method"</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicProxyDemo2</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Subject2 subject2 = <span class="keyword">new</span> Subject2Impl();</div><div class="line">        <span class="comment">// 1.创建调用处理器对象</span></div><div class="line">        ProxyHandler2 handler2 = <span class="keyword">new</span> ProxyHandler2(subject2); </div><div class="line">        <span class="comment">// 2.动态生成代理对象</span></div><div class="line">        Subject2 proxySubject2 = (Subject2) Proxy.newProxyInstance(Subject2.class.getClassLoader(),</div><div class="line">                <span class="keyword">new</span> Class[] &#123; Subject2.class &#125;, handler2); </div><div class="line">        </div><div class="line">        <span class="comment">//3.调用接口方法</span></div><div class="line">        proxySubject2.method1();</div><div class="line">        </div><div class="line">        proxySubject2.method2();</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>JDK中所要进行动态代理的类必须要实现一个接口，也就是说只能对该类所实现接口中定义的方法进行代理，这在实际编程中具有一定的局限性，而且使用反射的效率也并不是很高。</p>
+<p>CGLIB是一个功能强大，高性能的代码生成包。它为没有实现接口的类提供代理，为JDK的动态代理提供了很好的补充。</p>
+<p>CGLib不能对声明为final的方法进行代理</p>
+<p>CGLib拦截类方法调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"></div><div class="line"><span class="keyword">import</span> net.sf.cglib.proxy.Enhancer;</div><div class="line"><span class="keyword">import</span> net.sf.cglib.proxy.MethodInterceptor;</div><div class="line"><span class="keyword">import</span> net.sf.cglib.proxy.MethodProxy;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TableDAO</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"create() is running !"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">query</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"query() is running !"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"update() is running !"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"delete() is running !"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TableDAOMethodInterceptor</span> <span class="keyword">implements</span> <span class="title">MethodInterceptor</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object obj, Method method, Object[] args, MethodProxy paoxy)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">            System.out.println(<span class="string">"before invoke "</span> + method.getName() + <span class="string">"()"</span>);</div><div class="line">            Object result = paoxy.invokeSuper(obj, args);</div><div class="line">            System.out.println(<span class="string">"after invoke "</span> + method.getName() + <span class="string">"()"</span>);</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="comment">//拦截方法调用</span></div><div class="line">        Enhancer enhancer = <span class="keyword">new</span> Enhancer();</div><div class="line">        enhancer.setSuperclass(TableDAO.class);</div><div class="line">        enhancer.setCallback(<span class="keyword">new</span> TableDAOMethodInterceptor());</div><div class="line"></div><div class="line">        TableDAO tableDAOProxy = (TableDAO) enhancer.create();</div><div class="line"></div><div class="line">        System.out.println(tableDAOProxy.getClass().getName());</div><div class="line">        tableDAOProxy.create();</div><div class="line">        tableDAOProxy.delete();</div><div class="line">        tableDAOProxy.update();</div><div class="line">        tableDAOProxy.query();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>CGLib拦截接口方法调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.lang.reflect.Method;</div><div class="line"></div><div class="line"><span class="keyword">import</span> net.sf.cglib.proxy.Enhancer;</div><div class="line"><span class="keyword">import</span> net.sf.cglib.proxy.MethodInterceptor;</div><div class="line"><span class="keyword">import</span> net.sf.cglib.proxy.MethodProxy;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TableDAO</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">interface</span> <span class="title">DAO</span></span>&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">query</span><span class="params">()</span></span>;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span>;</div><div class="line">        </div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">delete</span><span class="params">()</span></span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TableDAOMethodInterceptor</span> <span class="keyword">implements</span> <span class="title">MethodInterceptor</span> </span>&#123;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">intercept</span><span class="params">(Object obj, Method method, Object[] args, MethodProxy proxy)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">            System.out.println(<span class="string">"before invoke "</span> + method.getName() + <span class="string">"()"</span>);</div><div class="line">            <span class="comment">//Object result = proxy.invokeSuper(obj, args);</span></div><div class="line">            System.out.println(<span class="string">"after invoke "</span> + method.getName() + <span class="string">"()"</span>);</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="comment">//拦截方法调用</span></div><div class="line">        Enhancer enhancer = <span class="keyword">new</span> Enhancer();</div><div class="line">        enhancer.setSuperclass(DAO.class);</div><div class="line">        enhancer.setCallback(<span class="keyword">new</span> TableDAOMethodInterceptor());</div><div class="line"></div><div class="line">        DAO tableDAOProxy = (DAO) enhancer.create();</div><div class="line"></div><div class="line">        <span class="comment">//System.out.println(tableDAOProxy.getClass().getName());</span></div><div class="line">        tableDAOProxy.create();</div><div class="line">        tableDAOProxy.delete();</div><div class="line">        tableDAOProxy.update();</div><div class="line">        tableDAOProxy.query();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>CGLIB原理：动态生成一个要代理类的子类，子类重写要代理的类的所有不是final的方法。<br>在子类中采用方法拦截的技术拦截所有父类方法的调用，顺势织入横切逻辑。<br>它比使用java反射的JDK动态代理要快。</p>
+<p>CGLIB底层：使用字节码处理框架ASM，来转换字节码并生成新的类。</p>
+<p>RMI：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.rmi.Remote;</div><div class="line"><span class="keyword">import</span> java.rmi.RemoteException;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">RMIInterface</span> <span class="keyword">extends</span> <span class="title">Remote</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">helloTo</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException</span>;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.net.MalformedURLException;</div><div class="line"><span class="keyword">import</span> java.rmi.Naming;</div><div class="line"><span class="keyword">import</span> java.rmi.RemoteException;</div><div class="line"><span class="keyword">import</span> java.rmi.registry.LocateRegistry;</div><div class="line"><span class="keyword">import</span> java.rmi.server.UnicastRemoteObject;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerOperation</span> <span class="keyword">extends</span> <span class="title">UnicastRemoteObject</span> <span class="keyword">implements</span> <span class="title">RMIInterface</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">783820609710107386L</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">ServerOperation</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">helloTo</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException</span>&#123;</div><div class="line">        System.out.println(name + <span class="string">" is trying to contact!"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="string">"Server says hello to "</span> + name;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            LocateRegistry.createRegistry (<span class="number">1099</span>);</div><div class="line">            Naming.rebind(<span class="string">"//localhost/MyServer"</span>, <span class="keyword">new</span> ServerOperation());</div><div class="line">        &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.net.MalformedURLException;</div><div class="line"><span class="keyword">import</span> java.rmi.Naming;</div><div class="line"><span class="keyword">import</span> java.rmi.NotBoundException;</div><div class="line"><span class="keyword">import</span> java.rmi.RemoteException;</div><div class="line"><span class="keyword">import</span> java.util.Scanner;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.sunday.rmi_learn.rmi.RMIInterface;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RmiClient</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            RMIInterface look_up = (RMIInterface) Naming.lookup(<span class="string">"rmi://localhost/MyServer"</span>);</div><div class="line">            Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">            <span class="keyword">try</span>&#123;</div><div class="line">                <span class="keyword">if</span>(scanner.hasNext())&#123;</div><div class="line">                    String txt = scanner.nextLine();</div><div class="line">                    String response = look_up.helloTo(txt);</div><div class="line">                    System.out.println(response);</div><div class="line">                &#125;</div><div class="line">            &#125;<span class="keyword">finally</span> &#123;</div><div class="line">                scanner.close();</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="comment">//String txt = JOptionPane.showInputDialog("What is your name?");</span></div><div class="line">            <span class="comment">//JOptionPane.showMessageDialog(null, reponse);</span></div><div class="line">        &#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (NotBoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代理模式与装饰着模式区别：<br>代理模式，使用组合模式；装饰者模式使用组合模式。<br>装饰着为对象增加行为，代理是控制对象的访问。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/23/javase-collection/" rel="next" title="JavaSE集合">
+                <i class="fa fa-chevron-left"></i> JavaSE集合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/12/javase-thinkinjava/" rel="prev" title="Think In Java">
+                Think In Java <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#面向对象设计原则"><span class="nav-number">1.</span> <span class="nav-text">面向对象设计原则</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#单一职责原则"><span class="nav-number">1.1.</span> <span class="nav-text">单一职责原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开闭原则"><span class="nav-number">1.2.</span> <span class="nav-text">开闭原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#里氏替换原则"><span class="nav-number">1.3.</span> <span class="nav-text">里氏替换原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖倒转原则"><span class="nav-number">1.4.</span> <span class="nav-text">依赖倒转原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口隔离原则"><span class="nav-number">1.5.</span> <span class="nav-text">接口隔离原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合成复用原则"><span class="nav-number">1.6.</span> <span class="nav-text">合成复用原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迪米特法则"><span class="nav-number">1.7.</span> <span class="nav-text">迪米特法则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#策略模式（Strategy-Pattern）"><span class="nav-number">2.</span> <span class="nav-text">策略模式（Strategy Pattern）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察则模式"><span class="nav-number">3.</span> <span class="nav-text">观察则模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#装饰者模式"><span class="nav-number">4.</span> <span class="nav-text">装饰者模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#工厂模式"><span class="nav-number">5.</span> <span class="nav-text">工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">5.1.</span> <span class="nav-text">简单工厂模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂方法模式"><span class="nav-number">5.2.</span> <span class="nav-text">工厂方法模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抽象工厂模式"><span class="nav-number">5.3.</span> <span class="nav-text">抽象工厂模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#单例模式"><span class="nav-number">6.</span> <span class="nav-text">单例模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#适配器模式与外观模式"><span class="nav-number">7.</span> <span class="nav-text">适配器模式与外观模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#适配器模式"><span class="nav-number">7.1.</span> <span class="nav-text">适配器模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外观模式"><span class="nav-number">7.2.</span> <span class="nav-text">外观模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模板方法模式"><span class="nav-number">8.</span> <span class="nav-text">模板方法模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态模式"><span class="nav-number">9.</span> <span class="nav-text">状态模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代理模式"><span class="nav-number">10.</span> <span class="nav-text">代理模式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

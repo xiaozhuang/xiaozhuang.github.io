@@ -1,0 +1,866 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Java多线程">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Multithread">
+<meta property="og:url" content="http://xiaozhuang.github.io/2017/02/09/javase-multithread/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="Java多线程">
+<meta property="og:updated_time" content="2017-09-03T12:01:46.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Multithread">
+<meta name="twitter:description" content="Java多线程">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> Java Multithread | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java Multithread
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-09T21:19:49+08:00" content="2017-02-09">
+              2017-02-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Java多线程<br><a id="more"></a></p>
+<h1 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h1><p>在并发编程中，我们通常会遇到以下三个问题：原子性问题，可见性问题，有序性问题。</p>
+<h2 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h2><p>在java中基本类型的大部分读取和写入操作是原子性的,但是long和double除外。<br>在32位操作系统上对64位的数据的读写要分两步完成。<br>jvm将long和double读取和写入当作分离的两次32位操作来执行。<br>使用volatile关键字来防止此类现象。<br>volatile本身不保证获取和设置操作的原子性，仅仅保持修改的可见性。java<code>内存模型</code>保证声明为<code>volatile的long和double变量的get和set操作是原子的</code>。</p>
+<h2 id="volatile-变量特征"><a href="#volatile-变量特征" class="headerlink" title="volatile 变量特征"></a>volatile 变量特征</h2><ul>
+<li>保证此变量对所有线程可见,也就是说一个线程修改了值，其他线程可以立刻得知</li>
+</ul>
+<h2 id="主内存和本地内存"><a href="#主内存和本地内存" class="headerlink" title="主内存和本地内存"></a>主内存和本地内存</h2><p>线程之间的共享变量存储在主内存（main memory）中，每个线程都有一个私有的本地内存（local memory），<br>本地内存中存储了该线程可读/写共享变量的副本。<br>本地内存是JMM的一个抽象概念，并不真实存在。它是寄存器和高速缓存的抽象描述。</p>
+<p>每个线程都有自己的执行空间(即工作内存)，<br>线程执行的时候用到某变量，首先要将变量从主内存拷贝的自己的工作内存，然后对变量进行操作：读取，修改，赋值等，这些均在工作内存完成，<br>操作完成后再将变量写回主内存；</p>
+<h2 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h2><p>在java中，所有实例域、静态域和数组元素存储在堆内存中，堆内存在线程之间共享。</p>
+<h2 id="synchronized关键字"><a href="#synchronized关键字" class="headerlink" title="synchronized关键字"></a>synchronized关键字</h2><p>Synchronized保证了数据<code>读写一致</code>和<code>可见性</code>等<br>synchronized能够<code>防止多个线程同时进入并访问程序的临界区</code></p>
+<h2 id="Lock"><a href="#Lock" class="headerlink" title="Lock"></a>Lock</h2><p>ReentrantLock, ReentrantReadWriteLock.ReadLock, ReentrantReadWriteLock.WriteLock </p>
+<p>实现Lock接口的基本思想<br>实现锁的功能，两个必备元素，一个是表示（锁）状态的变量。<br>另一个是队列，队列中的节点表示因未能获取锁而阻塞的线程。</p>
+<p>Lock接口</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lock()</td>
+<td>获取锁，否则block</td>
+</tr>
+<tr>
+<td>tryLock()</td>
+<td>尝试性地获取锁，不管有没有获取到都马上返回，拿到锁返回true，否则返回false 。</td>
+</tr>
+<tr>
+<td>tryLock(long time, TimeUnit unit)</td>
+<td>如果获取不到锁，就等待一段时间，超时返回false</td>
+</tr>
+<tr>
+<td>lockInterruptibly()</td>
+<td>如果当前线程未被中断，则获取锁</td>
+</tr>
+</tbody>
+</table>
+<p>线程中断</p>
+<ul>
+<li>线程在sleep、wait或者join,调用该线程的 interrupt()方法,此线程会被唤醒并被要求处理InterruptedException</li>
+<li>如果线程处在运行状态，在调用该线程的interrupt()方法时，不会响应该中断</li>
+</ul>
+<h2 id="Lock与synchronized的区别"><a href="#Lock与synchronized的区别" class="headerlink" title="Lock与synchronized的区别"></a>Lock与synchronized的区别</h2><ul>
+<li>Lock的加锁和解锁都是由java代码配合<code>native方法</code>（调用操作系统的相关方法） 实现的，而synchronize的加锁和解锁的过程是由<code>JVM管理</code>的</li>
+<li>当一个线程使用synchronize获取锁时，若锁被其他线程占用着，那么当前线程只能被阻塞，直到成功获取锁。而Lock则提供<code>超时锁</code>和<code>可中断</code>等更加灵活的方式，在未能获取锁的条件下提供一种退出的机制。</li>
+<li>一个锁内部可以有<code>多个Condition实例</code>，即有<code>多路条件队列</code>，而synchronize只有一路条件队列；同样Condition也提供灵活的阻塞方式，在未获得通知之前可以通过中断线程以及设置等待时限等方式退出条件队列。</li>
+<li>synchronize对线程的同步<code>仅提供独占模式</code>，而Lock即可以提供<code>独占模式</code>，也可以提供<code>共享模式</code></li>
+</ul>
+<h2 id="Condition"><a href="#Condition" class="headerlink" title="Condition"></a>Condition</h2><p>Condition实例的内部实际上维护了一个队列，<br>队列中的节点表示由于（某些条件不满足而）线程自身调用await方法阻塞的线程。</p>
+<p>对于await方法，它内部会执行释放锁的操作</p>
+<p>被唤醒后执行，尝试去获取锁，执行到这里时线程已不在条件队列中，而是位于等待（锁的）队列中</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// java.util.concurrent.locks.Condition</span></div><div class="line"><span class="comment">// 造成当前线程在接到信号、被中断或到达指定等待时间之前一直处于等待状态</span></div><div class="line"><span class="comment">// nanosTimeout - 等待的最长时间，以毫微秒为单位</span></div><div class="line"><span class="function"><span class="keyword">long</span> <span class="title">awaitNanos</span><span class="params">(<span class="keyword">long</span> nanosTimeout)</span> <span class="keyword">throws</span> InterruptedException</span>;</div></pre></td></tr></table></figure>
+<h2 id="synchronized和wait-、notify"><a href="#synchronized和wait-、notify" class="headerlink" title="synchronized和wait()、notify()"></a>synchronized和wait()、notify()</h2><p>几乎没有理由再使用wait和notify了。java 1.5提供了更高级的并发工具。<br>java.util.concurrent中更高级的工具分成三类：<code>Executor Fragment</code>、并发集合（<code>Concurrent Collection</code>）、同步器（<code>Synchronizer</code>）</p>
+<p>wait方法必须在同步区域内部调用。<br>应该使用<code>while</code>循环模式调用wait,在等待<code>之前</code>和<code>之后</code>测试条件</p>
+<h2 id="同步器"><a href="#同步器" class="headerlink" title="同步器"></a>同步器</h2><p>CyclicBarrier<br>\ˈsaɪklɪk\ \ˈbæriə(r)\</p>
+<h2 id="AtomicInteger"><a href="#AtomicInteger" class="headerlink" title="AtomicInteger"></a>AtomicInteger</h2><p>AtomicInteger，可以用原子方式更新的 int 值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">AtomicInteger ai = <span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</div><div class="line"><span class="comment">// 以原子方式将给定值与当前值相加</span></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">addAndGet</span><span class="params">(<span class="keyword">int</span> delta)</span></span></div></pre></td></tr></table></figure>
+<h1 id="守护线程-amp-非守护线程"><a href="#守护线程-amp-非守护线程" class="headerlink" title="守护线程&amp;非守护线程"></a>守护线程&amp;非守护线程</h1><p>守护线程：创建线程的父线程结束时，守护线程自动结束<br>非守护线程：即使父线程死亡，非守护线程仍然存活</p>
+<h1 id="Executor-框架"><a href="#Executor-框架" class="headerlink" title="Executor 框架"></a>Executor 框架</h1><p>/ɪgˈzekjətə/<br>在 Java 5之后，通过 Executor 来启动线程比使用 Thread 的 start 方法更好，除了更易管理，效率更好（用线程池实现，节约开销）外，还有关键的一点：有助于避免 this 逃逸问题</p>
+<p>this逃逸指在构造函数返回之前其他线程就持有该对象的引用. 调用尚未构造完全的对象的方法可能引发令人疑惑的错误</p>
+<p>ExecutorService 的 shutdown()方法来平滑地关闭 ExecutorService，调用该方法后，将导致 ExecutorService 停止接受任何新的任务且等待已经提交的任务执行完成</p>
+<p>ExecutorService 的生命周期包括三种状态：运行、关闭、终止</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 四种方法都是用的 Executors 中的 ThreadFactory 建立的线程</span></div><div class="line"></div><div class="line"><span class="comment">//创建固定数目线程的线程池。</span></div><div class="line"><span class="comment">//FixedThreadPool 多数针对一些很稳定很固定的正规并发线程，多用于服务器</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newFixedThreadPool</span><span class="params">(<span class="keyword">int</span> nThreads)</span></span></div><div class="line"></div><div class="line"><span class="comment">//创建一个可缓存的线程池,终止并从缓存中移除那些已有 60 秒钟未被使用的线程</span></div><div class="line"><span class="comment">//缓存型池子通常用于执行一些生存期很短的异步型任务</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span></div><div class="line"></div><div class="line"><span class="comment">//创建一个单个 worker 线程的 Executor,以无界队列方式来运行该线程</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newSingleThreadExecutor</span><span class="params">()</span></div><div class="line"></div><div class="line"><span class="comment">//创建一个支持定时及周期性的任务执行的线程池</span></div><div class="line"><span class="comment">//池子里的线程可以按 schedule 依次 delay 执行，或周期执行</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> ScheduledExecutorService <span class="title">newScheduledThreadPool</span><span class="params">(<span class="keyword">int</span> corePoolSize)</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>一般来说，CachedTheadPool 在程序执行过程中通常会创建与所需数量相同的线程，然后在它回收旧线程时停止创建新线程，因此它是合理的 Executor 的首选，只有当这种方式会引发问题时（比如需要大量长时间面向连接的线程时），才需要考虑用 FixedThreadPool。（摘自《Thinking in Java》第四版）</p>
+<p>如果队列容量已达上限，并且当前大小poolSize没有达到maximumPoolSize，那么就新增线程来处理任务</p>
+</blockquote>
+<h2 id="Runnable接口"><a href="#Runnable接口" class="headerlink" title="Runnable接口"></a>Runnable接口</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.sunday.multithread_demo;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.ScheduledExecutorService;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.sun.org.apache.xml.internal.security.keys.keyresolver.implementations.PrivateKeyResolver;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleThreadPool</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> nThreads = <span class="number">5</span>;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">int</span> corePoolSize = <span class="number">5</span>;</div><div class="line">    </div><div class="line">    <span class="comment">//首次执行延迟</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> initialDelay = <span class="number">2</span>;</div><div class="line">    </div><div class="line">    <span class="comment">//连续执行之间的周期</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> period = <span class="number">5</span>;</div><div class="line">    </div><div class="line">    <span class="comment">//一次执行终止和下一次执行开始之间的延迟</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> delay = <span class="number">5</span>;</div><div class="line">    </div><div class="line">    <span class="comment">//处理工作</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">doWrok</span><span class="params">(ExecutorService executor)</span></span>&#123;</div><div class="line">         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">                Runnable worker = <span class="keyword">new</span> WorkerThread(i);</div><div class="line">                executor.execute(worker);</div><div class="line">              &#125;</div><div class="line">            executor.shutdown();</div><div class="line">            <span class="comment">//关闭后所有任务都已完成，则返回 true </span></div><div class="line">            <span class="keyword">while</span> (!executor.isTerminated()) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    Thread.sleep(<span class="number">1000</span>);</div><div class="line">                    System.out.println(<span class="string">"wait..."</span>);</div><div class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                    e.printStackTrace();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            System.out.println(<span class="string">"Finished all threads"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">//固定线程数的线程池</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">fixed</span><span class="params">()</span></span>&#123;</div><div class="line">        ExecutorService executor = Executors.newFixedThreadPool(nThreads);</div><div class="line">        doWrok(executor);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment">//根据需要创建新线程的可缓存线程池</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">cached</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//根据需要创建新线程的线程池</span></div><div class="line">        ExecutorService executor = Executors.newCachedThreadPool();</div><div class="line">        doWrok(executor);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment">//单个 worker 线程的 Executor</span></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">single</span><span class="params">()</span></span>&#123;</div><div class="line">        ExecutorService executor = Executors.newSingleThreadExecutor();</div><div class="line">        doWrok(executor);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">scheduled</span><span class="params">()</span></span>&#123;        </div><div class="line">        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(corePoolSize);</div><div class="line">        </div><div class="line">        <span class="comment">//创建并执行在给定延迟后启用的一次性操作</span></div><div class="line">        <span class="comment">//scheduler.schedule(new WorkerThread(), initialDelay, TimeUnit.SECONDS);</span></div><div class="line">        <span class="comment">//scheduler.shutdown();</span></div><div class="line">        </div><div class="line">        <span class="comment">//固定速率</span></div><div class="line">        scheduler.scheduleAtFixedRate(<span class="keyword">new</span> WorkerThread(), initialDelay, period, TimeUnit.SECONDS);</div><div class="line">        </div><div class="line">        <span class="comment">//固定延迟</span></div><div class="line">        scheduler.scheduleWithFixedDelay(<span class="keyword">new</span> WorkerThread(), initialDelay, delay, TimeUnit.SECONDS);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line"><span class="comment">//      fixed();</span></div><div class="line">        </div><div class="line"><span class="comment">//      cached();</span></div><div class="line">        </div><div class="line">        </div><div class="line">        single();</div><div class="line">        </div><div class="line"><span class="comment">//      scheduled();</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WorkerThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</div><div class="line">      </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> command;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WorkerThread</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.command = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WorkerThread</span><span class="params">(<span class="keyword">int</span> s)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.command = s;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">" Start. Command = "</span>+(command++));</div><div class="line">        processCommand();</div><div class="line">        System.out.println(Thread.currentThread().getName()+<span class="string">" End."</span>); </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">processCommand</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(<span class="number">5000</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.command + <span class="string">""</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a href="/2017/02/09/javase-multithread/SimpleThreadPool.java" title="SimpleThreadPool.java">SimpleThreadPool.java</a>
+<h2 id="Callable-接口"><a href="#Callable-接口" class="headerlink" title="Callable 接口"></a>Callable 接口</h2><p>在 Java 5 之后，任务分两类：一类是实现了 Runnable 接口的类，一类是实现了 Callable 接口的类。两者都可以被 ExecutorService 执行，但是 Runnable 任务没有返回值，而 Callable 任务有返回值</p>
+<p>当将一个 Callable 的对象传递给 ExecutorService 的 submit 方法，则该 call 方法自动在一个线程上执行，并且会返回执行结果 Future 对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.sunday.multithread_demo;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.Callable;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.ExecutionException; </div><div class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.Future;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CallableDemo</span></span>&#123;   </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] ar,gs)</span></span>&#123;   </div><div class="line">        ExecutorService executorService = Executors.newCachedThreadPool();   </div><div class="line">        List&lt;Future&lt;String&gt;&gt; resultList = <span class="keyword">new</span> ArrayList&lt;Future&lt;String&gt;&gt;();   </div><div class="line"></div><div class="line">        <span class="comment">//创建10个任务并执行   </span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)&#123;   </div><div class="line">            <span class="comment">//使用ExecutorService执行Callable类型的任务，并将结果保存在future变量中   </span></div><div class="line">            Future&lt;String&gt; future = executorService.submit(<span class="keyword">new</span> TaskWithResult(i));</div><div class="line">            <span class="comment">//将任务执行结果存储到List中   </span></div><div class="line">            resultList.add(future);   </div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">//启动一次顺序关闭，执行以前提交的任务，但不接受新任务  </span></div><div class="line">        executorService.shutdown();   </div><div class="line"></div><div class="line">        <span class="comment">//遍历任务的结果   </span></div><div class="line">        <span class="keyword">for</span> (Future&lt;String&gt; fs : resultList)&#123;   </div><div class="line">                <span class="keyword">try</span>&#123;</div><div class="line">                    System.out.println(fs.get());     <span class="comment">//打印各个线程（任务）执行的结果  </span></div><div class="line">                &#125;<span class="keyword">catch</span>(InterruptedException e)&#123;   </div><div class="line">                    e.printStackTrace();   </div><div class="line">                &#125;<span class="keyword">catch</span>(ExecutionException e)&#123;   </div><div class="line">                    e.printStackTrace();   </div><div class="line">                &#125; </div><div class="line">        &#125;   </div><div class="line">    &#125;   </div><div class="line">&#125;   </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TaskWithResult</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">String</span>&gt;</span>&#123;   </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;   </div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TaskWithResult</span><span class="params">(<span class="keyword">int</span> id)</span></span>&#123;   </div><div class="line">        <span class="keyword">this</span>.id = id;   </div><div class="line">    &#125;   </div><div class="line"></div><div class="line">    <span class="comment">/**  </span></div><div class="line">     * 任务的具体过程，一旦任务传给ExecutorService的submit方法， </div><div class="line">     * 则该方法自动在一个线程上执行 </div><div class="line">     */   </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;  </div><div class="line">        System.out.println(<span class="string">"call()方法被自动调用！！！    "</span> + Thread.currentThread().getName());   </div><div class="line">        <span class="comment">//该返回结果将被Future的get方法得到  </span></div><div class="line">        <span class="keyword">return</span> <span class="string">"call()方法被自动调用，任务返回的结果是："</span> + id + <span class="string">"    "</span> + Thread.currentThread().getName();   </div><div class="line">    &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果Future的返回尚未完成，则get()方法会阻塞等待，直到Future完成返回，可以通过调用 isDone()方法判断 Future 是否完成了返回</p>
+<h1 id="伪共享"><a href="#伪共享" class="headerlink" title="伪共享"></a>伪共享</h1><blockquote>
+<p>参考文档：<a href="http://tech.meituan.com/disruptor.html" title="高性能队列——Disruptor" target="_blank" rel="external">高性能队列——Disruptor</a></p>
+</blockquote>
+<h2 id="CPU缓存行"><a href="#CPU缓存行" class="headerlink" title="CPU缓存行"></a>CPU缓存行</h2><p>Cache是由很多个cache line组成的。每个cache line通常是64字节，并且它有效地引用主内存中的一块儿地址。<br>CPU每次从主存中拉取数据时，会把相邻的数据也存入同一个cache line。</p>
+<p>一个Java的long类型变量是8字节，因此在一个缓存行中可以存8个long类型的变量。<br>在访问一个long数组的时候，如果数组中的一个值被加载到缓存中，它会自动加载另外7个。因此可以非常快的遍历这个数组。<br>事实上，你可以非常快速的遍历在连续内存块中分配的任意数据结构。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 测试利用cache line的特性和不利用cache line的特性的效果对比</span></div><div class="line"><span class="keyword">package</span> com.meituan.FalseSharing;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * <span class="doctag">@author</span> gongming</div><div class="line"> * <span class="doctag">@description</span></div><div class="line"> * <span class="doctag">@date</span> 16/6/4</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CacheLineEffect</span> </span>&#123;</div><div class="line">    <span class="comment">//考虑一般缓存行大小是64字节，一个 long 类型占8字节</span></div><div class="line">    <span class="keyword">static</span>  <span class="keyword">long</span>[][] arr;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        arr = <span class="keyword">new</span> <span class="keyword">long</span>[<span class="number">1024</span> * <span class="number">1024</span>][];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1024</span> * <span class="number">1024</span>; i++) &#123;</div><div class="line">            arr[i] = <span class="keyword">new</span> <span class="keyword">long</span>[<span class="number">8</span>];</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">8</span>; j++) &#123;</div><div class="line">                arr[i][j] = <span class="number">0L</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">long</span> sum = <span class="number">0L</span>;</div><div class="line">        <span class="keyword">long</span> marked = System.currentTimeMillis();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1024</span> * <span class="number">1024</span>; i+=<span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j =<span class="number">0</span>; j&lt; <span class="number">8</span>;j++)&#123;</div><div class="line">                sum = arr[i][j];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        System.out.println(<span class="string">"Loop times:"</span> + (System.currentTimeMillis() - marked) + <span class="string">"ms"</span>);</div><div class="line"></div><div class="line">        marked = System.currentTimeMillis();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i+=<span class="number">1</span>) &#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j =<span class="number">0</span>; j&lt; <span class="number">1024</span> * <span class="number">1024</span>;j++)&#123;</div><div class="line">                sum = arr[j][i];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        System.out.println(<span class="string">"Loop times:"</span> + (System.currentTimeMillis() - marked) + <span class="string">"ms"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>在2G Hz、2核、8G内存的运行环境中测试，速度差一倍。<br>结果：<br>Loop times:30ms<br>Loop times:65ms</p>
+</blockquote>
+<h2 id="什么是伪共享"><a href="#什么是伪共享" class="headerlink" title="什么是伪共享"></a>什么是伪共享</h2><p>ArrayBlockingQueue有三个成员变量：</p>
+<ul>
+<li>takeIndex：需要被取走的元素下标</li>
+<li>putIndex：可被元素插入的位置的下标</li>
+<li>count：队列中元素的数量</li>
+</ul>
+<p>这三个变量很容易放到一个缓存行中，但是之间修改没有太多的关联。所以每次修改，都会使之前缓存的数据失效，从而不能完全达到共享的效果。</p>
+
+<p>如上图所示，当生产者线程put一个元素到ArrayBlockingQueue时，putIndex会修改，从而导致消费者线程的缓存中的缓存行无效，需要从主存中重新读取。</p>
+<p>这种无法充分使用缓存行特性的现象，称为伪共享。</p>
+<p>对于伪共享，一般的解决方案是，增大数组元素的间隔使得由不同线程存取的元素位于不同的缓存行上，以空间换时间。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.meituan.FalseSharing;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FalseSharing</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>&#123;</div><div class="line">        <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="keyword">long</span> ITERATIONS = <span class="number">500L</span> * <span class="number">1000L</span> * <span class="number">100L</span>;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">int</span> arrayIndex = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="keyword">private</span> <span class="keyword">static</span> ValuePadding[] longs;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">FalseSharing</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> arrayIndex)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.arrayIndex = arrayIndex;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(<span class="keyword">final</span> String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;<span class="number">10</span>;i++)&#123;</div><div class="line">                System.gc();</div><div class="line">                <span class="keyword">final</span> <span class="keyword">long</span> start = System.currentTimeMillis();</div><div class="line">                runTest(i);</div><div class="line">                System.out.println(<span class="string">"Thread num "</span>+i+<span class="string">" duration = "</span> + (System.currentTimeMillis() - start));</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">runTest</span><span class="params">(<span class="keyword">int</span> NUM_THREADS)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</div><div class="line">            Thread[] threads = <span class="keyword">new</span> Thread[NUM_THREADS];</div><div class="line">            longs = <span class="keyword">new</span> ValuePadding[NUM_THREADS];</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; longs.length; i++) &#123;</div><div class="line">                longs[i] = <span class="keyword">new</span> ValuePadding();</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; threads.length; i++) &#123;</div><div class="line">                threads[i] = <span class="keyword">new</span> Thread(<span class="keyword">new</span> FalseSharing(i));</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">for</span> (Thread t : threads) &#123;</div><div class="line">                t.start();</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">for</span> (Thread t : threads) &#123;</div><div class="line">                t.join();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">long</span> i = ITERATIONS + <span class="number">1</span>;</div><div class="line">            <span class="keyword">while</span> (<span class="number">0</span> != --i) &#123;</div><div class="line">                longs[arrayIndex].value = <span class="number">0L</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ValuePadding</span> </span>&#123;</div><div class="line">            <span class="keyword">protected</span> <span class="keyword">long</span> p1, p2, p3, p4, p5, p6, p7;</div><div class="line">            <span class="keyword">protected</span> <span class="keyword">volatile</span> <span class="keyword">long</span> value = <span class="number">0L</span>;</div><div class="line">            <span class="keyword">protected</span> <span class="keyword">long</span> p9, p10, p11, p12, p13, p14;</div><div class="line">            <span class="keyword">protected</span> <span class="keyword">long</span> p15;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ValueNoPadding</span> </span>&#123;</div><div class="line">            <span class="comment">// protected long p1, p2, p3, p4, p5, p6, p7;</span></div><div class="line">            <span class="keyword">protected</span> <span class="keyword">volatile</span> <span class="keyword">long</span> value = <span class="number">0L</span>;</div><div class="line">            <span class="comment">// protected long p9, p10, p11, p12, p13, p14, p15;</span></div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在2G Hz，2核，8G内存, jdk 1.7.0_45 的运行环境下，使用了共享机制比没有使用共享机制，速度快了4倍左右。</p>
+<p>结果：<br>Thread num 1 duration = 447<br>Thread num 2 duration = 463<br>Thread num 3 duration = 454<br>Thread num 4 duration = 464<br>Thread num 5 duration = 561<br>Thread num 6 duration = 606<br>Thread num 7 duration = 684<br>Thread num 8 duration = 870<br>Thread num 9 duration = 823</p>
+<p>把代码中ValuePadding都替换为ValueNoPadding后的结果：<br>Thread num 1 duration = 446<br>Thread num 2 duration = 2549<br>Thread num 3 duration = 2898<br>Thread num 4 duration = 3931<br>Thread num 5 duration = 4716<br>Thread num 6 duration = 5424<br>Thread num 7 duration = 4868<br>Thread num 8 duration = 4595<br>Thread num 9 duration = 4540</p>
+<p>备注：在jdk1.8中，有专门的注解@Contended来避免伪共享，更优雅地解决问题。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/15/SoftwareEngineering/" rel="next" title="SoftwareEngineering">
+                <i class="fa fa-chevron-left"></i> SoftwareEngineering
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/27/javaee-thymeleaf/" rel="prev" title="JavaEE Thymeleaf">
+                JavaEE Thymeleaf <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#多线程"><span class="nav-number">1.</span> <span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#原子性"><span class="nav-number">1.1.</span> <span class="nav-text">原子性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile-变量特征"><span class="nav-number">1.2.</span> <span class="nav-text">volatile 变量特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主内存和本地内存"><span class="nav-number">1.3.</span> <span class="nav-text">主内存和本地内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java内存模型"><span class="nav-number">1.4.</span> <span class="nav-text">Java内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized关键字"><span class="nav-number">1.5.</span> <span class="nav-text">synchronized关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lock"><span class="nav-number">1.6.</span> <span class="nav-text">Lock</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lock与synchronized的区别"><span class="nav-number">1.7.</span> <span class="nav-text">Lock与synchronized的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Condition"><span class="nav-number">1.8.</span> <span class="nav-text">Condition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized和wait-、notify"><span class="nav-number">1.9.</span> <span class="nav-text">synchronized和wait()、notify()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同步器"><span class="nav-number">1.10.</span> <span class="nav-text">同步器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AtomicInteger"><span class="nav-number">1.11.</span> <span class="nav-text">AtomicInteger</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#守护线程-amp-非守护线程"><span class="nav-number">2.</span> <span class="nav-text">守护线程&非守护线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Executor-框架"><span class="nav-number">3.</span> <span class="nav-text">Executor 框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Runnable接口"><span class="nav-number">3.1.</span> <span class="nav-text">Runnable接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Callable-接口"><span class="nav-number">3.2.</span> <span class="nav-text">Callable 接口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#伪共享"><span class="nav-number">4.</span> <span class="nav-text">伪共享</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU缓存行"><span class="nav-number">4.1.</span> <span class="nav-text">CPU缓存行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是伪共享"><span class="nav-number">4.2.</span> <span class="nav-text">什么是伪共享</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

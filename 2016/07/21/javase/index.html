@@ -1,0 +1,902 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="大学零零散散搞了不到四年的Java，我相信很多人都跟我一样，JavaSE基础没打牢，就急忙忙、兴冲冲的搞JavaEE了，然后学习一下前台开发(html、css、JavaScript)，有可能还搞搞jQuery、extjs，再然后是Struts、hibernate、spring，然后听说找工作得会Linux、Oracle，又去学，在这个过程中，是否迷失了，虽然学习面很广，但就像《神雕侠侣》中黄药师">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaSE">
+<meta property="og:url" content="http://xiaozhuang.github.io/2016/07/21/javase/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="大学零零散散搞了不到四年的Java，我相信很多人都跟我一样，JavaSE基础没打牢，就急忙忙、兴冲冲的搞JavaEE了，然后学习一下前台开发(html、css、JavaScript)，有可能还搞搞jQuery、extjs，再然后是Struts、hibernate、spring，然后听说找工作得会Linux、Oracle，又去学，在这个过程中，是否迷失了，虽然学习面很广，但就像《神雕侠侣》中黄药师">
+<meta property="og:updated_time" content="2018-07-15T02:36:17.005Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaSE">
+<meta name="twitter:description" content="大学零零散散搞了不到四年的Java，我相信很多人都跟我一样，JavaSE基础没打牢，就急忙忙、兴冲冲的搞JavaEE了，然后学习一下前台开发(html、css、JavaScript)，有可能还搞搞jQuery、extjs，再然后是Struts、hibernate、spring，然后听说找工作得会Linux、Oracle，又去学，在这个过程中，是否迷失了，虽然学习面很广，但就像《神雕侠侣》中黄药师">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> JavaSE | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaSE
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-21T10:18:47+08:00" content="2016-07-21">
+              2016-07-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>大学零零散散搞了不到四年的Java，我相信很多人都跟我一样，JavaSE基础没打牢，就急忙忙、兴冲冲的搞JavaEE了，然后学习一下前台开发(html、css、JavaScript)，有可能还搞搞jQuery、extjs，再然后是Struts、hibernate、spring，然后听说找工作得会Linux、Oracle，又去学，在这个过程中，是否迷失了，虽然学习面很广，但就像《神雕侠侣》中黄药师评价杨过，博而不精、杂而不纯，这一串下来，感觉做Java开发好难，并不是学着难，而是知识面太广了，又要精通这个，又要精通那个。<br>—— <a href="http://blog.csdn.net/ghsau/article/details/7421217" title="Java线程(一)：线程安全与不安全" target="_blank" rel="external">Java线程(一)：线程安全与不安全</a></p>
+</blockquote>
+<a id="more"></a>
+<h1 id="jdk安装"><a href="#jdk安装" class="headerlink" title="jdk安装"></a>jdk安装</h1><p>jdk8安装，自动添加环境变量<br>C:\ProgramData\Oracle\Java\javapath;<br>其中java命令指向jre下java.exe</p>
+<h1 id="面向对象三大特征"><a href="#面向对象三大特征" class="headerlink" title="面向对象三大特征"></a>面向对象三大特征</h1><p>封装：封装就是将数据或函数等集合在一个单元中</p>
+<ul>
+<li>隐藏实现细节,仅对外公开接口</li>
+<li>保证数据的安全,将变化隔离</li>
+</ul>
+<p>继承：当两个类具有相同的特征（属性）和行为（方法）时，可以将相同的部分抽取出来放到一个类中作为父类，其它类继承这个父类。<br>多态：指允许不同类的对象对同一消息做出响应。</p>
+<h1 id="Java基础"><a href="#Java基础" class="headerlink" title="Java基础"></a>Java基础</h1><h2 id="float-与-double"><a href="#float-与-double" class="headerlink" title="float 与 double"></a>float 与 double</h2><p>float是单精度浮点数，内存分配4个字节，占32位，有效小数位6-7位<br>double是双精度浮点数，内存分配8个字节，占64位，有效小数位15位</p>
+<h2 id="int-和-Integer区别"><a href="#int-和-Integer区别" class="headerlink" title="int 和 Integer区别"></a>int 和 Integer区别</h2><p>int 默认值为 0<br>Integer 默认值为null</p>
+<h2 id="String-format-String-format-Object…-args"><a href="#String-format-String-format-Object…-args" class="headerlink" title="String.format(String format,Object… args)"></a>String.format(String format,Object… args)</h2><p>使用指定的格式字符串和参数返回一个格式化字符串<br><code>jdk1.5+</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">String sqlTp = <span class="string">"SELECT * FROM `uam_user`WHERE `USER_ID` IN ('%s')"</span>;</div><div class="line">String sql1 = String.format(sqlTp,<span class="string">"user1"</span>);</div><div class="line"><span class="comment">//结果：SELECT * FROM `uam_user`WHERE `USER_ID` IN ('user1')</span></div><div class="line">String sql2 = String.format(sqlTp,<span class="string">"'user1,user2'"</span>.replace(<span class="string">","</span>, <span class="string">"','"</span>));</div><div class="line"><span class="comment">//结果：SELECT * FROM `uam_user`WHERE `USER_ID` IN ('user1','user2')</span></div></pre></td></tr></table></figure>
+<h2 id="基本数据类型转换"><a href="#基本数据类型转换" class="headerlink" title="基本数据类型转换"></a>基本数据类型转换</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// long转int</span></div><div class="line">Long num  = <span class="number">100L</span>;</div><div class="line">num.intValue();</div><div class="line"></div><div class="line"><span class="comment">// Integer 转 String</span></div><div class="line">Integer.toString(number)</div></pre></td></tr></table></figure>
+<h2 id="HashCode"><a href="#HashCode" class="headerlink" title="HashCode"></a>HashCode</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// java.lang.String.hashCode()</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> h = hash;</div><div class="line">    <span class="keyword">int</span> len = count;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (h == <span class="number">0</span> &amp;&amp; len &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">int</span> off = offset;</div><div class="line">        <span class="keyword">char</span> val[] = value;</div><div class="line"></div><div class="line">        <span class="comment">//每个字符</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">            h = <span class="number">31</span>*h + val[off++];</div><div class="line">        &#125;</div><div class="line">        hash = h;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> h;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="近似数"><a href="#近似数" class="headerlink" title="近似数"></a>近似数</h2><p><code>jdk1.0</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//java.lang.Math</span></div><div class="line"><span class="keyword">double</span> quarter = <span class="number">0.25</span>;</div><div class="line"><span class="keyword">double</span> half = <span class="number">0.5</span>;</div><div class="line"><span class="keyword">double</span> three_fourths = <span class="number">0.75</span>;</div><div class="line"><span class="comment">//四舍五入</span></div><div class="line">Math.round(quarter);<span class="comment">//0</span></div><div class="line">Math.round(half);<span class="comment">//1</span></div><div class="line">Math.round(three_fourths);<span class="comment">//1</span></div><div class="line"><span class="comment">//进一法</span></div><div class="line">Math.ceil(quarter);<span class="comment">//1.0</span></div><div class="line"><span class="comment">//去尾法</span></div><div class="line">Math.floor(three_fourths);<span class="comment">//0.0</span></div></pre></td></tr></table></figure>
+<h2 id="随机数"><a href="#随机数" class="headerlink" title="随机数"></a>随机数</h2><p>伪随机数：真正意义上的随机数（或者随机事件）在某次产生过程中是按照实验过程中表现的分布概率随机产生的，其结果是不可预测的，是不可见的。而计算机中的随机函数是按照一定算法模拟产生的，其结果是确定的，是可见的。我们可以这样认为这个可预见的结果其出现的概率是100%。所以用计算机随机函数所产生的“随机数”并不随机，是伪随机数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">        Random rand = <span class="keyword">new</span> Random();</div><div class="line"><span class="comment">//      nextInt()  返回下一个伪随机数</span></div><div class="line"><span class="comment">//      nextBoolean()  生成一个随机的boolean值，生成true和false的值几率相等</span></div><div class="line"><span class="comment">//      nextDouble()  生成一个随机的double值，数值介于[0,1.0)之间</span></div><div class="line"><span class="comment">//      nextInt(int n)  生成一个随机的int值，该值介于[0,n)的区间</span></div><div class="line"><span class="comment">//      nextFloat()  伪随机地生成并返回一个从 0.0f（包括）到 1.0f（包括）范围内均匀选择（大致）的 float 值</span></div><div class="line"><span class="comment">//      double nextGaussian()返回下一个伪随机数，它是取自此随机数生成器序列的、呈高斯（“正态”）分布的 double 值，其平均值是 0.0，标准差是 1.0</span></div><div class="line">        </div><div class="line">        </div><div class="line"><span class="comment">//      Random(long seed)使用单个 long 种子创建一个新的随机数生成器。该种子是伪随机数生成器的内部状态的初始值</span></div><div class="line"><span class="comment">//      setSeed(long seed)该方法的作用是重新设置Random对象中的种子数。设置完种子数以后的Random对象和相同种子数使用new关键字创建出的Random对象相同。</span></div></pre></td></tr></table></figure>
+<h2 id="获取当前执行的方法"><a href="#获取当前执行的方法" class="headerlink" title="获取当前执行的方法"></a>获取当前执行的方法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Thread.currentThread().getStackTrace()[<span class="number">1</span>].getMethodName();</div></pre></td></tr></table></figure>
+<h2 id="多继承"><a href="#多继承" class="headerlink" title="多继承"></a>多继承</h2><p>Java类是单继承的，接口可以多继承。</p>
+<h2 id="字符串拼接"><a href="#字符串拼接" class="headerlink" title="字符串拼接"></a>字符串拼接</h2><p><code>模板</code><br><code>替换</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">final</span> String MOBILE_RETURN_CODE_PREFIX = <span class="string">"WW"</span>;</div><div class="line">        </div><div class="line">StringBuffer billCode = <span class="keyword">new</span> StringBuffer();</div><div class="line">billCode.append(MOBILE_RETURN_CODE_PREFIX);</div><div class="line"></div><div class="line">billCode.append(String.format(<span class="string">"%010d"</span>, <span class="number">10000L</span>));<span class="comment">//字符串格式化10位数字，前端补零</span></div><div class="line"></div><div class="line">System.out.println(billCode.toString());</div><div class="line"></div><div class="line">String ROLE_1_CONTENT = <span class="string">"运单[&#123;0&#125;]客户申请取消，请拦截！确认拦截成功后，请及时审核拦截申请！"</span>;</div><div class="line">String content = MessageFormat.format(ROLE_1_CONTENT, <span class="string">"VC40898997812"</span>);</div><div class="line">System.out.println(content);</div></pre></td></tr></table></figure>
+<h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 获取与系统有关的路径分隔符k</span></div><div class="line">File.separator</div></pre></td></tr></table></figure>
+<h2 id="获取classpath路径"><a href="#获取classpath路径" class="headerlink" title="获取classpath路径"></a>获取classpath路径</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 方法1：</span></div><div class="line"><span class="comment">// 相对路径为相对App3所在包路径；</span></div><div class="line"><span class="comment">// 绝对路径为相对classpath路径</span></div><div class="line"><span class="comment">// 若路径指定的文件或文件夹不存在，则返回空</span></div><div class="line"><span class="comment">// jar包中Class使用相对路径获取资源java.lang.NullPointerException</span></div><div class="line">String path = App3.class.getResource(<span class="string">"/"</span>).getPath();</div><div class="line">String path2 = App3.class.getResource(<span class="string">"./"</span>).getPath();</div><div class="line"></div><div class="line"><span class="comment">// 方法2：</span></div><div class="line"><span class="comment">// 获取App3加载路径根，即classpath路径</span></div><div class="line"><span class="comment">// 若App3在jar包中，则返回jar包路径</span></div><div class="line">String path3 = App3.class.getProtectionDomain().getCodeSource().getLocation().getPath();</div></pre></td></tr></table></figure>
+<h2 id="创建临时文件"><a href="#创建临时文件" class="headerlink" title="创建临时文件"></a>创建临时文件</h2><p>windows临时文件位置：<br>C:\Users\xxx\AppData\Local\Temp</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在默认临时文件目录中创建一个空文件，使用给定前缀和后缀生成其名称</span></div><div class="line"><span class="comment">// 文件名为，前缀 + 随机序列 + 后缀</span></div><div class="line">File.createTempFile(String prefix, String suffix) </div><div class="line"></div><div class="line"><span class="comment">// 在指定目录中创建一个新的空文件，使用给定的前缀和后缀字符串生成其名称。</span></div><div class="line">File.createTempFile(String prefix, String suffix, File directory)</div></pre></td></tr></table></figure>
+<h2 id="写文件-img2base64"><a href="#写文件-img2base64" class="headerlink" title="写文件 img2base64"></a>写文件 img2base64</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// import org.apache.commons.codec.binary.Base64;</span></div><div class="line"><span class="comment">// import org.apache.commons.io.IOUtils;</span></div><div class="line"></div><div class="line"> <span class="comment">//图片转base64，不包含header</span></div><div class="line">URL url = App.class.getResource(<span class="string">"/github5.png"</span>);</div><div class="line"><span class="keyword">byte</span>[] imageBytes = <span class="keyword">null</span>;</div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    imageBytes = IOUtils.toByteArray(url);</div><div class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div><div class="line"><span class="keyword">byte</span>[] base64EncodedByteArray = Base64.encodeBase64(imageBytes);</div><div class="line">System.out.println(<span class="keyword">new</span> String(base64EncodedByteArray));</div><div class="line"></div><div class="line"><span class="comment">//base64转图片，base64不包含header</span></div><div class="line"><span class="keyword">try</span> (FileOutputStream imageOutFile = <span class="keyword">new</span> FileOutputStream(App.class.getResource(<span class="string">"/"</span>).getPath() + <span class="string">"github52.jpeg"</span>))&#123;</div><div class="line">    imageOutFile.write(Base64.decodeBase64(base64EncodedByteArray));</div><div class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="文件保存"><a href="#文件保存" class="headerlink" title="文件保存"></a>文件保存</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    InputStream is = <span class="keyword">new</span> FileInputStream(<span class="string">"/Users/pankaj/source.txt"</span>);</div><div class="line">    </div><div class="line">    OutputStream os = <span class="keyword">new</span> FileOutputStream(<span class="string">"/Users/pankaj/new_source.txt"</span>);</div><div class="line">    </div><div class="line">    <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</div><div class="line">    <span class="keyword">int</span> bytesRead;</div><div class="line">    <span class="comment">//read from is to buffer</span></div><div class="line">    <span class="keyword">while</span>((bytesRead = is.read(buffer)) !=-<span class="number">1</span>)&#123;</div><div class="line">        os.write(buffer, <span class="number">0</span>, bytesRead);</div><div class="line">    &#125;</div><div class="line">    is.close();</div><div class="line">    <span class="comment">//flush OutputStream to write any buffered data to file</span></div><div class="line">    os.flush();</div><div class="line">    os.close();</div><div class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="递归文件目录"><a href="#递归文件目录" class="headerlink" title="递归文件目录"></a>递归文件目录</h2><p><code>递归</code><br><code>所以文件</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//路径</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> String OUTPUT_ROOT_PATH = System.getProperty(<span class="string">"user.dir"</span>)</div><div class="line">            + File.separator + <span class="string">"sqlscripts"</span>;</div><div class="line"></div><div class="line">File scriptDir = <span class="keyword">new</span> File(OUTPUT_ROOT_PATH);</div><div class="line"><span class="keyword">if</span>(!scriptDir.exists())&#123;</div><div class="line">    scriptDir.mkdirs();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 指定路径、文件过滤器、目录过滤器</span></div><div class="line">Collection&lt;File&gt; listFiles = FileUtils.listFiles(<span class="keyword">new</span> File(OUTPUT_ROOT_PATH), <span class="keyword">new</span> SuffixFileFilter(<span class="string">"xml"</span>),TrueFileFilter.INSTANCE);</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- pom --&gt;</span></div><div class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/commons-io/commons-io --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-io<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-io<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<h1 id="对象操作"><a href="#对象操作" class="headerlink" title="对象操作"></a>对象操作</h1><h2 id="Map深拷贝"><a href="#Map深拷贝" class="headerlink" title="Map深拷贝"></a>Map深拷贝</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Map&lt;String, Object&gt; dataClone = <span class="keyword">new</span> HashMap&lt;String, Object&gt;(data);</div></pre></td></tr></table></figure>
+<h2 id="对象深拷贝"><a href="#对象深拷贝" class="headerlink" title="对象深拷贝"></a>对象深拷贝</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// org.apache.commons.lang3.SerializationUtils</span></div><div class="line"><span class="comment">// 对象需实现Serializable接口</span></div><div class="line">Foo foo = <span class="keyword">new</span> Foo();</div><div class="line">foo.setId(<span class="number">1</span>);</div><div class="line">Foo clone = SerializationUtils.clone(foo);</div></pre></td></tr></table></figure>
+<h2 id="同名属性拷贝"><a href="#同名属性拷贝" class="headerlink" title="同名属性拷贝"></a>同名属性拷贝</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">Bar orig = <span class="keyword">new</span> Bar();</div><div class="line">orig.setId(<span class="number">111</span>);</div><div class="line">orig.setName(<span class="string">"sunday"</span>);</div><div class="line"></div><div class="line">Foo dest = <span class="keyword">new</span> Foo();</div><div class="line"><span class="comment">//方式1 commons-beanutils</span></div><div class="line"><span class="comment">//org.apache.commons.beanutils.BeanUtils</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    BeanUtils.copyProperties(dest, orig);</div><div class="line">&#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div><div class="line">System.out.println(dest);</div><div class="line"></div><div class="line"><span class="comment">//方式2 cglib</span></div><div class="line"><span class="comment">//net.sf.cglib.beans.BeanCopier</span></div><div class="line">Foo foo = <span class="keyword">new</span> Foo();</div><div class="line">BeanCopier bc = BeanCopier.create(Bar.class, Foo.class, <span class="keyword">false</span>);</div><div class="line">bc.copy(orig, foo, <span class="keyword">null</span>);</div><div class="line">System.out.println(foo);</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// object to map</span></div><div class="line">ObjectMapper oMapper = <span class="keyword">new</span> ObjectMapper();</div><div class="line"></div><div class="line">Student obj = <span class="keyword">new</span> Student();</div><div class="line">obj.setName(<span class="string">"mkyong"</span>);</div><div class="line">obj.setAge(<span class="number">34</span>);</div><div class="line">obj.setSkills(Arrays.asList(<span class="string">"java"</span>,<span class="string">"node"</span>));</div><div class="line"><span class="comment">// object -&gt; Map</span></div><div class="line">Map&lt;String, Object&gt; map = oMapper.convertValue(obj, Map.class);</div></pre></td></tr></table></figure>
+<h2 id="使用参数创建List"><a href="#使用参数创建List" class="headerlink" title="使用参数创建List"></a>使用参数创建List</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; asList = Arrays.asList(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>);</div></pre></td></tr></table></figure>
+<h1 id="数组移除元素java-lang-UnsupportedOperationException"><a href="#数组移除元素java-lang-UnsupportedOperationException" class="headerlink" title="数组移除元素java.lang.UnsupportedOperationException"></a>数组移除元素java.lang.UnsupportedOperationException</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// List&lt;String&gt; list = new ArrayList&lt;&gt;();</span></div><div class="line"><span class="comment">// list.add("a");</span></div><div class="line"><span class="comment">// list.add("b");</span></div><div class="line"><span class="comment">// list.add("c");  </span></div><div class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>);</div><div class="line"><span class="keyword">for</span>(Iterator&lt;String&gt; it = list.iterator(); it.hasNext();)&#123;  </div><div class="line">    String it_tmp = it.next(); </div><div class="line">    <span class="keyword">if</span>(it_tmp.equals(<span class="string">"b"</span>))&#123;</div><div class="line">        it.remove();</div><div class="line">    &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Arrays.asList()返回固定大小的集合，不支持remove</p>
+</blockquote>
+<h2 id="获取本机ip"><a href="#获取本机ip" class="headerlink" title="获取本机ip"></a>获取本机ip</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**返回本地主机。*/</span> </div><div class="line">InetAddress addr = InetAddress.getLocalHost(); </div><div class="line"><span class="comment">/**返回 IP 地址字符串（以文本表现形式）*/</span> </div><div class="line">String ip; = addr.getHostAddress();</div></pre></td></tr></table></figure>
+<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//爬楼梯问题</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">up</span><span class="params">(<span class="keyword">int</span> to)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(to &lt; <span class="number">1</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();<span class="comment">//参数非法异常</span></div><div class="line">    </div><div class="line">    <span class="keyword">if</span>(<span class="number">1</span> == to)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(<span class="number">2</span> == to)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> up(to - <span class="number">1</span>) + up(to -<span class="number">2</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 断言异常：java.lang.AssertionError</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 主键重复异常： org.springframework.dao.DuplicateKeyException</span></div></pre></td></tr></table></figure>
+<h2 id="常用异常类型"><a href="#常用异常类型" class="headerlink" title="常用异常类型"></a>常用异常类型</h2><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IllegalArgumentException</td>
+<td>非法参数异常</td>
+</tr>
+</tbody>
+</table>
+<h1 id="调试技巧"><a href="#调试技巧" class="headerlink" title="调试技巧"></a>调试技巧</h1><h2 id="日志代理"><a href="#日志代理" class="headerlink" title="日志代理"></a>日志代理</h2><p>logging proxy是一个子类的对象，可窃取方法调用，并进行日志记录，然后调用超类中的方法</p>
+<h2 id="打印堆栈"><a href="#打印堆栈" class="headerlink" title="打印堆栈"></a>打印堆栈</h2><p>代码中任意位置插入下面语句可获得堆栈跟踪</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Thread.dumpStack()</div></pre></td></tr></table></figure>
+<h2 id="处理非捕获异常"><a href="#处理非捕获异常" class="headerlink" title="处理非捕获异常"></a>处理非捕获异常</h2><p>调用静态的Thread.setDefaultUncaughtExceptionHandler方法改变非捕获异常处理器</p>
+<h2 id="观察类加载过程"><a href="#观察类加载过程" class="headerlink" title="观察类加载过程"></a>观察类加载过程</h2><p>-verbose标志启动java虚拟机</p>
+<h2 id="使用jconsole显示虚拟机性能统计"><a href="#使用jconsole显示虚拟机性能统计" class="headerlink" title="使用jconsole显示虚拟机性能统计"></a>使用jconsole显示虚拟机性能统计</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jconsole processID</div></pre></td></tr></table></figure>
+<h1 id="日期"><a href="#日期" class="headerlink" title="日期"></a>日期</h1><h2 id="日期转换"><a href="#日期转换" class="headerlink" title="日期转换"></a>日期转换</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// String -&gt; Date</span></div><div class="line">SimpleDateFormat format = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</div><div class="line">format.parse(datetime);</div><div class="line"></div><div class="line"><span class="comment">// Date -&gt; String</span></div><div class="line">format.format(date);</div></pre></td></tr></table></figure>
+<h1 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h1><p>log4j规定了默认的几个级别：trace&lt;debug&lt;info&lt;warn&lt;error&lt;fatal</p>
+<h1 id="log4j-换行"><a href="#log4j-换行" class="headerlink" title="log4j 换行"></a>log4j 换行</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">String lineSeparator = System.getProperty(<span class="string">"line.separator"</span>);</div><div class="line">LOGGER.info(<span class="string">"Person's name is  &#123;&#125; .&#123;&#125;"</span>, person.getName(), lineSeparator);</div></pre></td></tr></table></figure>
+<h1 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h1><p>@Description</p>
+<p>{@link com.jd.etms.waybill.common.constant.OrderRelationTypeEnum}</p>
+<h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><h2 id="接口过时"><a href="#接口过时" class="headerlink" title="接口过时"></a>接口过时</h2><p>@Deprecated</p>
+<h1 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h1><h2 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">byte</span>[] serialize(Object obj) <span class="keyword">throws</span> Exception &#123;</div><div class="line">    ByteArrayOutputStream baos = <span class="keyword">null</span>;</div><div class="line">    ObjectOutputStream oos = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        baos = <span class="keyword">new</span> ByteArrayOutputStream();</div><div class="line">        oos = <span class="keyword">new</span> ObjectOutputStream(baos);</div><div class="line">        oos.writeObject(obj);</div><div class="line">        oos.flush();</div><div class="line">        <span class="keyword">byte</span>[] bytes = baos.toByteArray();</div><div class="line">        <span class="keyword">return</span> bytes;</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">        logger.error(<span class="string">"serialize-error:"</span>, e);</div><div class="line">    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        <span class="keyword">if</span>(oos != <span class="keyword">null</span>)&#123;</div><div class="line">            oos.close();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(baos != <span class="keyword">null</span>)&#123;</div><div class="line">            baos.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">unserialize</span><span class="params">(<span class="keyword">byte</span>[] bytes)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    ByteArrayInputStream bais = <span class="keyword">null</span>;</div><div class="line">    ObjectInputStream ois = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        bais = <span class="keyword">new</span> ByteArrayInputStream(bytes);</div><div class="line">        ois = <span class="keyword">new</span> ObjectInputStream(bais);</div><div class="line">        <span class="keyword">return</span> ois.readObject();</div><div class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">        logger.error(<span class="string">"unserialize-error:"</span>, e);</div><div class="line">    &#125; <span class="keyword">finally</span>&#123;</div><div class="line">        <span class="keyword">if</span>(ois != <span class="keyword">null</span>)&#123;</div><div class="line">            ois.close();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(bais != <span class="keyword">null</span>)&#123;</div><div class="line">            bais.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="SerialVersionUid"><a href="#SerialVersionUid" class="headerlink" title="SerialVersionUid"></a>SerialVersionUid</h1><p>用一个称为 serialVersionUID 的版本号与每个可序列化类相关联，该序列号在反序列化过程中用于验证序列化对象的发送者和接收者是否为该对象加载了与序列化兼容的类</p>
+<p>强烈建议 所有可序列化类都显式声明 serialVersionUID 值</p>
+<p>两种方式：<br> private static final long serialVersionUID = 1L;<br> private static final long serialVersionUID = -2805284943658356093L;</p>
+<p>一般采用第一种就行了，简单。<br>第二种能够保证每次更改类结构后改变版本号，但还是要手工去生成</p>
+<h1 id="java异常处理"><a href="#java异常处理" class="headerlink" title="java异常处理"></a>java异常处理</h1><p>printStackTrace的堆栈跟踪功能显示出程序运行到当前类的执行流程，但只提供了一些最基本的信息，<br>未能说明实际导致错误的原因，同时也不易解读。</p>
+<p>printStackTrace 可以出现在开发和测试阶段，不应该出现在运行阶段</p>
+<p>调用printStackTrace算不上已经“处理好了异常”</p>
+<h1 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h1><h2 id="for循环优化"><a href="#for循环优化" class="headerlink" title="for循环优化"></a>for循环优化</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Vector vect = <span class="keyword">new</span> Vector(<span class="number">1000</span>);</div><div class="line"><span class="keyword">for</span>( inti=<span class="number">0</span>; i &lt; vect.size(); i++)&#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//优化，减少1000次size()的系统调用开销</span></div><div class="line"><span class="keyword">int</span> size = vect.size();</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; size; i++)&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 检查循环内效率不高的地方</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i &lt;<span class="number">100000</span>;i++)&#123;</div><div class="line">    <span class="keyword">if</span> (i%<span class="number">10</span> == <span class="number">9</span>) &#123;</div><div class="line">    <span class="comment">// 每十次执行一次</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">for</span>(inti =<span class="number">0</span>,j =<span class="number">10</span>; i&lt;<span class="number">100000</span>; i++,j--)&#123;　</div><div class="line">    <span class="keyword">if</span>(j == <span class="number">0</span>)&#123;</div><div class="line">        <span class="comment">// 每十次执行一次</span></div><div class="line">        j = <span class="number">10</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="数组复制"><a href="#数组复制" class="headerlink" title="数组复制"></a>数组复制</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> size = <span class="number">1000</span>;</div><div class="line">String[] strArray1 = <span class="keyword">new</span> String[size];</div><div class="line">String[] strArray2 = <span class="keyword">new</span> String[size];</div><div class="line"><span class="keyword">for</span>(inti=<span class="number">0</span>;i&lt;size;i++)&#123; <span class="comment">// 赋值</span></div><div class="line">    strArray1 = (<span class="keyword">new</span> String(<span class="string">"Array: "</span> + i));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//优先使用API</span></div><div class="line">System.arraycopy(strArray1,<span class="number">0</span>,strArray2,<span class="number">0</span>,size); <span class="comment">// 复制</span></div></pre></td></tr></table></figure>
+<h2 id="减少I-O操作"><a href="#减少I-O操作" class="headerlink" title="减少I/O操作"></a>减少I/O操作</h2><p>用BufferedReader 代替Reader，用BufferedWriter代替Writer来进行处理I/O操作</p>
+<p>同样可以用BufferedInputStream代替InputStream都可以获得性能的提高</p>
+<h1 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h1><h2 id="load-xml-conf"><a href="#load-xml-conf" class="headerlink" title="load xml conf"></a>load xml conf</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Properties;</div><div class="line"><span class="comment">//生成完成输出图案</span></div><div class="line">Properties donePattern = <span class="keyword">new</span> Properties();</div><div class="line"></div><div class="line"><span class="keyword">try</span> (InputStream doneResourceAsStream = <span class="keyword">this</span>.getClass().getClassLoader()</div><div class="line">                     .getResourceAsStream(<span class="string">"done.xml"</span>))&#123;</div><div class="line">    donePattern.loadFromXML(doneResourceAsStream);</div><div class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="meta">&lt;!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd"&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">comment</span>&gt;</span>执行完成控制台图案<span class="tag">&lt;/<span class="name">comment</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">entry</span> <span class="attr">key</span>=<span class="string">"done_logo"</span>&gt;</span></div><div class="line">        &lt;![CDATA[</div><div class="line">          _____   ____  _   _ ______</div><div class="line">         |  __ \ / __ \| \ | |  ____|</div><div class="line">         | |  | | |  | |  \| | |__</div><div class="line">         | |  | | |  | | . ` |  __|</div><div class="line">         | |__| | |__| | |\  | |____</div><div class="line">         |_____/ \____/|_| \_|______|</div><div class="line">        ]]&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">entry</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; sorted_keys = <span class="keyword">new</span> ArrayList&lt;String&gt;(params.keySet());</div><div class="line">Collections.sort(sorted_keys);<span class="comment">//自然升序排序</span></div></pre></td></tr></table></figure>
+<h2 id="shutdown-hook"><a href="#shutdown-hook" class="headerlink" title="shutdown hook"></a>shutdown hook</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//将hook线程添加到运行时环境中去</span></div><div class="line">Runtime.getRuntime().addShutdownHook(<span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">    </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        applicationContext.close();</div><div class="line">        System.out.println(<span class="string">"shutdown hook run..."</span>);</div><div class="line">    &#125;</div><div class="line">&#125;));</div></pre></td></tr></table></figure>
+<h2 id="javaSE-运行"><a href="#javaSE-运行" class="headerlink" title="javaSE 运行"></a>javaSE 运行</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@echo off</div><div class="line">set TITLE=日志堆栈输出验证</div><div class="line">echo "--------------------------------"</div><div class="line">echo "日志堆栈输出验证"</div><div class="line">echo "--------------------------------"</div><div class="line">rem 解决以管理员运行，不能定位到当前目录问题</div><div class="line">cd /d %~dp0</div><div class="line">rem 保存当前目录</div><div class="line">set SERVICE_PATH="%cd%"</div><div class="line">rem 设置JAVA_HOME变量</div><div class="line">set JAVA_HOME=%SERVICE_PATH%\jdk1.7.0_79</div><div class="line">rem %JAVA_HOME%\bin\java -Dfile.encoding=UTF-8 -jar %SERVICE_PATH%\link_webservice.jar</div><div class="line">%JAVA_HOME%\bin\java -server -Xmx512m -Dfile.encoding=UTF-8 -classpath "./classes;./libs/*" com.sunday.log4j2_learn.ExctptionApp</div><div class="line">pause</div></pre></td></tr></table></figure>
+<h2 id="3DES加密"><a href="#3DES加密" class="headerlink" title="3DES加密"></a>3DES加密</h2><p>对称加密</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.security.Security;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.crypto.Cipher;</div><div class="line"><span class="keyword">import</span> javax.crypto.SecretKey;</div><div class="line"><span class="keyword">import</span> javax.crypto.spec.SecretKeySpec;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 3DES加密</div><div class="line"> * 主要依靠唯一密钥来确保数据加密解密的安全</div><div class="line"> * <span class="doctag">@author</span> SHANHY(365384722@QQ.COM)</div><div class="line"> * <span class="doctag">@date</span> 2015-8-18</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreeDES</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String Algorithm = <span class="string">"DESede"</span>; <span class="comment">// 定义 加密算法,可用 DES,DESede(即3DES),Blowfish</span></div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 加密方法</div><div class="line">     * </div><div class="line">     * <span class="doctag">@param</span> keybyte</div><div class="line">     *            加密密钥，长度为24字节</div><div class="line">     * <span class="doctag">@param</span> src</div><div class="line">     *            被加密的数据缓冲区（源）</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     * <span class="doctag">@author</span> SHANHY</div><div class="line">     * <span class="doctag">@date</span> 2015-8-18</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] encryptMode(<span class="keyword">byte</span>[] keybyte, <span class="keyword">byte</span>[] src) &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">// 生成密钥</span></div><div class="line">            SecretKey deskey = <span class="keyword">new</span> SecretKeySpec(keybyte, Algorithm);</div><div class="line"></div><div class="line">            <span class="comment">// 加密</span></div><div class="line">            Cipher c1 = Cipher.getInstance(Algorithm);</div><div class="line">            c1.init(Cipher.ENCRYPT_MODE, deskey);</div><div class="line">            <span class="keyword">return</span> c1.doFinal(src);</div><div class="line">        &#125; <span class="keyword">catch</span> (java.security.NoSuchAlgorithmException e1) &#123;</div><div class="line">            e1.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (javax.crypto.NoSuchPaddingException e2) &#123;</div><div class="line">            e2.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (java.lang.Exception e3) &#123;</div><div class="line">            e3.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 解密</div><div class="line">     * </div><div class="line">     * <span class="doctag">@param</span> keybyte</div><div class="line">     *            加密密钥，长度为24字节</div><div class="line">     * <span class="doctag">@param</span> src</div><div class="line">     *            加密后的缓冲区</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     * <span class="doctag">@author</span> SHANHY</div><div class="line">     * <span class="doctag">@date</span> 2015-8-18</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] decryptMode(<span class="keyword">byte</span>[] keybyte, <span class="keyword">byte</span>[] src) &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">// 生成密钥</span></div><div class="line">            SecretKey deskey = <span class="keyword">new</span> SecretKeySpec(keybyte, Algorithm);</div><div class="line"></div><div class="line">            <span class="comment">// 解密</span></div><div class="line">            Cipher c1 = Cipher.getInstance(Algorithm);</div><div class="line">            c1.init(Cipher.DECRYPT_MODE, deskey);</div><div class="line">            <span class="keyword">return</span> c1.doFinal(src);</div><div class="line">        &#125; <span class="keyword">catch</span> (java.security.NoSuchAlgorithmException e1) &#123;</div><div class="line">            e1.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (javax.crypto.NoSuchPaddingException e2) &#123;</div><div class="line">            e2.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (java.lang.Exception e3) &#123;</div><div class="line">            e3.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 转换成十六进制字符串</div><div class="line">     * </div><div class="line">     * <span class="doctag">@param</span> b</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     * <span class="doctag">@author</span> SHANHY</div><div class="line">     * <span class="doctag">@date</span> 2015-8-18</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">byte2hex</span><span class="params">(<span class="keyword">byte</span>[] b)</span> </span>&#123;</div><div class="line">        String hs = <span class="string">""</span>;</div><div class="line">        String stmp = <span class="string">""</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> n = <span class="number">0</span>; n &lt; b.length; n++) &#123;</div><div class="line">            stmp = (java.lang.Integer.toHexString(b[n] &amp; <span class="number">0XFF</span>));</div><div class="line">            <span class="keyword">if</span> (stmp.length() == <span class="number">1</span>)</div><div class="line">                hs = hs + <span class="string">"0"</span> + stmp;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                hs = hs + stmp;</div><div class="line">            <span class="keyword">if</span> (n &lt; b.length - <span class="number">1</span>)</div><div class="line">                hs = hs + <span class="string">":"</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> hs.toUpperCase();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     * 测试</div><div class="line">     * </div><div class="line">     * <span class="doctag">@param</span> args</div><div class="line">     * <span class="doctag">@author</span> SHANHY</div><div class="line">     * <span class="doctag">@date</span> 2015-8-18</div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="comment">// 添加新安全算法,如果用JCE就要把它添加进去</span></div><div class="line">        Security.addProvider(<span class="keyword">new</span> com.sun.crypto.provider.SunJCE());</div><div class="line"></div><div class="line">        <span class="comment">// 24字节的密钥</span></div><div class="line">        <span class="comment">// 3DES的密钥必须是24位的byte数组</span></div><div class="line">        <span class="keyword">final</span> <span class="keyword">byte</span>[] keyBytes = &#123; <span class="number">0x11</span>, <span class="number">0x22</span>, <span class="number">0x4F</span>, <span class="number">0x58</span>, (<span class="keyword">byte</span>) <span class="number">0x88</span>, <span class="number">0x10</span>, <span class="number">0x40</span>, <span class="number">0x38</span>, <span class="number">0x28</span>, <span class="number">0x25</span>, <span class="number">0x79</span>, <span class="number">0x51</span>, (<span class="keyword">byte</span>) <span class="number">0xCB</span>, (<span class="keyword">byte</span>) <span class="number">0xDD</span>, <span class="number">0x55</span>, <span class="number">0x66</span>, <span class="number">0x77</span>, <span class="number">0x29</span>, <span class="number">0x74</span>, (<span class="keyword">byte</span>) <span class="number">0x98</span>, <span class="number">0x30</span>, <span class="number">0x40</span>, <span class="number">0x36</span>, (<span class="keyword">byte</span>) <span class="number">0xE2</span> &#125;;</div><div class="line">        String szSrc = <span class="string">"This is a 3DES test. 测试"</span>;</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"加密前的字符串:"</span> + szSrc);</div><div class="line"></div><div class="line">        <span class="keyword">byte</span>[] encoded = encryptMode(keyBytes, szSrc.getBytes());</div><div class="line">        System.out.println(<span class="string">"加密后的字符串:"</span> + <span class="keyword">new</span> String(encoded));</div><div class="line"></div><div class="line">        <span class="keyword">byte</span>[] srcBytes = decryptMode(keyBytes, encoded);</div><div class="line">        System.out.println(<span class="string">"解密后的字符串:"</span> + (<span class="keyword">new</span> String(srcBytes)));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="List截取"><a href="#List截取" class="headerlink" title="List截取"></a>List截取</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">List&lt;String&gt; list = Arrays.asList(<span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>);</div><div class="line">System.out.println(list.subList(<span class="number">1</span>, list.size()));</div></pre></td></tr></table></figure>
+<h2 id="参数校验"><a href="#参数校验" class="headerlink" title="参数校验"></a>参数校验</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// com.google.common.base.Preconditions#checkArgument(boolean, java.lang.Object)</span></div><div class="line">Object obj = <span class="keyword">null</span>;</div><div class="line">Preconditions.checkArgument(obj != <span class="keyword">null</span>, <span class="string">"参数obj为空！"</span>);</div></pre></td></tr></table></figure>
+<h2 id="延迟重试（retry-with-delay）"><a href="#延迟重试（retry-with-delay）" class="headerlink" title="延迟重试（retry with delay）"></a>延迟重试（retry with delay）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> tryCount = <span class="number">0</span>;</div><div class="line">String data = <span class="keyword">null</span>;</div><div class="line"><span class="keyword">boolean</span> dataIsEmpty = <span class="keyword">true</span>;</div><div class="line"><span class="keyword">do</span> &#123;</div><div class="line">    data = getData();</div><div class="line">    dataIsEmpty = StringUtils.isEmpty(data);</div><div class="line">    <span class="comment">//获取数据失败，延迟</span></div><div class="line">    <span class="keyword">if</span>(dataIsEmpty)&#123;</div><div class="line">        TimeUnit.SECONDS.sleep(<span class="number">1</span>);</div><div class="line">        ++tryCount;</div><div class="line">        System.out.println(<span class="string">"休眠。。。"</span>);</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        System.out.println(<span class="string">"成功获的数据。。。"</span>);</div><div class="line">    &#125;</div><div class="line">&#125; <span class="keyword">while</span>(dataIsEmpty &amp;&amp; tryCount &lt; retry_timeout);</div><div class="line"></div><div class="line">System.out.println(data);</div></pre></td></tr></table></figure>
+<h2 id="加载多个properties文件"><a href="#加载多个properties文件" class="headerlink" title="加载多个properties文件"></a>加载多个properties文件</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Properties properties = <span class="keyword">new</span> Properties();</div><div class="line">properties.load(<span class="keyword">new</span> FileInputStream(<span class="string">"file1.properties"</span>));</div><div class="line"></div><div class="line">Properties properties2 = <span class="keyword">new</span> Properties();</div><div class="line">properties2.load(<span class="keyword">new</span> FileInputStream(<span class="string">"file2.properties"</span>));</div><div class="line">properties.putAll(properties2);</div></pre></td></tr></table></figure>
+<h2 id="文件复制"><a href="#文件复制" class="headerlink" title="文件复制"></a>文件复制</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Apache Commons IO FileUtils</span></div><div class="line">FileUtils.copyFile(source, dest);</div><div class="line"></div><div class="line"><span class="comment">// Java 7 or higher</span></div><div class="line">Files.copy(source.toPath(), dest.toPath());</div></pre></td></tr></table></figure>
+<h2 id="创建多级目录"><a href="#创建多级目录" class="headerlink" title="创建多级目录"></a>创建多级目录</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">File files = <span class="keyword">new</span> File(<span class="string">"C:\\Directory2\\Sub2\\Sub-Sub2"</span>);</div><div class="line"><span class="keyword">if</span> (!files.exists()) &#123;</div><div class="line">    <span class="keyword">if</span> (files.mkdirs()) &#123;</div><div class="line">        System.out.println(<span class="string">"Multiple directories are created!"</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        System.out.println(<span class="string">"Failed to create multiple directories!"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="注解-1"><a href="#注解-1" class="headerlink" title="注解"></a>注解</h1><h2 id="内置注解"><a href="#内置注解" class="headerlink" title="内置注解"></a>内置注解</h2><h3 id="作用于Java代码的注解"><a href="#作用于Java代码的注解" class="headerlink" title="作用于Java代码的注解"></a>作用于Java代码的注解</h3><ul>
+<li>@Override 检查某个方法<code>是否是复写的方法</code>，如果这个方法在父类或者实现的接口中未找到，编译会出错。</li>
+<li>@Deprecated 标记某个<code>方法或者类被废弃</code>，如果使用该类或者方法，编译过程会报警告</li>
+<li>@SuppressWarnings 通知编译器忽略关于被标注的参数的警告</li>
+<li>@SafeVarargs 忽略关于调用含有泛型参数的方法或者构造器的警告，1.7新增注解</li>
+<li>@FunctionalInterface 表明某一个声明的接口将被用作功能性接口，1.8新增注解 </li>
+</ul>
+<p>元注解（Meta Annotation） </p>
+<ul>
+<li><p>@Retention 指明被标注的注解在什么时候使用（也就是注解什么时候会被保留） </p>
+<ul>
+<li><code>仅在源代码中保留</code>，在编译过程中丢弃（RetentionPolicy.SOURCE）</li>
+<li>注解<code>在编译过程中保存到class文件</code>，在class文件被加载时候忽略（RetentionPolicy.CLASS）</li>
+<li>注解在class文件加载时候被读取，也就是<code>运行中注解可用</code>，可以通过反射获取注解信息（RetentionPolicy.RUNTIME）</li>
+</ul>
+</li>
+<li><p>@Documented 指明在生成Javadoc时候，被标注的注解将被写入Javadoc文档中</p>
+</li>
+<li><p>@Target 指明被标注的注解的作用范围 </p>
+<ul>
+<li>ElementType.TYPE:用于描述类、接口(包括注解类型) 或enum声明</li>
+<li>ElementType.FIELD:用于描述域</li>
+<li>ElementType.METHOD:用于描述方法</li>
+<li>ElementType.PARAMETER:用于描述参数</li>
+<li>ElementType.CONSTRUCTOR:用于描述构造器</li>
+<li>ElementType.LOCAL_VARIABLE:用于描述局部变量</li>
+<li>ElementType.ANNOTATION_TYPE:用于描述注解</li>
+<li>ElementType.PACKAGE:用于描述包</li>
+</ul>
+</li>
+<li><p>@Inherited  指明被标注的注解是被继承的，也就是说如果一个@Inherited修饰的annotation类型被用于一个类，则这个annotation也会作用于改类的子类。</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</div><div class="line"><span class="meta">@Target</span>(ElementType.TYPE) <span class="comment">//on class level</span></div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> TesterInfo &#123;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">enum</span> Priority &#123;</div><div class="line">       LOW, MEDIUM, HIGH</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function">Priority <span class="title">priority</span><span class="params">()</span> <span class="keyword">default</span> Priority.MEDIUM</span>;</div><div class="line"></div><div class="line">    String[] tags() <span class="keyword">default</span> <span class="string">""</span>;</div><div class="line"></div><div class="line">    <span class="function">String <span class="title">createdBy</span><span class="params">()</span> <span class="keyword">default</span> "Mkyong"</span>;</div><div class="line"></div><div class="line">    <span class="function">String <span class="title">lastModified</span><span class="params">()</span> <span class="keyword">default</span> "03/01/2014"</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@TesterInfo</span>(</div><div class="line">    priority = Priority.HIGH,</div><div class="line">    createdBy = <span class="string">"mkyong.com"</span>,</div><div class="line">    tags = &#123;<span class="string">"sales"</span>,<span class="string">"test"</span> &#125;</div><div class="line">)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestExample</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Class&lt;TestExample&gt; obj = TestExample.class;</div><div class="line"><span class="keyword">if</span> (obj.isAnnotationPresent(TesterInfo.class)) &#123;</div><div class="line">    Annotation annotation = obj.getAnnotation(TesterInfo.class);</div><div class="line">    TesterInfo testerInfo = (TesterInfo) annotation;</div><div class="line">&#125;</div><div class="line"><span class="keyword">for</span> (Method method : obj.getDeclaredMethods()) &#123;</div><div class="line">    <span class="keyword">if</span> (method.isAnnotationPresent(Test.class)) &#123;</div><div class="line">        Annotation annotation = method.getAnnotation(Test.class);</div><div class="line">        Test test = (Test) annotation;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="使用的Class文件来自哪个jar包"><a href="#使用的Class文件来自哪个jar包" class="headerlink" title="使用的Class文件来自哪个jar包"></a>使用的Class文件来自哪个jar包</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">URL location = Logger.class.getProtectionDomain().getCodeSource().getLocation();</div><div class="line">System.out.println(location);</div></pre></td></tr></table></figure>
+<h2 id="查看编译版本"><a href="#查看编译版本" class="headerlink" title="查看编译版本"></a>查看编译版本</h2><p>javap -verbose MyClass | findstr “major”</p>
+<p>jdk版本和major version对应关系<br>J2SE 8 = 52,<br>J2SE 7 = 51,<br>J2SE 6.0 = 50,<br>J2SE 5.0 = 49,<br>JDK 1.4 = 48,<br>JDK 1.3 = 47,<br>JDK 1.2 = 46,<br>JDK 1.1 = 45</p>
+<h1 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h1><h2 id="静态方法泛型"><a href="#静态方法泛型" class="headerlink" title="静态方法泛型"></a>静态方法泛型</h2><p>静态方法操作的应用数据类型不确定，可以将泛型定义在方法上 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;W&gt; <span class="function"><span class="keyword">void</span> <span class="title">staticMethod</span><span class="params">(W w)</span></span>&#123;  </div><div class="line">    System.out.println(<span class="string">"staticMethod :"</span>+ w);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/21/spring4/" rel="next" title="Spring 4">
+                <i class="fa fa-chevron-left"></i> Spring 4
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/21/apache-commons/" rel="prev" title="Apache Commons">
+                Apache Commons <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jdk安装"><span class="nav-number">1.</span> <span class="nav-text">jdk安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面向对象三大特征"><span class="nav-number">2.</span> <span class="nav-text">面向对象三大特征</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java基础"><span class="nav-number">3.</span> <span class="nav-text">Java基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#float-与-double"><span class="nav-number">3.1.</span> <span class="nav-text">float 与 double</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#int-和-Integer区别"><span class="nav-number">3.2.</span> <span class="nav-text">int 和 Integer区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String-format-String-format-Object…-args"><span class="nav-number">3.3.</span> <span class="nav-text">String.format(String format,Object… args)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据类型转换"><span class="nav-number">3.4.</span> <span class="nav-text">基本数据类型转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashCode"><span class="nav-number">3.5.</span> <span class="nav-text">HashCode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#近似数"><span class="nav-number">3.6.</span> <span class="nav-text">近似数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机数"><span class="nav-number">3.7.</span> <span class="nav-text">随机数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取当前执行的方法"><span class="nav-number">3.8.</span> <span class="nav-text">获取当前执行的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多继承"><span class="nav-number">3.9.</span> <span class="nav-text">多继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串拼接"><span class="nav-number">3.10.</span> <span class="nav-text">字符串拼接</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件操作"><span class="nav-number">4.</span> <span class="nav-text">文件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取classpath路径"><span class="nav-number">4.1.</span> <span class="nav-text">获取classpath路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建临时文件"><span class="nav-number">4.2.</span> <span class="nav-text">创建临时文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写文件-img2base64"><span class="nav-number">4.3.</span> <span class="nav-text">写文件 img2base64</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件保存"><span class="nav-number">4.4.</span> <span class="nav-text">文件保存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#递归文件目录"><span class="nav-number">4.5.</span> <span class="nav-text">递归文件目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象操作"><span class="nav-number">5.</span> <span class="nav-text">对象操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Map深拷贝"><span class="nav-number">5.1.</span> <span class="nav-text">Map深拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象深拷贝"><span class="nav-number">5.2.</span> <span class="nav-text">对象深拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同名属性拷贝"><span class="nav-number">5.3.</span> <span class="nav-text">同名属性拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用参数创建List"><span class="nav-number">5.4.</span> <span class="nav-text">使用参数创建List</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数组移除元素java-lang-UnsupportedOperationException"><span class="nav-number">6.</span> <span class="nav-text">数组移除元素java.lang.UnsupportedOperationException</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取本机ip"><span class="nav-number">6.1.</span> <span class="nav-text">获取本机ip</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">7.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#常用异常类型"><span class="nav-number">7.1.</span> <span class="nav-text">常用异常类型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调试技巧"><span class="nav-number">8.</span> <span class="nav-text">调试技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#日志代理"><span class="nav-number">8.1.</span> <span class="nav-text">日志代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打印堆栈"><span class="nav-number">8.2.</span> <span class="nav-text">打印堆栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理非捕获异常"><span class="nav-number">8.3.</span> <span class="nav-text">处理非捕获异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#观察类加载过程"><span class="nav-number">8.4.</span> <span class="nav-text">观察类加载过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用jconsole显示虚拟机性能统计"><span class="nav-number">8.5.</span> <span class="nav-text">使用jconsole显示虚拟机性能统计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日期"><span class="nav-number">9.</span> <span class="nav-text">日期</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#日期转换"><span class="nav-number">9.1.</span> <span class="nav-text">日期转换</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#日志"><span class="nav-number">10.</span> <span class="nav-text">日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#log4j-换行"><span class="nav-number">11.</span> <span class="nav-text">log4j 换行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注释"><span class="nav-number">12.</span> <span class="nav-text">注释</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注解"><span class="nav-number">13.</span> <span class="nav-text">注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#接口过时"><span class="nav-number">13.1.</span> <span class="nav-text">接口过时</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#序列化"><span class="nav-number">14.</span> <span class="nav-text">序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK"><span class="nav-number">14.1.</span> <span class="nav-text">JDK</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SerialVersionUid"><span class="nav-number">15.</span> <span class="nav-text">SerialVersionUid</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java异常处理"><span class="nav-number">16.</span> <span class="nav-text">java异常处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优化"><span class="nav-number">17.</span> <span class="nav-text">优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#for循环优化"><span class="nav-number">17.1.</span> <span class="nav-text">for循环优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组复制"><span class="nav-number">17.2.</span> <span class="nav-text">数组复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#减少I-O操作"><span class="nav-number">17.3.</span> <span class="nav-text">减少I/O操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tools"><span class="nav-number">18.</span> <span class="nav-text">Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#load-xml-conf"><span class="nav-number">18.1.</span> <span class="nav-text">load xml conf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序"><span class="nav-number">18.2.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shutdown-hook"><span class="nav-number">18.3.</span> <span class="nav-text">shutdown hook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javaSE-运行"><span class="nav-number">18.4.</span> <span class="nav-text">javaSE 运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3DES加密"><span class="nav-number">18.5.</span> <span class="nav-text">3DES加密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#List截取"><span class="nav-number">18.6.</span> <span class="nav-text">List截取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数校验"><span class="nav-number">18.7.</span> <span class="nav-text">参数校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延迟重试（retry-with-delay）"><span class="nav-number">18.8.</span> <span class="nav-text">延迟重试（retry with delay）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加载多个properties文件"><span class="nav-number">18.9.</span> <span class="nav-text">加载多个properties文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件复制"><span class="nav-number">18.10.</span> <span class="nav-text">文件复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建多级目录"><span class="nav-number">18.11.</span> <span class="nav-text">创建多级目录</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注解-1"><span class="nav-number">19.</span> <span class="nav-text">注解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内置注解"><span class="nav-number">19.1.</span> <span class="nav-text">内置注解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#作用于Java代码的注解"><span class="nav-number">19.1.1.</span> <span class="nav-text">作用于Java代码的注解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用的Class文件来自哪个jar包"><span class="nav-number">19.2.</span> <span class="nav-text">使用的Class文件来自哪个jar包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看编译版本"><span class="nav-number">19.3.</span> <span class="nav-text">查看编译版本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#泛型"><span class="nav-number">20.</span> <span class="nav-text">泛型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#静态方法泛型"><span class="nav-number">20.1.</span> <span class="nav-text">静态方法泛型</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

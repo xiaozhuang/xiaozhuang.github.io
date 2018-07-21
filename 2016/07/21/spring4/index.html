@@ -1,0 +1,900 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,Sriing," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Spring框架是以简化java EE应用程序的开发为目标而创建的。">
+<meta name="keywords" content="Java,Sriing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring 4">
+<meta property="og:url" content="http://xiaozhuang.github.io/2016/07/21/spring4/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="Spring框架是以简化java EE应用程序的开发为目标而创建的。">
+<meta property="og:updated_time" content="2018-07-15T02:21:40.072Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring 4">
+<meta name="twitter:description" content="Spring框架是以简化java EE应用程序的开发为目标而创建的。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> Spring 4 | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring 4
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-21T10:18:38+08:00" content="2016-07-21">
+              2016-07-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Spring框架是以简化java EE应用程序的开发为目标而创建的。<br><a id="more"></a></p>
+<h1 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h1><h2 id="Spring配置的可选方案"><a href="#Spring配置的可选方案" class="headerlink" title="Spring配置的可选方案"></a>Spring配置的可选方案</h2><ul>
+<li>XML中显示配置</li>
+<li>Java中显示配置</li>
+<li>隐式的bean发现机制和自动装配</li>
+</ul>
+<p>建议尽可能地使用自动装配的机制，显示配置越少越好。<br>推荐使用类型安全且比XML更强大的JavaConfig。<br>只有需要使用便利地XML命名空间，并且在JavaConfig中没有同样的实现时，才应该使用XML。</p>
+<h2 id="自动装配bean"><a href="#自动装配bean" class="headerlink" title="自动装配bean"></a>自动装配bean</h2><p>Spring 从两个角度实现自动化装配:</p>
+<ul>
+<li>组件扫描（component scanning）：发现应用上下文中所创建的bean。</li>
+<li>自动装配（autowiring）：自动满足bean之间的依赖。</li>
+</ul>
+<h2 id="组件扫描的bean命名"><a href="#组件扫描的bean命名" class="headerlink" title="组件扫描的bean命名"></a>组件扫描的bean命名</h2><p>bean的ID默认为类名将首字母变为小写</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//注解指定bean名称</span></div><div class="line"><span class="meta">@Component</span>(<span class="string">"cDPlayer"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayer</span> <span class="keyword">implements</span> <span class="title">MediaPlayer</span></span>&#123;&#125;</div></pre></td></tr></table></figure>
+<h2 id="设置组件扫描的基础包"><a href="#设置组件扫描的基础包" class="headerlink" title="设置组件扫描的基础包"></a>设置组件扫描的基础包</h2><p>@Configuration</p>
+<h3 id="默认基础包"><a href="#默认基础包" class="headerlink" title="默认基础包"></a>默认基础包</h3><p>@ComponentScan默认以配置类所在的包作为基础包</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@ComponentScan</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayerConfig</span> </span>&#123; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="String指定基础包"><a href="#String指定基础包" class="headerlink" title="String指定基础包"></a>String指定基础包</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@ComponentScan</span>(<span class="string">"com.sunday"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayerConfig</span> </span>&#123; </div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@ComponentScan</span>(basePackages=&#123;<span class="string">"com.sunday.controller"</span>,<span class="string">"com.sunday.services"</span>&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayerConfig</span> </span>&#123; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Class指定基础包"><a href="#Class指定基础包" class="headerlink" title="Class指定基础包"></a>Class指定基础包</h3><p>这些类所在的包将作为组件扫描的基础包（推荐使用这种方式）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@ComponentScan</span>(basePackageClasses=&#123;MediaPlayer.class&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayerConfig</span> </span>&#123; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以考虑在包中创建一个用来进行扫描的空标记接口（marker interface）</p>
+<h2 id="通过java代码配置bean"><a href="#通过java代码配置bean" class="headerlink" title="通过java代码配置bean"></a>通过java代码配置bean</h2><p>在进行显示的配置时，javaConfig是更好的方案，它更为强大、类型安全且对重构友好。</p>
+<h3 id="创建配置类"><a href="#创建配置类" class="headerlink" title="创建配置类"></a>创建配置类</h3><p>@Configuration注解表明类时配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CDPlayerConfig</span> </span>&#123; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="声明简单bean"><a href="#声明简单bean" class="headerlink" title="声明简单bean"></a>声明简单bean</h3><p>编写一个方法，该方法会创建所需类型的实例，然后给这个方法添加@bean注解。</p>
+<p>@bean注解告诉Sring这个方法将会放回一个对象，该对象要注册为Spring应用上下文中的bean。<br>方法体中包含了最终<code>产生bean实例的逻辑</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> CompactDisc <span class="title">sgtPeppers</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> SgtPeppers();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//默认，bean的ID与带有@Bean注解的方法名是一样的</span></div><div class="line"><span class="comment">//通过name属性指定不同的名字</span></div><div class="line"><span class="meta">@Bean</span>(name = <span class="string">"sgtPeppers"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> CompactDisc <span class="title">sgtPeppers</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> SgtPeppers();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="借助javaConfig实现注入"><a href="#借助javaConfig实现注入" class="headerlink" title="借助javaConfig实现注入"></a>借助javaConfig实现注入</h3><p>方式1：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> CompactDisc <span class="title">sgtPeppers</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> SgtPeppers();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> MediaPlayer <span class="title">cDPlayer</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="comment">//通过调用sgtPeppers()实现注入</span></div><div class="line">	<span class="comment">//看起来CompactDisc是通过调用sgtPeppers获取的，但并非完全如此</span></div><div class="line">	<span class="comment">//sgtPeppers()是@bean注解的方法，Spring会拦截所有对它的调用，并确保直接放回该方法所创建的bean</span></div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> CDPlayer(sgtPeppers());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>方式2：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> CompactDisc <span class="title">sgtPeppers</span><span class="params">()</span></span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> SgtPeppers();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//将需要注入的对象，作为参数添加到参数列表</span></div><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> MediaPlayer <span class="title">cDPlayer</span><span class="params">(CompactDisc compactDisc)</span></span>&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> CDPlayer(compactDisc);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过这种方式引用其他bean通常是最佳的选择<br>它不会要求将CompactDisc生命到同一配置类中</p>
+<h2 id="导入和混合配置"><a href="#导入和混合配置" class="headerlink" title="导入和混合配置"></a>导入和混合配置</h2><h3 id="JavaConfig配置导入"><a href="#JavaConfig配置导入" class="headerlink" title="JavaConfig配置导入"></a>JavaConfig配置导入</h3><p>使用<code>@Import</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@Import</span>(&#123;CDPlayerConfig.class&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationConfig</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="JavaConfig混合XML配置"><a href="#JavaConfig混合XML配置" class="headerlink" title="JavaConfig混合XML配置"></a>JavaConfig混合XML配置</h3><p>使用<code>@ImportResource</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@ImportResource</span>(<span class="string">"classpath:cd-config.xml"</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationConfig</span> </span>&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="XML配置混合JavaConfig配置"><a href="#XML配置混合JavaConfig配置" class="headerlink" title="XML配置混合JavaConfig配置"></a>XML配置混合JavaConfig配置</h3><p>使用JavaConfig创建bean，添加到xml配置中</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"soundsystem.CDPlayerConfig"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<h1 id="读取配置文件"><a href="#读取配置文件" class="headerlink" title="读取配置文件"></a>读取配置文件</h1><h2 id="JavaConfig"><a href="#JavaConfig" class="headerlink" title="JavaConfig"></a>JavaConfig</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="meta">@PropertySources</span>(&#123;</div><div class="line">    <span class="meta">@PropertySource</span>(<span class="string">"classpath:db.properties"</span>),</div><div class="line">    <span class="meta">@PropertySource</span>(<span class="string">"classpath:redis.properties"</span>)</div><div class="line">&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedisConfig</span> </span>&#123;</div><div class="line">    <span class="meta">@Autowired</span></div><div class="line">    <span class="keyword">private</span> Environment env;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> JedisConnectionFactory <span class="title">jedisConnFactory</span><span class="params">(@Value(<span class="string">"$&#123;redis.usePool&#125;"</span>)</span> <span class="keyword">boolean</span> usePool)</span>&#123;</div><div class="line">        String redisHost = env.getProperty(<span class="string">"redis.host"</span>);</div><div class="line">        </div><div class="line">        JedisConnectionFactory jedisConnectionFactory = <span class="keyword">new</span> JedisConnectionFactory();</div><div class="line">        jedisConnectionFactory.setHostName(redisHost);</div><div class="line">        jedisConnectionFactory.setUsePool(usePool);</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> jedisConnectionFactory;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Conditional"><a href="#Conditional" class="headerlink" title="Conditional"></a>Conditional</h2><p><code>条件注册</code><br>@Conditional 只有在特定条件满足时才启用一些配置</p>
+<p>除了自自定义Condition之外，Spring-boot还提供了很多Condition给我们用</p>
+<a href="https://fangjian0423.github.io/2017/05/16/springboot-condition-annotation/" title="SpringBoot源码分析之条件注解的底层实现" target="_blank" rel="external">SpringBoot源码分析之条件注解的底层实现</a>
+<p>@ConditionalOnBean（仅仅在当前上下文中存在某个对象时，才会实例化一个Bean）<br>@ConditionalOnClass（某个class位于类路径上，才会实例化一个Bean）<br>@ConditionalOnExpression（当表达式为true的时候，才会实例化一个Bean）<br>@ConditionalOnMissingBean（仅仅在当前上下文中不存在某个对象时，才会实例化一个Bean）<br>@ConditionalOnMissingClass（某个class类路径上不存在的时候，才会实例化一个Bean）<br>@ConditionalOnNotWebApplication（不是web应用）</p>
+<h1 id="面向切面的Spring"><a href="#面向切面的Spring" class="headerlink" title="面向切面的Spring"></a>面向切面的Spring</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.sunday.spring_boot_learn.aspect;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.aspectj.lang.JoinPoint;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</div><div class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.*;</div><div class="line"><span class="keyword">import</span> org.slf4j.Logger;</div><div class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</div><div class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</div><div class="line"><span class="keyword">import</span> org.springframework.web.context.request.RequestContextHolder;</div><div class="line"><span class="keyword">import</span> org.springframework.web.context.request.ServletRequestAttributes;</div><div class="line"></div><div class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Created by Sunday on 2017/5/17.</div><div class="line"> */</div><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpAspect</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Logger logger = LoggerFactory.getLogger(HttpAspect.class);</div><div class="line"></div><div class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(public * com.sunday.spring_boot_learn.controller.PersonController.*(..))"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">log</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="comment">//    @Before("log()")</span></div><div class="line"><span class="comment">//    public void doBefore(JoinPoint joinPoint)&#123;</span></div><div class="line"><span class="comment">//        //类名和方法名</span></div><div class="line"><span class="comment">//        logger.debug("before invoke: &#123;&#125;.&#123;&#125;() args=&#123;&#125;",</span></div><div class="line"><span class="comment">//                joinPoint.getSignature().getDeclaringTypeName(),</span></div><div class="line"><span class="comment">//                joinPoint.getSignature().getName(),</span></div><div class="line"><span class="comment">//                joinPoint.getArgs());</span></div><div class="line"><span class="comment">//    &#125;</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//    @After("log()")</span></div><div class="line"><span class="comment">//    public void doAfter(JoinPoint joinPoint)&#123;</span></div><div class="line"><span class="comment">//        logger.debug("after invoke: &#123;&#125;.&#123;&#125;() args=&#123;&#125;",</span></div><div class="line"><span class="comment">//                joinPoint.getSignature().getDeclaringTypeName(),</span></div><div class="line"><span class="comment">//                joinPoint.getSignature().getName(),</span></div><div class="line"><span class="comment">//                joinPoint.getArgs());</span></div><div class="line"><span class="comment">//    &#125;</span></div><div class="line"></div><div class="line">    <span class="meta">@Around</span>(<span class="string">"log()"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">doAround</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable </span>&#123;</div><div class="line">        logger.debug(<span class="string">"before invoke: &#123;&#125;.&#123;&#125;() args=&#123;&#125;"</span>,</div><div class="line">                joinPoint.getSignature().getDeclaringTypeName(),</div><div class="line">                joinPoint.getSignature().getName(),</div><div class="line">                joinPoint.getArgs());</div><div class="line"></div><div class="line">        Object result = joinPoint.proceed();</div><div class="line"></div><div class="line"></div><div class="line">        logger.debug(<span class="string">"after invoke: &#123;&#125;.&#123;&#125;() args=&#123;&#125;"</span>,</div><div class="line">                joinPoint.getSignature().getDeclaringTypeName(),</div><div class="line">                joinPoint.getSignature().getName(),</div><div class="line">                joinPoint.getArgs());</div><div class="line"></div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="meta">@AfterReturning</span>(returning = <span class="string">"object"</span>, pointcut = <span class="string">"log()"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAfterReturning</span><span class="params">(Object object)</span></span>&#123;</div><div class="line">        logger.debug(<span class="string">"response=&#123;&#125;"</span>, object);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="注解事务"><a href="#注解事务" class="headerlink" title="注解事务"></a>注解事务</h1><p>@Transactional 注解</p>
+<ul>
+<li>name              指定事务管理器</li>
+<li>propagation       事务传播行为，默认值 REQUIRED</li>
+<li>isolation         事务隔离度，默认值 DEFAULT</li>
+<li>timeout           事务的超时时间，默认值为-1，单位是秒</li>
+<li>readOnly          是否为只读事务，默认值为 false</li>
+<li>rollbackFor       能够触发事务回滚的异常类型</li>
+<li>noRollbackFor     指定的异常类型，不回滚事务</li>
+</ul>
+<h2 id="事务传播行为"><a href="#事务传播行为" class="headerlink" title="事务传播行为"></a>事务传播行为</h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TransactionDefinition.PROPAGATION_REQUIRED</td>
+<td><code>默认值</code>，如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务</td>
+</tr>
+<tr>
+<td>TransactionDefinition.PROPAGATION_REQUIRES_NEW</td>
+<td>创建一个新的事务，如果当前存在事务，则把当前事务挂起</td>
+</tr>
+<tr>
+<td>TransactionDefinition.PROPAGATION_SUPPORTS</td>
+<td>如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行</td>
+</tr>
+<tr>
+<td>TransactionDefinition.PROPAGATION_NOT_SUPPORTED</td>
+<td>以非事务方式运行，如果当前存在事务，则把当前事务挂起</td>
+</tr>
+<tr>
+<td>TransactionDefinition.PROPAGATION_NEVER</td>
+<td>以非事务方式运行，如果当前存在事务，则抛出异常</td>
+</tr>
+<tr>
+<td>TransactionDefinition.PROPAGATION_MANDATORY</td>
+<td>如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常</td>
+</tr>
+<tr>
+<td>TransactionDefinition.PROPAGATION_NESTED</td>
+<td>如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于REQUIRED</td>
+</tr>
+</tbody>
+</table>
+<h2 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TransactionDefinition.ISOLATION_DEFAULT</td>
+<td><code>默认值</code>，默认隔离级别</td>
+</tr>
+<tr>
+<td>TransactionDefinition.ISOLATION_READ_UNCOMMITTED</td>
+<td>未提交读（Read uncommitted）</td>
+</tr>
+<tr>
+<td>TransactionDefinition.ISOLATION_READ_COMMITTED</td>
+<td>已提交读（Read committed）</td>
+</tr>
+<tr>
+<td>TransactionDefinition.ISOLATION_REPEATABLE_READ</td>
+<td>可重复读（Repeatable read）</td>
+</tr>
+<tr>
+<td>TransactionDefinition.ISOLATION_SERIALIZABLE</td>
+<td>可串行化（Serializable）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="事务的只读属性"><a href="#事务的只读属性" class="headerlink" title="事务的只读属性"></a>事务的只读属性</h2><p>如果确定只对事务性资源进行只读操作，那么我们可以将事务标志为只读的，以<code>提高事务处理的性能</code></p>
+<h2 id="事务的回滚规则"><a href="#事务的回滚规则" class="headerlink" title="事务的回滚规则"></a>事务的回滚规则</h2><p>默认情况下，如果在事务中抛出了未检查异常（继承自 RuntimeException 的异常）或者 Error，则 Spring 将回滚事务；除此之外，Spring 不会回滚事务。</p>
+<h2 id="注解方式的事务使用注意事项"><a href="#注解方式的事务使用注意事项" class="headerlink" title="注解方式的事务使用注意事项"></a>注解方式的事务使用注意事项</h2><p>@Transactional 只能应用到 public 方法才有效<br>若不是 public，就不会获取@Transactional 的属性配置信息，最终会造成不会用 TransactionInterceptor 来拦截该目标方法进行事务管理</p>
+<h2 id="不加-Transactional"><a href="#不加-Transactional" class="headerlink" title="不加@Transactional"></a>不加@Transactional</h2><p>不管写不写transaction，事务是肯定有的。<br>只是<code>默认单条sql一个事务</code>，<br>如果我们在Service层的方法上加Transaction注解，那么事务的范围就会扩大，包含在service方法执行的所有sql</p>
+<h1 id="Tools"><a href="#Tools" class="headerlink" title="Tools"></a>Tools</h1><h2 id="生成md5"><a href="#生成md5" class="headerlink" title="生成md5"></a>生成md5</h2><p><code>spring-core-3.0.3.RELEASE.jar</code><br>org.springframework.util.DigestUtils</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DigestUtils.md5DigestAsHex(filePath.getBytes()).toUpperCase();</div></pre></td></tr></table></figure>
+<h1 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h1><p>spring mvc 3以及之前版本可能存在的一个<br>redirect引起的内存泄露问题<br>示例为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(method = RequestMethod.POST)  </div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">onPost</span><span class="params">()</span> </span>&#123;  </div><div class="line">    <span class="comment">// ...  </span></div><div class="line">    <span class="keyword">return</span> <span class="string">"redirect:form.html?entityId="</span> + entityId;  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>AbstractCachingViewResolver中viewCache缓存视图<br>redirect这个时候，使用的是整个从controller方法中返回的字符串，做为view name</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RequestMapping</span>(method = RequestMethod.POST)    </div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">onPost</span><span class="params">(RedirectAttributes redirectAttrs)</span> </span>&#123;    </div><div class="line">    <span class="comment">// ...  </span></div><div class="line">    redirectAttrs.addAttribute(<span class="string">"entityId"</span>, entityId)  </div><div class="line">    <span class="keyword">return</span> <span class="string">"redirect:form.html?entityId=&#123;entityId&#125;"</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Sriing/" rel="tag"># Sriing</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/30/request-wrapper/" rel="next" title="Java Request Wrapper">
+                <i class="fa fa-chevron-left"></i> Java Request Wrapper
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/21/javase/" rel="prev" title="JavaSE">
+                JavaSE <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IOC"><span class="nav-number">1.</span> <span class="nav-text">IOC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring配置的可选方案"><span class="nav-number">1.1.</span> <span class="nav-text">Spring配置的可选方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动装配bean"><span class="nav-number">1.2.</span> <span class="nav-text">自动装配bean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件扫描的bean命名"><span class="nav-number">1.3.</span> <span class="nav-text">组件扫描的bean命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置组件扫描的基础包"><span class="nav-number">1.4.</span> <span class="nav-text">设置组件扫描的基础包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#默认基础包"><span class="nav-number">1.4.1.</span> <span class="nav-text">默认基础包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String指定基础包"><span class="nav-number">1.4.2.</span> <span class="nav-text">String指定基础包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class指定基础包"><span class="nav-number">1.4.3.</span> <span class="nav-text">Class指定基础包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过java代码配置bean"><span class="nav-number">1.5.</span> <span class="nav-text">通过java代码配置bean</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建配置类"><span class="nav-number">1.5.1.</span> <span class="nav-text">创建配置类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#声明简单bean"><span class="nav-number">1.5.2.</span> <span class="nav-text">声明简单bean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#借助javaConfig实现注入"><span class="nav-number">1.5.3.</span> <span class="nav-text">借助javaConfig实现注入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#导入和混合配置"><span class="nav-number">1.6.</span> <span class="nav-text">导入和混合配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaConfig配置导入"><span class="nav-number">1.6.1.</span> <span class="nav-text">JavaConfig配置导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaConfig混合XML配置"><span class="nav-number">1.6.2.</span> <span class="nav-text">JavaConfig混合XML配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#XML配置混合JavaConfig配置"><span class="nav-number">1.6.3.</span> <span class="nav-text">XML配置混合JavaConfig配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#读取配置文件"><span class="nav-number">2.</span> <span class="nav-text">读取配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaConfig"><span class="nav-number">2.1.</span> <span class="nav-text">JavaConfig</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conditional"><span class="nav-number">2.2.</span> <span class="nav-text">Conditional</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面向切面的Spring"><span class="nav-number">3.</span> <span class="nav-text">面向切面的Spring</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注解事务"><span class="nav-number">4.</span> <span class="nav-text">注解事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事务传播行为"><span class="nav-number">4.1.</span> <span class="nav-text">事务传播行为</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务隔离级别"><span class="nav-number">4.2.</span> <span class="nav-text">事务隔离级别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务的只读属性"><span class="nav-number">4.3.</span> <span class="nav-text">事务的只读属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务的回滚规则"><span class="nav-number">4.4.</span> <span class="nav-text">事务的回滚规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注解方式的事务使用注意事项"><span class="nav-number">4.5.</span> <span class="nav-text">注解方式的事务使用注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不加-Transactional"><span class="nav-number">4.6.</span> <span class="nav-text">不加@Transactional</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Tools"><span class="nav-number">5.</span> <span class="nav-text">Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#生成md5"><span class="nav-number">5.1.</span> <span class="nav-text">生成md5</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重定向"><span class="nav-number">6.</span> <span class="nav-text">重定向</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

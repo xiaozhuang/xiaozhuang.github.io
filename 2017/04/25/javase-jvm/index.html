@@ -1,0 +1,920 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Java 虚拟机">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaSE JVM">
+<meta property="og:url" content="http://xiaozhuang.github.io/2017/04/25/javase-jvm/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="Java 虚拟机">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/25/javase-jvm/jvmMemory1.png">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/25/javase-jvm/stackHeapInfo.png">
+<meta property="og:image" content="http://xiaozhuang.github.io/2017/04/25/javase-jvm/StringIiteral.png">
+<meta property="og:updated_time" content="2018-07-10T00:44:04.772Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaSE JVM">
+<meta name="twitter:description" content="Java 虚拟机">
+<meta name="twitter:image" content="http://xiaozhuang.github.io/2017/04/25/javase-jvm/jvmMemory1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> JavaSE JVM | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaSE JVM
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-25T16:07:25+08:00" content="2017-04-25">
+              2017-04-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Java 虚拟机<br><a id="more"></a></p>
+<h1 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h1><p>运行时内存模型，分为<code>线程私有</code>和<code>共享数据区</code>两大类。<br>其中线程私有的数据区包含<code>程序计数器</code>、<code>虚拟机栈</code>、<code>本地方法栈</code>，<br>所有线程共享的数据区包含<code>Java堆</code>、<code>方法区</code>，在方法区内包含<code>常量池</code>。</p>
+<blockquote><p>参考文档：<br><a href="http://gityuan.com/2016/01/09/java-memory/" target="_blank" rel="external">http://gityuan.com/2016/01/09/java-memory/</a><br><a href="https://www.zhihu.com/question/29884421" target="_blank" rel="external">https://www.zhihu.com/question/29884421</a></p>
+</blockquote>
+<img src="/2017/04/25/javase-jvm/jvmMemory1.png" alt="jvmMemory1.png" title="">
+<p>详细模型</p>
+<img src="/2017/04/25/javase-jvm/stackHeapInfo.png" alt="stackHeapInfo.png" title="">
+<h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><p>存放虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。</p>
+<p>方法区的内存回收目标主要是针对常量池的回收和类型的卸载。</p>
+<blockquote>
+<p>java虚拟机规范把方法区描述为堆的一个逻辑部分，它有一个别名叫Non-Heap</p>
+</blockquote>
+<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>运行时常量池：是<code>方法区的一部分</code>，<br>是类或接口class文件中<code>常量池表</code>的运行时表示形式，<br>常量池表用于存放<code>字面量</code>和<code>符号引用</code>。</p>
+<p>字面量：包含文本字符串、声明为final的常量值等。<br>符号引用：类和接口的全限定名、字段的名称和描述符、方法的名称和描述符。</p>
+<p>Java虚拟机为每个类型都维护着一个常量池。</p>
+<h3 id="String类中的intern-方法"><a href="#String类中的intern-方法" class="headerlink" title="String类中的intern()方法"></a>String类中的intern()方法</h3><p>运行时常量池除了编译期产生的Class文件的常量池，还可以在运行期间，将新的常量加入常量池，<br>比较常见的是String类的intern()方法。</p>
+<img src="/2017/04/25/javase-jvm/StringIiteral.png" alt="StringIiteral.png" title="">
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 1.String定义时赋值，表达式右侧只有字符串常量，变量存放在常量池里</span></div><div class="line"><span class="comment">// 2.new出来的字符串是放在堆中</span></div><div class="line"><span class="comment">// 3.对字符串进行拼接操作，分2中情况： </span></div><div class="line"><span class="comment">//      右侧是纯字符串常量，存于字符串常量池；</span></div><div class="line"><span class="comment">//      右侧存在字符串对象句柄，存放在堆中。</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 在heap堆重新创建一个对象</span></div><div class="line"><span class="comment">// 然后把 弱引用驻留到字符串常量区。</span></div><div class="line"><span class="comment">// 然后再把引用复制栈帧的局部变量表。</span></div><div class="line">String str = <span class="string">"Hello"</span>;</div><div class="line"></div><div class="line"><span class="comment">// 在heap堆重新创建一个对象</span></div><div class="line">String str2 = <span class="keyword">new</span> String(<span class="string">"Hello"</span>);</div><div class="line"></div><div class="line"><span class="comment">// 能手动检查字符串常量池，把有新字面值的字符串地址驻留到常量池里</span></div><div class="line">String str3 = str2.intern();</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># server模式 打印GC</span></div><div class="line">java -server -verbose:gc -XX:+PrintCompilation C2EscapeAnalysisDemo </div><div class="line"><span class="comment"># 逃逸分析和空间分配消除功能</span></div><div class="line">java -server -verbose:gc -XX:+PrintCompilation -XX:+DoEscapeAnalysis -XX:+EliminateAllocations C2EscapeAnalysisDemo</div></pre></td></tr></table></figure>
+<blockquote><footer><strong>参考文档:</strong><cite><a href="https://www.zhihu.com/question/22739143" target="_blank" rel="external">www.zhihu.com/question/22739143</a></cite></footer></blockquote>
+<p>Java的8种基本类型(Byte, Short, Integer, Long, Character, Boolean, Float, Double), 除Float和Double以外, 其它六种都实现了常量池,<br>但是它们只在大于等于-128并且小于等于127时才使用常量池。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </div><div class="line">    Integer a = <span class="number">127</span>;  </div><div class="line">    Integer b = <span class="number">127</span>;  </div><div class="line">    System.out.println(<span class="string">"等于127:"</span>);  </div><div class="line">    System.out.println(a == b);  </div><div class="line">    System.out.println(<span class="string">"*****************"</span>);  </div><div class="line">  </div><div class="line">    a = <span class="number">128</span>;  </div><div class="line">    b = <span class="number">128</span>;  </div><div class="line">    System.out.println(<span class="string">"等于128:"</span>);  </div><div class="line">    System.out.println(a == b);  </div><div class="line">    System.out.println(<span class="string">"*****************"</span>);  </div><div class="line">  </div><div class="line">    a = -<span class="number">128</span>;  </div><div class="line">    b = -<span class="number">128</span>;  </div><div class="line">    System.out.println(<span class="string">"等于-128:"</span>);  </div><div class="line">    System.out.println(a == b);  </div><div class="line">    System.out.println(<span class="string">"*****************"</span>);  </div><div class="line">  </div><div class="line">    a = -<span class="number">129</span>;  </div><div class="line">    b = -<span class="number">129</span>;  </div><div class="line">    System.out.println(<span class="string">"等于-129:"</span>);  </div><div class="line">    System.out.println(a == b);  </div><div class="line">    System.out.println(<span class="string">"*****************"</span>);  </div><div class="line">  </div><div class="line">    <span class="comment">// &lt;a href="http://lib.csdn.net/base/softwaretest" class='replace_word' title="软件测试知识库" target='_blank' style='color:#df3434; font-weight:bold;'&gt;测试&lt;/a&gt;Boolean  </span></div><div class="line">    System.out.println(<span class="string">"测试Boolean"</span>);  </div><div class="line">    Boolean c = <span class="keyword">true</span>;  </div><div class="line">    Boolean d = <span class="keyword">true</span>;  </div><div class="line">    System.out.println(c == d);  </div><div class="line">    d = <span class="keyword">new</span> Boolean(<span class="keyword">true</span>);  </div><div class="line">    System.out.println(c == d);  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">等于127:</div><div class="line">true</div><div class="line">*****************</div><div class="line">等于128:</div><div class="line">false</div><div class="line">*****************</div><div class="line">等于-128:</div><div class="line">true</div><div class="line">*****************</div><div class="line">等于-129:</div><div class="line">false</div><div class="line">*****************</div><div class="line">测试Boolean</div><div class="line">true</div><div class="line">false</div></pre></td></tr></table></figure>
+<blockquote><footer><strong>参考文档:</strong><cite><a href="http://blog.csdn.net/shw2004/article/details/5678703" target="_blank" rel="external">blog.csdn.net/shw2004/article/details/5678703</a></cite></footer></blockquote>
+<h2 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h2><p>存放对象实例和数组数据</p>
+<h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><p>当前线程所执行的字节码的行号指示器</p>
+<blockquote>
+<p>如果正在执行Native方法，计数器值为空（Undefined）</p>
+</blockquote>
+<h2 id="虚拟机栈"><a href="#虚拟机栈" class="headerlink" title="虚拟机栈"></a>虚拟机栈</h2><p>Java方法执行的内存模型：栈帧随着方法调用而创建，随着方法结束而销毁。</p>
+<h3 id="栈帧"><a href="#栈帧" class="headerlink" title="栈帧"></a>栈帧</h3><p>栈帧是方法执行的数据结构</p>
+<p>栈帧包括:</p>
+<ul>
+<li>局部变量表</li>
+<li>操作数栈</li>
+<li>方法返回地址</li>
+<li>动态链接</li>
+<li>额外附加信息</li>
+</ul>
+<h4 id="局部变量表"><a href="#局部变量表" class="headerlink" title="局部变量表"></a>局部变量表</h4><p>用于存放方法参数和局部变量</p>
+<p>局部变量表中存放了<code>基本数据类型</code>、<code>对象引用</code>和<code>returnAddress类型</code></p>
+<p>一个局部变量可保存一个类型为boolean、byte、char、short、int、float、reference或returnAddress的数据。<br>两个局部变量可保存一个类型为long或double的数据。</p>
+<h4 id="操作数栈"><a href="#操作数栈" class="headerlink" title="操作数栈"></a>操作数栈</h4><p>方法调用时，操作数栈用来准备调用方法的<code>参数</code>及接收方法<code>返回结果</code></p>
+<p>任意时刻，操作数栈都会有一个明确的栈深度，<br>long和double类型数据占用两个单位栈深度，其他数据类型占用一个单位栈深度。</p>
+<h4 id="方法返回地址"><a href="#方法返回地址" class="headerlink" title="方法返回地址"></a>方法返回地址</h4><p>正常退出，执行引擎遇到方法返回的字节码，将返回值传递给调用者<br>异常退出，遇到Exception,并且方法未捕捉异常，那么不会有任何返回值</p>
+<h4 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h4><p>每个栈帧都包含执行当前方法所在类型的运行时常量池的引用，<br>以便对当前方法的代码实现动态链接。</p>
+<p>动态链接的作用是将以<code>符号引用</code>表示的方法转换为实际方法的<code>直接引用</code>。</p>
+<h4 id="额外附加信息"><a href="#额外附加信息" class="headerlink" title="额外附加信息"></a>额外附加信息</h4><p>与Java虚拟机实现相关的附加信息</p>
+<p>如：对程序调试提供支持的信息</p>
+<h1 id="HotSpot虚拟机"><a href="#HotSpot虚拟机" class="headerlink" title="HotSpot虚拟机"></a>HotSpot虚拟机</h1><h2 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h2><p>直接指针访问（Sun HotSpot使用该方式）：<br>reference中存储<code>实例数据地址</code>，实例数据中包含对象类型数据地址</p>
+<p>句柄访问：<br>堆区包含句柄池，reference中存储对象句柄地址，<br>句柄中包含对象<code>实例数据地址</code>和<code>类型数据地址</code>。</p>
+<h1 id="JVM概览"><a href="#JVM概览" class="headerlink" title="JVM概览"></a>JVM概览</h1><h2 id="编译策略"><a href="#编译策略" class="headerlink" title="编译策略"></a>编译策略</h2><p>代码最初都是在解释器中运行。<br>方法被调用的次数变多，可能变成编译。</p>
+<h2 id="混合式JIT编译器"><a href="#混合式JIT编译器" class="headerlink" title="混合式JIT编译器"></a>混合式JIT编译器</h2><p>混合式JIT编译器采用分层编译，融合了Client JIT编译器和Server JIT编译器的主要特征。</p>
+<p>Java6 Update 25、Java7或更高的版本，<br>可以用-server -XX: +TieredCompilation替代Client JIT编译器。</p>
+<h2 id="HotSpot-VM-自适应调优"><a href="#HotSpot-VM-自适应调优" class="headerlink" title="HotSpot VM 自适应调优"></a>HotSpot VM 自适应调优</h2><p>Java5 HotSport VM新特性，<br>依据JVM启动时底层平台和系统配置自动选择<code>垃圾收集器</code>、<code>配置Java堆</code>、<code>JIT编译器</code>。</p>
+<p>命令行选项-XX:+PrintCommandLineFlags可打印HotSpot VM采用的自动优化参数。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">java -XX:+PrintCommandLineFlags -version</div><div class="line"></div><div class="line"><span class="comment"># 关闭自适应调优</span></div><div class="line">-XX:-UseAdaptiveSizePolicy</div></pre></td></tr></table></figure>
+<h1 id="JVM性能监控"><a href="#JVM性能监控" class="headerlink" title="JVM性能监控"></a>JVM性能监控</h1><p>生产环境中应该<code>自始至终</code>地监控应用JVM。</p>
+<p>JVM是应用软件栈的重要组成部分，应该想监控应用本身和操作系统那样监控JVM。</p>
+<h2 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h2><p>垃圾收集报告：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 报告垃圾收集信息</span></div><div class="line">-verbose:gc</div><div class="line"><span class="comment"># 报告详细垃圾收集信息</span></div><div class="line">-XX:+PrintGCDetails</div><div class="line"></div><div class="line"><span class="comment"># gc报告包含时间戳</span></div><div class="line">-XX:+PrintGCTimeStamps</div><div class="line">-XX:+PrintGCDateStamps</div><div class="line"></div><div class="line"><span class="comment"># 垃圾收集统计数据输出到文件</span></div><div class="line">-Xloggc:&lt;filename&gt;</div></pre></td></tr></table></figure>
+<h2 id="垃圾收集数据的离线分析"><a href="#垃圾收集数据的离线分析" class="headerlink" title="垃圾收集数据的离线分析"></a>垃圾收集数据的离线分析</h2><p>gchisto gc报告离线分析工具</p>
+<p>GC Pause Stats显示垃圾收集的次数、开销和持续时间等</p>
+<p>一般性准则，并发垃圾收集的开销应该小于10%<br>Throughput收集器，垃圾收集开销接近1%，说明垃圾收集调的很好，3%或更高则说明调优可以改善应用的性能</p>
+<p>GC Timeline显示整个时间线上所有垃圾收集的停顿。</p>
+<h2 id="jconsole"><a href="#jconsole" class="headerlink" title="jconsole"></a>jconsole</h2><p>JConsole 是一个内置 Java 性能分析器，Java 某个进程的内存、线程、类加载、jvm 概要</p>
+<h3 id="启动JConsole"><a href="#启动JConsole" class="headerlink" title="启动JConsole"></a>启动JConsole</h3><ul>
+<li>JDK 在 PATH 上，运行 jconsole 即可</li>
+<li>JDK 安装路径，打开 bin 文件夹，双击 jconsole</li>
+</ul>
+<h3 id="JConsole连接远程机器的JAVA程序"><a href="#JConsole连接远程机器的JAVA程序" class="headerlink" title="JConsole连接远程机器的JAVA程序"></a>JConsole连接远程机器的JAVA程序</h3><p>远程JVM开启远程监控;<br>MBean调用</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">java -cp . </div><div class="line">-Dcom.sun.management.jmxremote.port=8999 </div><div class="line">-Dcom.sun.managent.jmxremote.authenticate=<span class="literal">false</span> </div><div class="line">-Dcom.sun.management.jmxremote.ssl=<span class="literal">false</span> </div><div class="line">JConsoleTest</div></pre></td></tr></table></figure>
+<p>连接远程JVM：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jconsole.exe 192.168.0.181:8999</div></pre></td></tr></table></figure>
+<p>tianj<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">jconsole.exe -J-Djava.class.path=%JAVA_HOME%/lib/jconsole.jar;path_to_newjar_/newjar.jar</div><div class="line"></div><div class="line">jconsole.exe -J-Djava.class.path=D:\Program Files\Java\jdk1.7.0_79\binlibjconsole.jar;d:\common-domain-0.0.1-SNAPSHOT.jar</div></pre></td></tr></table></figure></p>
+<h2 id="jvisualvm"><a href="#jvisualvm" class="headerlink" title="jvisualvm"></a>jvisualvm</h2><p>VisualVM，JDK自带监控工具，它被认为是第2代JConsole，能够监控线程，内存情况，查看方法的CPU时间和内存中的对象，已被GC的对象，反向查看分配的堆栈(如100个String对象分别由哪几个对象分配出来的).</p>
+<h3 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h3><ul>
+<li>本地机器的程序直接可以监听到</li>
+<li>远程机器的程序需要加上JVM参数</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-Dcom.sun.management.jmxremote= <span class="literal">true</span></div><div class="line">-Dcom.sun.management.jmxremote.port= 9090</div><div class="line">-Dcom.sun.management.jmxremote.ssl= <span class="literal">false</span></div><div class="line">-Dcom.sun.management.jmxremote.authenticate= <span class="literal">false</span></div></pre></td></tr></table></figure>
+<p>tomcat配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xport CATALINA_OPTS=&quot;$CATALINA_OPTS -Dcom.sun.management.jmxremote -Djava.rmi.server.hostname=xxx.xxx.xxx.xxx  -Dcom.sun.management.jmxremote.port=xxx -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=true -Dcom.sun.management.jmxremote.password.file=../conf/jmxremote.password  -Dcom.sun.management.jmxremote.access.file=../conf/jmxremote.access&quot;</div></pre></td></tr></table></figure>
+<p>开启认证：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 是否开启认证、false的时候可以不使用密码访问</span></div><div class="line"><span class="comment"># -Dcom.sun.management.jmxremote.authenticate=true</span></div><div class="line"></div><div class="line"><span class="comment"># 以上配置是开启认证时使用的access文件和password文件</span></div><div class="line"><span class="comment"># -Dcom.sun.management.jmxremote.password.file=../conf/jmxremote.password </span></div><div class="line"><span class="comment"># -Dcom.sun.management.jmxremote.access.file=../conf/jmxremote.access</span></div></pre></td></tr></table></figure>
+<p>其中jmxremote.access文件的内容可以配置为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">username1 readonly</div><div class="line">username2 readwrite</div></pre></td></tr></table></figure>
+<p>jmxremote.password文件可以配置为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">username1 password1</div><div class="line">username2 password2</div></pre></td></tr></table></figure>
+<p>将以上俩文件放在对应配置目录tomcat/conf/下<br>并且将以上俩个文件访问权限配置成：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 600 jmx*</div></pre></td></tr></table></figure>
+<p>如果没有这一步、使用startup启动不了tomcat。</p>
+<ul>
+<li><a href="http://www.cnblogs.com/jager/p/5683455.html" title="JAVA内存泄露分析及解决" target="_blank" rel="external">JAVA内存泄露分析及解决</a></li>
+<li><a href="https://my.oschina.net/kone/blog/157239" title="使用JDK自带jvisualvm监控tomcat" target="_blank" rel="external">使用JDK自带jvisualvm监控tomcat</a>
+</li>
+</ul>
+<h3 id="导出堆dump"><a href="#导出堆dump" class="headerlink" title="导出堆dump"></a>导出堆dump</h3><p>jvisualvm导出堆dump：应用程序 -&gt; 堆dump</p>
+<p>java命令导出堆dump：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># java5 生成堆dump命令，保存于执行命令目录下heap.bin文件中</span></div><div class="line">jmap -heap:format=b,&lt;jvm pid&gt;</div><div class="line"></div><div class="line"><span class="comment"># java6 生成堆dump命令</span></div><div class="line">jmap -dump:format=b,file=&lt;filename&gt; &lt;jvm pid&gt;</div></pre></td></tr></table></figure>
+<h3 id="分析Dump文件"><a href="#分析Dump文件" class="headerlink" title="分析Dump文件"></a>分析Dump文件</h3><p>堆dump文件分析工具：MemoryAnalyzerTool</p>
+<p>使用内存分析工具从众多的对象中进行分析，快速的计算出在内存中对象的占用大小，看看是谁阻止了垃圾收集器的回收工作，并可以通过报表直观的查看到可能造成这种结果的对象。</p>
+<h3 id="VisualGC"><a href="#VisualGC" class="headerlink" title="VisualGC"></a>VisualGC</h3><p>VisualGC 是JVisualVM的插件，可以监控垃圾收集、类加载和JIT编译。</p>
+<h2 id="JIT编译"><a href="#JIT编译" class="headerlink" title="JIT编译"></a>JIT编译</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 监控HotSport JIT编译器</span></div><div class="line">-XX:+PrintCompilation</div></pre></td></tr></table></figure>
+<p>图形化工具JConsole、JVisualVM或VisualGC插件提供哪个方法正被JIT编译的信息。</p>
+<h1 id="类加载"><a href="#类加载" class="headerlink" title="类加载"></a>类加载</h1><p>需要加载其他类而空间不足时，未使用的类会从永久代中被卸载。<br>从永久代卸载类，意味着需要Full GC。</p>
+<p>Full GC时有类被卸载，说明永久代需要扩大，或者它的初始大小需要扩大</p>
+<p>避免Full GC扩大或缩小永久代的可分配空间，可以设置-XX:PermSize和-XX:MaxPermSize为相同值</p>
+<p>图形工具JConsole、JVisualVM和VisualGC插件可以监视类加载</p>
+<p>类数据共享是指在同一个系统内的JVM之间<code>共享类</code>、减少内存占用的特性。</p>
+<h1 id="jdk源码debug不显示变量值"><a href="#jdk源码debug不显示变量值" class="headerlink" title="jdk源码debug不显示变量值"></a>jdk源码debug不显示变量值</h1><p>原因：<br>    Oracle提供的jre中rt.jar不带debug信息：orcale在编译src时使用了 javac -g:none，意思是不带任何调试信息，这样可以减小rt.jar的大小。<br>    若想正常调试jdk，可以重新编译src.zip或带有Debug信息的JDK</p>
+<p>解决方法：<br>    编译jdk目录下src.zip中java、javax包下类文件，打包为rt_debug.jar,<br>    放到<code>$JAVA_HOME/jre/lib/endorsed</code>文件夹下</p>
+<p>参考文档：<br><a href="http://www.thejavageek.com/2016/04/03/debug-jdk-source-code/" title="debug-jdk-source-code" target="_blank" rel="external">debug-jdk-source-code</a></p>
+<p>编译后jar包及参考文档：<br></p>
+<h2 id="编译src-zip报错问题"><a href="#编译src-zip报错问题" class="headerlink" title="编译src.zip报错问题"></a>编译src.zip报错问题</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Type mismatch: cannot convert from Annotation to ConstructorProperties</span></div><div class="line">java.beans.MetaData.getAnnotationValue(Constructor)</div></pre></td></tr></table></figure>
+<p>解决方法；<br><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=167952" title="Invalid compilation errors for rt.jar for Java 1.6 annotations" target="_blank" rel="external">Invalid compilation errors for rt.jar for Java 1.6 annotations</a></p>
+<h2 id="Java-覆盖系统类：endorsed-技术"><a href="#Java-覆盖系统类：endorsed-技术" class="headerlink" title="Java 覆盖系统类：endorsed 技术"></a>Java 覆盖系统类：endorsed 技术</h2><p>/ɪnˈdɔ:sd/</p>
+<p>jvm的两个参数-Djava.endorsed.dirs和-Djava.ext.dirs<br>{java.ext.dirs} 可选包扩展机制<br>{java.endorsed.dirs} 包升级替换机制，一般默认是lib/endorsed文件夹，就是说，可以把你自己的jar包放在这里，代替原有的系统的jar包</p>
+<p>如果不想添加-D参数，如果我们希望基于这个JDK下的都统一改变，那么我们可以将我们修改的jar放到：<code>$JAVA_HOME/jre/lib/endorsed</code></p>
+<blockquote>
+<p>参考信息:<br><a href="http://blog.csdn.net/conquer0715/article/details/51243353" title="Java 覆盖系统类：endorsed 技术" target="_blank" rel="external">Java 覆盖系统类：endorsed 技术</a><br><a href="http://www.iteye.com/problems/75087" title="endorsed文件夹的作用" target="_blank" rel="external">endorsed文件夹的作用</a></p>
+</blockquote>
+<h2 id="classpath路径的先后顺序是有意义的"><a href="#classpath路径的先后顺序是有意义的" class="headerlink" title="classpath路径的先后顺序是有意义的"></a>classpath路径的先后顺序是有意义的</h2><p><code>可用于覆盖jar包中的类</code></p>
+<p>-classpath路径的先后顺序是有意义的</p>
+<blockquote><p>Of particular importance, and much consternation, the class loader will load classes in the order they appear in the classpath. Starting with the first classpath entry, the class loader visits each specified directory or archive file attempting to find the class to load. The first class it finds with the proper name is loaded, and any remaining classpath entries are ignored.<br>Sounds simple, right?</p>
+<footer><strong>Mastering the classpath with JWhich</strong><cite><a href="http://www.javaworld.com/javaworld/javatips/jw-javatip105.html" target="_blank" rel="external">Mastering the classpath with JWhich</a></cite></footer></blockquote>
+<p>上面说明了，java xx -classpath “.;a.jar;b.jar;” 时，如果a.jar和b.jar有重名的类，那么会以a.jar的为准，忽略b.jar的，因为jvm按照-classpath参数的路径先后顺序去load类，后续加载的同名的类会被忽略。</p>
+<p>jvm查找类，不仅仅是按名字找，还有包，如果包不同，也视为不同的class，<br>如果package+class都相同，则根据classpath的设置顺序，前面的优先加载，一旦前面的被加载，后面的就再也不会被加载了,<br>也就是说其实还是有一定的加载规则加载顺序的,你不能寄希望与系统，让它智能的加载你想要的。如果系统出现了重名class，危险性是非常高的。</p>
+<h2 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h2><p>类加载器大致可以分成两类</p>
+<ul>
+<li>系统提供</li>
+<li>Java 应用开发人员编写</li>
+</ul>
+<p>系统提供的类加载器</p>
+<ul>
+<li>引导类加载器（bootstrap class loader）：用来加载 Java 核心库，原生代码来实现，不继承自java.lang.ClassLoader</li>
+<li>扩展类加载器（extensions class loader）：用来加载 Java 的扩展库。Java 虚拟机的实现会提供一个扩展库目录。该类加载器在此目录里面查找并加载 Java 类</li>
+<li>系统类加载器（system class loader）：根据 Java 应用的类路径（CLASSPATH）来加载 Java 类。一般，Java 应用的类都是由它完成加载。可以通过 ClassLoader.getSystemClassLoader()来获取它</li>
+</ul>
+<p>开发人员可以通过继承 java.lang.ClassLoader类的方式实现自己的类加载器</p>
+<h3 id="双亲委托模型"><a href="#双亲委托模型" class="headerlink" title="双亲委托模型"></a>双亲委托模型</h3><p>当前classLoader的缓存中没有找到被加载的类的时候，委托父类加载器去加载，父类加载器采用同样的策略，首先查看自己的缓存，然后委托父类的父类去加载，一直到bootstrp ClassLoader</p>
+<p>当所有的父类加载器都没有加载的时候，再由当前的类加载器加载，并将其放入它自己的缓存中，以便下次有加载请求的时候直接返回</p>
+<h2 id="快速监控锁竞争"><a href="#快速监控锁竞争" class="headerlink" title="快速监控锁竞争"></a>快速监控锁竞争</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 命令生成线程转储</span></div><div class="line">jstack &lt;jvm pid&gt;</div><div class="line"></div><div class="line"><span class="comment"># linux</span></div><div class="line"><span class="built_in">kill</span> -3</div><div class="line"></div><div class="line"><span class="comment"># window</span></div><div class="line">Ctrl + Break</div></pre></td></tr></table></figure>
+<p>JVisualVM 可生成线程转储</p>
+<h1 id="GC"><a href="#GC" class="headerlink" title="GC"></a>GC</h1><h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><p>CMS收集器，低延迟为先，减少stop the world的时间，让GC线程和业务线程并发</p>
+<p>-Xms4096m -Xmx4096m，Java堆的初始和最小值，最大值<br>-XX:MaxPermSize=512m，最大持久代内存512M</p>
+<p>-XX:+UseConcMarkSweepGC，新生代和老年代都并发gc的方式<br>-Xmn2048M，置新生代内存的上限大小为2g</p>
+<p>-XX:+UseCMSInitiatingOccupancyOnly，当旧生代空间使用率达到92%时会无条件执行Full GC，不根据成本计算<br>-XX:+CMSClassUnloadingEnabled，开启对永久代垃圾回收，CMS收集器默认不会对永久代进行垃圾回收</p>
+<p>-XX:CMSInitiatingOccupancyFraction=80，当旧生代空间使用到一定比率时, 强制执行旧生代的Full GC，默认92%<br>-XX:CMSInitiatingPermOccupancyFraction=80，当持久代里的使用比例达到一定比率时，进行持久代内存 的回收，默认为92%</p>
+<p>-Xss 每个线程的堆栈大小 JDK5.0以后每个线程堆栈大小为1M,以前每个线程堆栈大小为256K;<br>如果栈不是很深， 应该是128k够用的 大的应用建议使用256k。这个选项对性能影响比较大，需要严格的测试。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/20/java-concurrency-in-practice/" rel="next" title="Java Concurrency In Practice">
+                <i class="fa fa-chevron-left"></i> Java Concurrency In Practice
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/25/mysql/" rel="prev" title="高性能 MySQL">
+                高性能 MySQL <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java内存模型"><span class="nav-number">1.</span> <span class="nav-text">Java内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方法区"><span class="nav-number">1.1.</span> <span class="nav-text">方法区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时常量池"><span class="nav-number">1.1.1.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String类中的intern-方法"><span class="nav-number">1.1.2.</span> <span class="nav-text">String类中的intern()方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java堆"><span class="nav-number">1.2.</span> <span class="nav-text">Java堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序计数器"><span class="nav-number">1.3.</span> <span class="nav-text">程序计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机栈"><span class="nav-number">1.4.</span> <span class="nav-text">虚拟机栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#栈帧"><span class="nav-number">1.4.1.</span> <span class="nav-text">栈帧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#局部变量表"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">局部变量表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#操作数栈"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">操作数栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法返回地址"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">方法返回地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动态链接"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">动态链接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#额外附加信息"><span class="nav-number">1.4.1.5.</span> <span class="nav-text">额外附加信息</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HotSpot虚拟机"><span class="nav-number">2.</span> <span class="nav-text">HotSpot虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的访问定位"><span class="nav-number">2.1.</span> <span class="nav-text">对象的访问定位</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM概览"><span class="nav-number">3.</span> <span class="nav-text">JVM概览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译策略"><span class="nav-number">3.1.</span> <span class="nav-text">编译策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#混合式JIT编译器"><span class="nav-number">3.2.</span> <span class="nav-text">混合式JIT编译器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HotSpot-VM-自适应调优"><span class="nav-number">3.3.</span> <span class="nav-text">HotSpot VM 自适应调优</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM性能监控"><span class="nav-number">4.</span> <span class="nav-text">JVM性能监控</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集"><span class="nav-number">4.1.</span> <span class="nav-text">垃圾收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集数据的离线分析"><span class="nav-number">4.2.</span> <span class="nav-text">垃圾收集数据的离线分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jconsole"><span class="nav-number">4.3.</span> <span class="nav-text">jconsole</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动JConsole"><span class="nav-number">4.3.1.</span> <span class="nav-text">启动JConsole</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JConsole连接远程机器的JAVA程序"><span class="nav-number">4.3.2.</span> <span class="nav-text">JConsole连接远程机器的JAVA程序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jvisualvm"><span class="nav-number">4.4.</span> <span class="nav-text">jvisualvm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#连接"><span class="nav-number">4.4.1.</span> <span class="nav-text">连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导出堆dump"><span class="nav-number">4.4.2.</span> <span class="nav-text">导出堆dump</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析Dump文件"><span class="nav-number">4.4.3.</span> <span class="nav-text">分析Dump文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VisualGC"><span class="nav-number">4.4.4.</span> <span class="nav-text">VisualGC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JIT编译"><span class="nav-number">4.5.</span> <span class="nav-text">JIT编译</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类加载"><span class="nav-number">5.</span> <span class="nav-text">类加载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jdk源码debug不显示变量值"><span class="nav-number">6.</span> <span class="nav-text">jdk源码debug不显示变量值</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#编译src-zip报错问题"><span class="nav-number">6.1.</span> <span class="nav-text">编译src.zip报错问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-覆盖系统类：endorsed-技术"><span class="nav-number">6.2.</span> <span class="nav-text">Java 覆盖系统类：endorsed 技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#classpath路径的先后顺序是有意义的"><span class="nav-number">6.3.</span> <span class="nav-text">classpath路径的先后顺序是有意义的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载器"><span class="nav-number">6.4.</span> <span class="nav-text">类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#双亲委托模型"><span class="nav-number">6.4.1.</span> <span class="nav-text">双亲委托模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速监控锁竞争"><span class="nav-number">6.5.</span> <span class="nav-text">快速监控锁竞争</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GC"><span class="nav-number">7.</span> <span class="nav-text">GC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集器"><span class="nav-number">7.1.</span> <span class="nav-text">垃圾收集器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

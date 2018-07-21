@@ -1,0 +1,988 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Effective Java2 笔记">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Effective Java">
+<meta property="og:url" content="http://xiaozhuang.github.io/2017/04/19/java-effective/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="Effective Java2 笔记">
+<meta property="og:updated_time" content="2018-07-21T06:06:37.507Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Effective Java">
+<meta name="twitter:description" content="Effective Java2 笔记">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> Effective Java | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Effective Java
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-19T22:14:18+08:00" content="2017-04-19">
+              2017-04-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Effective Java2 笔记<br><a id="more"></a></p>
+<h1 id="创建和销毁对象"><a href="#创建和销毁对象" class="headerlink" title="创建和销毁对象"></a>创建和销毁对象</h1><h2 id="考虑用静态工厂方法代替构造器"><a href="#考虑用静态工厂方法代替构造器" class="headerlink" title="考虑用静态工厂方法代替构造器"></a>考虑用静态工厂方法代替构造器</h2><p><code>tip-1</code><br>需要多个相同签名的构造器时，用静态工厂方法代替构造器</p>
+<p>静态工厂方法惯用名称：</p>
+<ul>
+<li>valueOf</li>
+<li>of</li>
+<li>getInstance</li>
+<li>newInstance</li>
+<li>getType</li>
+<li>newType</li>
+</ul>
+<h2 id="遇到多个构造器参数时考虑用构造器"><a href="#遇到多个构造器参数时考虑用构造器" class="headerlink" title="遇到多个构造器参数时考虑用构造器"></a>遇到多个构造器参数时考虑用构造器</h2><p><code>tip-2</code><br>Builder模式解决的问题</p>
+<ul>
+<li>构造器参数列表过长不易使用</li>
+<li>JavaBeans模式阻止了把类做成不可变类的可能，也不易检查参数约束条件</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Date;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.alibaba.fastjson.JSON;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Baz</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Long id;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Integer age;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Date birthday;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Baz</span><span class="params">(Builder builder)</span></span>&#123;</div><div class="line">        id = builder.getId();</div><div class="line">        name = builder.getName();</div><div class="line">        age = builder.getAge();</div><div class="line">        birthday = builder.getBirthday();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> Long <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> id;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span></div><div class="line">        return name;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getAge</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> age;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">getBirthday</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> birthday;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span></span>&#123;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">final</span> Long id;</div><div class="line">        <span class="keyword">private</span> <span class="keyword">final</span> String name;</div><div class="line">        </div><div class="line">        <span class="keyword">private</span> Integer age;</div><div class="line">        <span class="keyword">private</span> Date birthday;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">(Long id, String name)</span> </span>&#123;</div><div class="line">            <span class="keyword">super</span>();</div><div class="line">            <span class="keyword">this</span>.id = id;</div><div class="line">            <span class="keyword">this</span>.name = name;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> Integer <span class="title">getAge</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> age;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">setAge</span><span class="params">(Integer age)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.age = age;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> Date <span class="title">getBirthday</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> birthday;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> Builder <span class="title">setBirthday</span><span class="params">(Date birthday)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.birthday = birthday;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> Long <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> id;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> name;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="function"><span class="keyword">public</span> Baz <span class="title">build</span><span class="params">()</span></span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> Baz(<span class="keyword">this</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Baz baz = <span class="keyword">new</span> Baz.Builder(<span class="number">1000L</span>, <span class="string">"Baz"</span>).setAge(<span class="number">7</span>).setBirthday(<span class="keyword">new</span> Date()).build();</div><div class="line">        System.out.println(JSON.toJSON(baz));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>类的构造器或者静态工厂具有多个参数时，<code>Builder模式</code>就是不错的选择</p>
+<h2 id="用私有构造器或者枚举类型强化Singleton属性"><a href="#用私有构造器或者枚举类型强化Singleton属性" class="headerlink" title="用私有构造器或者枚举类型强化Singleton属性"></a>用私有构造器或者枚举类型强化Singleton属性</h2><p><code>tip-3</code><br>私有构造器单例需要处理反射调用私有构造器攻击，且需声明所有实例域都是<code>transient</code>，并提供readResolve方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> <span class="keyword">implements</span> <span class="title">Serializable</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance = <span class="keyword">new</span> Singleton();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> instance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> Object <span class="title">readResolve</span><span class="params">()</span> <span class="keyword">throws</span> ObjectStreamException </span>&#123;  </div><div class="line">      <span class="comment">// instead of the object we're on,   </span></div><div class="line">      <span class="comment">// return the class variable INSTANCE  </span></div><div class="line">      <span class="keyword">return</span> instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>单元素枚举类型，无偿地提供了序列化机制，绝对防止多次实例化，即使是在面对复杂的序列化或 反射攻击的时候。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Employee &#123; <span class="comment">// changed "class" to "enum"</span></div><div class="line"></div><div class="line">   INSTANCE; <span class="comment">// added name of the (single) instance</span></div><div class="line"></div><div class="line">   <span class="keyword">private</span> <span class="keyword">int</span> id; </div><div class="line">   <span class="keyword">private</span> String name; </div><div class="line">   Employee() &#123;&#125;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</div><div class="line">      <span class="keyword">return</span> id; </div><div class="line">   &#125;</div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">( <span class="keyword">int</span> id )</span> </span>&#123; </div><div class="line">      <span class="keyword">this</span>.id = id; </div><div class="line">   &#125; </div><div class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123; </div><div class="line">      <span class="keyword">return</span> name; </div><div class="line">   &#125; </div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">( String name )</span> </span>&#123;</div><div class="line">      <span class="keyword">this</span>.name = name; </div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>单元素的枚举类型已经成为实现Singleton的最佳方法</p>
+<h2 id="避免创建不必要的对象"><a href="#避免创建不必要的对象" class="headerlink" title="避免创建不必要的对象"></a>避免创建不必要的对象</h2><p><code>tip-5</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 静态构造方法优先于构造器</span></div><div class="line">Boolean.valueOf(<span class="string">"true"</span>);</div></pre></td></tr></table></figure>
+<p>优先使用基本类型而不是装箱的基本类型，要当心无意识的自动装箱</p>
+<p>维护自己的对象池（object pool）来避免创建对象<code>并不是</code>一种好的做法</p>
+<h2 id="消除过期的对象引用"><a href="#消除过期的对象引用" class="headerlink" title="消除过期的对象引用"></a>消除过期的对象引用</h2><p><code>tip-6</code></p>
+<p>只要类自己管理内存，程序员就应该警惕内存泄漏问题</p>
+<p>内存泄漏的另一个常见来源是<code>缓存</code></p>
+<h2 id="避免使用终结方法"><a href="#避免使用终结方法" class="headerlink" title="避免使用终结方法"></a>避免使用终结方法</h2><p><code>tip-7</code><br>不应该依赖终结方法来更新重要的持久状态</p>
+<p>使用终结方法有一个非常严重的（severe）性能损失</p>
+<p>如果子类实现覆盖了超类的终结方法，但是忘了手工调用超类的终结方法，<br>那么超类的终结方法将永远也不会被调用</p>
+<p>除非作为安全网，或者为了终止非关键的本地资源，否则不要使用终结方法</p>
+<h1 id="对所有对象都通用的方法"><a href="#对所有对象都通用的方法" class="headerlink" title="对所有对象都通用的方法"></a>对所有对象都通用的方法</h1><h2 id="覆盖equals时请遵守通用约定"><a href="#覆盖equals时请遵守通用约定" class="headerlink" title="覆盖equals时请遵守通用约定"></a>覆盖equals时请遵守通用约定</h2><p><code>tip-8</code><br>equals方法的通用约定</p>
+<ul>
+<li>自反性</li>
+<li>对称性</li>
+<li>传递性</li>
+<li>一致性  多次调用，一致地返回true或false</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span> </span>&#123;</div><div class="line">    <span class="comment">//instanceof 第一个参数为null，无论第二个参数是哪种类型，都返回false</span></div><div class="line">    <span class="keyword">if</span>(!(obj <span class="keyword">instanceof</span> MyType))&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于非float 和 double类型的<code>基本类型域</code>，可以使用 == 操作符进行比较<br>float域，使用Float.compare方法<br>double域，使用Double.compare方法<br>数组域使用Arrays.equals方法</p>
+<blockquote>
+<p>如果 f1 和 f2 都表示 Float.NaN，那么即使 Float.NaN==Float.NaN 的值为 false，equals 方法也将返回 true<br>如果 f1 表示 +0.0f，而 f2 表示 -0.0f，或相反，那么即使 0.0f==-0.0f 的值为 true，equal 测试也将返回 false</p>
+</blockquote>
+<p>域的比较影响equals方法的性能，应该优先比较<code>最有可能不一致的域</code></p>
+<p><code>不要</code>将equals声明中的Object对象替换为其他类型</p>
+<h2 id="覆盖equals方法时总要覆盖hashCode"><a href="#覆盖equals方法时总要覆盖hashCode" class="headerlink" title="覆盖equals方法时总要覆盖hashCode"></a>覆盖equals方法时总要覆盖hashCode</h2><p><code>tip-9</code></p>
+<ul>
+<li>每个覆盖了equals方法的类中，也<code>必须</code>覆盖hashCode方法</li>
+<li><p>相等的对象<code>必须</code>具有相等的散列码</p>
+</li>
+<li><p>hashCode计算必须排除equals比较计算中没有用到的任何域</p>
+</li>
+</ul>
+<h2 id="始终要覆盖toString"><a href="#始终要覆盖toString" class="headerlink" title="始终要覆盖toString"></a>始终要覆盖toString</h2><p><code>tip-10</code></p>
+<p>toString通用约定：<code>简洁</code>的，但<code>信息丰富</code>，并且<code>易于阅读</code>的表达形式。</p>
+<p>toString方法应该返回对象中包含的<code>所有值得关注的信息</code>。</p>
+<p>最好提供一个相匹配的静态工厂或构造器，以便在<code>对象</code>和他的<code>字符串表示法</code>之间转换。</p>
+<p>toStrig方法间接提供了对象访问途径，应<code>避免暴露内部数据</code>。</p>
+<h1 id="类和接口"><a href="#类和接口" class="headerlink" title="类和接口"></a>类和接口</h1><h2 id="使类和成员的可访问性最小"><a href="#使类和成员的可访问性最小" class="headerlink" title="使类和成员的可访问性最小"></a>使类和成员的可访问性最小</h2><p><code>tip-13</code><br>设计良好的模块会<code>隐藏所有的实现细节</code>，把它的API与它的实现清晰地隔离开来。</p>
+<p><code>信息隐藏</code>可以有效地解除组成系统的各模块之间的耦合关系，<br>使得这些模块可以独立地开发、测试、优化、使用、理解和修改。</p>
+<p>信息隐藏也降低了构建大型业务系统的风险。</p>
+<p><code>尽可能地使每个类或成员不被外界访问</code><br>对于顶层(非嵌套的)类和接口，<code>只有两种</code>可能的访问级别：<br>包级私有的(package-private)和公有的(public)</p>
+<p>如果包级私有的顶层类(或者接口)<code>只在某一个类的内部</code>被用到，<br>就应该考虑使它成为唯一使用它的那个类的<code>私有嵌套类</code>。</p>
+<p>实例域<code>绝不能</code>是公有的，同样的建议也适用于静态域，只有静态常量可以为公有。</p>
+<p>长度非零的数组总是可变的。<br>类具有公有的静态final数组域，或者返回这种域的访问方法，这几乎总是错误的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 可以返回数组的不可变列表</span></div><div class="line">Integer[] values = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</div><div class="line">List&lt;Integer&gt; asList = Collections.unmodifiableList(Arrays.asList(values));</div><div class="line"></div><div class="line"><span class="comment">// 或返回数组的拷贝</span></div><div class="line">Integer[] clone = values.clone();</div></pre></td></tr></table></figure>
+<h2 id="在公有类中使用访问方法而非公有域"><a href="#在公有类中使用访问方法而非公有域" class="headerlink" title="在公有类中使用访问方法而非公有域"></a>在公有类中使用访问方法而非公有域</h2><p>如果类可以在它<code>所在的包的外部</code>进行访问，就提供访问方法</p>
+<p>如果类是<code>包级私有的</code>，或者是<code>私有的嵌套类</code>，直接暴露他的数据域并没有本质的错误</p>
+<h2 id="使可变性最小化"><a href="#使可变性最小化" class="headerlink" title="使可变性最小化"></a>使可变性最小化</h2><p><code>tip-15</code><br>Java平台类库中包含许多不可变类，<br>其中有String、基本类型的包装类、BigInteger和BigDecimal。</p>
+<p>BigInteger和BigDecimal使用方法和场景<br>BigInteger：<code>不可变的</code>任意精度的整数。<br>BigDecimal：<code>不可变的</code>任意精度的有符号十进制数。</p>
+<p>double转BigDecimal精度问题：<br>new BigDecimal(double d) 会导致精度不准确。 new BigDecimal(doubble+””)或<code>BigDecimal.valueOf(double)</code>可解决。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Create two new BigDecimals</span></div><div class="line">BigDecimal BigDec1 = <span class="keyword">new</span> BigDecimal(<span class="string">"1238126387123"</span>);</div><div class="line">BigDecimal BigDec2 = <span class="keyword">new</span> BigDecimal(<span class="string">"1213669989183"</span>);</div><div class="line"></div><div class="line"><span class="comment">// 加 Addition of two BigDecimals</span></div><div class="line">BigDec1 = BigDec1.add(BigDec2);</div><div class="line">System.out.println(<span class="string">"BigDec1 = "</span> + BigDec1);</div><div class="line"></div><div class="line"><span class="comment">// 减 Multiplication of two BigDecimals</span></div><div class="line">BigDec1 = BigDec1.subtract(BigDec2);</div><div class="line">System.out.println(<span class="string">"BigDec1 = "</span> + BigDec1);</div><div class="line"></div><div class="line"><span class="comment">// 乘 Subtraction of two BigDecimals</span></div><div class="line">BigDec1 = BigDec1.multiply(BigDec2);</div><div class="line">System.out.println(<span class="string">"BigDec1 = "</span> + BigDec1);</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 除 Division of two BigDecimals</span></div><div class="line">BigDec1 = BigDec1.divide(BigDec2);</div><div class="line">System.out.println(<span class="string">"BigDec1 = "</span> + BigDec1);</div><div class="line"></div><div class="line"><span class="comment">// 幂运算 BigDecima1 raised to the power of 2</span></div><div class="line">BigDec1 = BigDec1.pow(<span class="number">2</span>);</div><div class="line">System.out.println(<span class="string">"BigDec1 = "</span> + BigDec1);</div><div class="line"></div><div class="line"><span class="comment">// 取负值 Negate value of BigDecimal1</span></div><div class="line">BigDec1 = BigDec1.negate();</div><div class="line">System.out.println(<span class="string">"BigDec1 = "</span> + BigDec1);</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// BigDecimal 转 double</span></div><div class="line"><span class="comment">// java.math.BigDecimal.doubleValue()</span></div><div class="line"></div><div class="line"><span class="comment">// double 转 BigDecimal</span></div><div class="line"><span class="comment">// java.math.BigDecimal.valueOf(double)</span></div></pre></td></tr></table></figure>
+<p>如何进行浮点数精度计算？<br>Java中的简单浮点数类型float和double不能够进行运算。</p>
+<p>CPU表示浮点数由两个部分组成：指数和尾数，这样的表示方法一般都会失去一定的精确度，有些浮点数运算也会产生一定的误差。<br>其实java的float只能用来进行科学计算或工程计算，在大多数的商业计算中，一般采用java.math.BigDecimal类来进行精确计算。</p>
+<p>在使用BigDecimal类来进行计算的时候，主要分为以下<code>步骤</code>：<br>1、用float或者double变量构建BigDecimal对象。<br>2、通过调用BigDecimal的加，减，乘，除等相应的方法进行算术运算。<br>3、把BigDecimal对象转换成float，double，int等类型。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 验证double直接计算失精度 </span></div><div class="line">Random random = <span class="keyword">new</span> Random();</div><div class="line">        </div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>;i++)&#123;</div><div class="line">    Double d1 = random.nextDouble();</div><div class="line">    BigDecimal bd1 = BigDecimal.valueOf(d1);</div><div class="line">    bd1 = bd1.setScale(<span class="number">2</span>,BigDecimal.ROUND_HALF_UP);</div><div class="line">    </div><div class="line">    Double d2 = random.nextDouble();</div><div class="line">    BigDecimal bd2 = BigDecimal.valueOf(d2);</div><div class="line">    bd2 = bd2.setScale(<span class="number">2</span>,BigDecimal.ROUND_HALF_UP);</div><div class="line">    </div><div class="line">    System.out.println(bd1.doubleValue() + <span class="string">" + "</span> + bd2.doubleValue() + <span class="string">" = "</span> + (bd1.doubleValue() + bd2.doubleValue()));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>不可变类比可变类更易于设计、实现和使用。</p>
+<p>实现不可变类，4条原则：</p>
+<ul>
+<li>不提供任何会<code>修改对象</code>状态的方法</li>
+<li>保证类不会被扩展（final类 或 工厂方法）</li>
+<li>使所有域都是<code>私有</code>的<code>final</code>域</li>
+<li>客户端无法获取到可变组件引用</li>
+</ul>
+<p>应该确保没有一个方法能够对对象的状态产生<code>外部可见</code>的改变。</p>
+<p>不可变对象方法可以设计为<code>函数式</code>的</p>
+<p>不可变对象<code>只有一种状态</code>，即对象创建时的状态。</p>
+<p>不可变对象本质是<code>线程安全的</code>，他们不要求同步。</p>
+<p>不可变对象可以被<code>自由地共享</code>。</p>
+<p>不可变类可以提供一些静态工厂，把频繁被请求的实例缓存起来。</p>
+<p>不可变类真正唯一的缺点是：对于每一个不同的值都需要一个单独的对象。<br>解决方法是提供可变配套类。String类，提供了公有的可变配套类StringBuilder。</p>
+<p>许多不可变类拥有一个或多个非final的域，它们在第一次被请求执行计算时，把计算结果缓存在这些域中。<br>如：String的HashCode()</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// java.lang.String.hashCode()</span></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> h = hash;</div><div class="line">        <span class="keyword">int</span> len = count;</div><div class="line">    <span class="keyword">if</span> (h == <span class="number">0</span> &amp;&amp; len &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">int</span> off = offset;</div><div class="line">        <span class="keyword">char</span> val[] = value;</div><div class="line"></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">                h = <span class="number">31</span>*h + val[off++];</div><div class="line">            &#125;</div><div class="line">            hash = h;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> h;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>除非有令人信服的理由要使域变成非final的，否则要使每个域都是final的。</p>
+<h2 id="复合优先于继承"><a href="#复合优先于继承" class="headerlink" title="复合优先于继承"></a>复合优先于继承</h2><p><code>tip-16</code></p>
+<p>对<code>普通的具体类</code>进行<code>跨越包边界</code>的继承，是非常危险的</p>
+<p>继承打破了封装性</p>
+<p>只有当子类真实是超类的子类时，才适合用继承<br>只有两者存在“is-a”关系时，才使用继承</p>
+<h2 id="要么为继承而设计，并提提供文档说明，要么就禁止继承"><a href="#要么为继承而设计，并提提供文档说明，要么就禁止继承" class="headerlink" title="要么为继承而设计，并提提供文档说明，要么就禁止继承"></a>要么为继承而设计，并提提供文档说明，要么就禁止继承</h2><p><code>tip-17</code><br>类的文档必须精确地描述覆盖每个方法所带来的影响。</p>
+<p>类必须通过某种形式提供适当的钩子（hook），以便能够进入到它的<code>内部工作流程</code>中。<br>y<br>好的API文档应该描述给定方法<code>做了什么工作</code>，<code>而不是</code>描述它是<code>如何做到的</code>。</p>
+<p>为继承而设计类，应该尽可能少地暴露受保护的成员。</p>
+<p>为了继承而设计的类，唯一测试方法就是编写子类。（3个子类通常足以测试一个可扩展的类）</p>
+<p>构造器决不能调用可被覆盖的方法。（因为子类中覆盖版本的方法将会在子类的构造器运行之前被调用）</p>
+<h2 id="接口优于抽象类"><a href="#接口优于抽象类" class="headerlink" title="接口优于抽象类"></a>接口优于抽象类</h2><p><code>tip-18</code></p>
+<p>通过对每个重要接口都提供一个抽象的骨架实现类，把接口和抽象类的优点结合起来。</p>
+<p>实现这个接口的类可以把对于接口的调用，转发到一个内部私有类的实例上，这个内部私有类扩展了骨架实现类。</p>
+<h2 id="接口只用于定义类型"><a href="#接口只用于定义类型" class="headerlink" title="接口只用于定义类型"></a>接口只用于定义类型</h2><p><code>tip-19</code><br>类实现接口时，接口就充当可以引用这个类的实例的类型（type）。</p>
+<p>类实现接口，表明客户端可以<code>对这个类的实例实施某些动作</code>。任何其他目的定义接口都是不恰当的。</p>
+<p>常量接口是对接口的<code>不良使用</code>。</p>
+<p>使用<code>枚举类型</code>或不可实例化的<code>工具类</code>导出常量</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PhysicalConstants</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">private</span> <span class="title">PhysicalConstants</span><span class="params">()</span> </span>&#123; &#125;  <span class="comment">// Prevents instantiation</span></div><div class="line"></div><div class="line">  <span class="comment">// Avogadro's number (1/mol)</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">double</span> AVOGADROS_NUMBER   = <span class="number">6.02214199e23</span>;</div><div class="line"></div><div class="line">  <span class="comment">// Boltzmann constant (J/K)</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">double</span> BOLTZMANN_CONSTANT = <span class="number">1.3806503e-23</span>;</div><div class="line"></div><div class="line">  <span class="comment">// Mass of the electron (kg)</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">double</span> ELECTRON_MASS      = <span class="number">9.10938188e-31</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="用函数对象表示策略"><a href="#用函数对象表示策略" class="headerlink" title="用函数对象表示策略"></a>用函数对象表示策略</h2><p><code>tip-21</code></p>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="必要时进行保护性拷贝"><a href="#必要时进行保护性拷贝" class="headerlink" title="必要时进行保护性拷贝"></a>必要时进行保护性拷贝</h2><p><code>tip-39</code></p>
+<p>不可变时间周期类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.sql.Date;</div><div class="line"></div><div class="line"><span class="comment">// Bloken "immutable" time period class</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Period</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Date start;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Date end;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Period</span><span class="params">(Date start, Date end)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(start.compareTo(end) &gt; <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(start + <span class="string">" "</span> + end);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">this</span>.start = start;</div><div class="line">        <span class="keyword">this</span>.end = end;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">getStart</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> start;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Date <span class="title">getEnd</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> end;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个类似乎是不可变的，并且强加了约束条件<br>因为<code>Date类本身是可变的</code>，所以很容易违反这个约束条件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// attack the internals of a Period instance</span></div><div class="line">Data start = <span class="keyword">new</span> Date();</div><div class="line">Date end = <span class="keyword">new</span> Date();</div><div class="line">Period p = <span class="keyword">new</span> Period(start, end);</div><div class="line"></div><div class="line"><span class="comment">// Deprecated</span></div><div class="line"><span class="comment">// end.setYear(78);</span></div><div class="line"></div><div class="line">Calendar calendar = Calendar.getInstance();</div><div class="line">calendar.setTime(end);</div><div class="line">calendar.set(Calendar.YEAR, <span class="number">1978</span>);</div><div class="line">end.setTime(calendar.getTimeInMillis());</div></pre></td></tr></table></figure>
+<p>对构造器的每个可变参数进行<code>保护性拷贝</code>是必要的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Period</span><span class="params">(Date start, Date end)</span> </span>&#123;</div><div class="line">    <span class="keyword">this</span>.start = <span class="keyword">new</span> Date(start.getTime());</div><div class="line">    <span class="keyword">this</span>.end = <span class="keyword">new</span> Date(end.getTime());</div><div class="line">    </div><div class="line">    <span class="keyword">if</span>(start.compareTo(end) &gt; <span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(start + <span class="string">" "</span> + end);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>没有使用Date的clone()进行保护性拷贝。<br>因为Date是非final的，不能保证clone()返回java.util.Date的对象</p>
+<p>对于参数类型可以被<code>不可信任方</code>子类化的参数，不要使用clone()进行保护性拷贝。</p>
+<p>因为访问方法提供了对其<code>可变内部成员</code>的访问能力,修改为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Date <span class="title">getStart</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Date(start.getTime());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> Date <span class="title">getEnd</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Date(end.getTime());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果正在考虑由客户提供的<code>对象引用</code>作为内部Set实例的元素，或者做为内部Map的键,<br>就应该意识到，如果这个对象在插入之后再被修改，Set或Map的约束条件就会遭到破坏。</p>
+<p>长度非零的数组总是可变的。<br>把内部数组返回给客户端之前，应该总是<code>进行保护性拷贝</code>。另一种解决方案是，给客户端<code>返回数组的不可变视图</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Integer[] values = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</div><div class="line">List&lt;Integer&gt; asList = Collections.unmodifiableList(Arrays.asList(values));</div></pre></td></tr></table></figure>
+<p>类具有从客户端得到或返回客户端的<code>可变组件</code>，类就必须<code>保护性的拷贝</code>这些组件。<br>如果<code>拷贝的成本受到限制</code>，并且类信任它的客户端不会不恰当地修改组件，<br>就可以<code>在文档中指明</code>客户端的职责不得修改受到影响的组件，以此来代替保护性拷贝。</p>
+<h2 id="复合优先于继承-1"><a href="#复合优先于继承-1" class="headerlink" title="复合优先于继承"></a>复合优先于继承</h2><h1 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h1><h2 id="同步访问共享的可变数据"><a href="#同步访问共享的可变数据" class="headerlink" title="同步访问共享的可变数据"></a>同步访问共享的可变数据</h2><p><code>tip-66</code></p>
+<p>Java语言规范保证<code>读</code>或<code>写</code>一个变量是<code>原子的</code>(atomic)，除非这个变量的类型为long或double。</p>
+<p>语言规范保证了线程在读取原子数据的时候，不会看到任意的数值，<br>但并不保证线程写入的值对于另一个线程是可见的。（可见性）</p>
+<h2 id="避免过度同步"><a href="#避免过度同步" class="headerlink" title="避免过度同步"></a>避免过度同步</h2><p><code>tip-67</code></p>
+<p>不要从同步区域调用外来方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 观察者模式</span></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">removeObserver</span><span class="params">(SetObserver&lt;E&gt; observer)</span></span>&#123;</div><div class="line">    <span class="comment">//遍历观察者列表，加锁</span></div><div class="line">    <span class="comment">//避免遍历期间Iterator出现ConcurrentModificationException</span></div><div class="line">    <span class="keyword">synchronized</span>(observers)&#123;</div><div class="line">        <span class="keyword">for</span>(SetObserver&lt;E&gt; observer : observers)&#123;</div><div class="line">            <span class="comment">//调用外部方法(观察者方法)</span></div><div class="line">            <span class="comment">//观察者方法可以获取当前对象，且内置锁可重入</span></div><div class="line">            <span class="comment">//观察者方法中可以修改observers，导致遍历异常</span></div><div class="line">            observer.added(<span class="keyword">this</span>, element);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过将外来方法调用移出同步的代码块解决这个问题，使用observers快照</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">removeObserver</span><span class="params">(SetObserver observer)</span></span>&#123;</div><div class="line">    List&lt;SetObserver&gt; snapshot = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">synchronized</span>(observers)&#123;</div><div class="line">        snapshot = <span class="keyword">new</span> ArrayList&lt;SetObserver&gt;(observers);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(SetObserver observer : snapshot)&#123;</div><div class="line">        observer.added(<span class="keyword">this</span>, element);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>消息通知通常比观察者列表变化更频繁，<br>故使用CopyOnWriteArrayList作为观察者列表更合适</p>
+<p>在同步区域调用外来方法，其他线程对受保护资源的访问会遭到不必要的拒绝。<br>应该在同步区域做尽量少的工作。</p>
+<p>过度同步实际成本并不是获取锁所花费的CPU时间，而是失去了并行的机会；<br>以及因为需要确保每个核都有一个<code>一致的内存视图</code>而导致的延迟。<br>另一个潜在开销在于，它会限制VM<code>优化代码执行</code>的能力。</p>
+<p>当不确定是否需要<code>内部同步</code>时，就不要同步类，<br>而应该建立文档，注明它不是线程安全的。</p>
+<p>内部同步可以使用不同的方法来实现高并发。<br>如：拆分锁(lock splitting)、分离锁(lock striping)和非阻塞(nonblocking)</p>
+<p>方法修改静态域，<code>必须同步</code>对这个域的访问。<br>客户在这种方法上执行外部同步是不可能的，<br>因为不能保证不相关的客户端也会执行外部同步。</p>
+<p>未同步静态域访问示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">int</span> nextSerialNumber = <span class="number">0</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">generateSerialNumber</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> nextSerialNumber++;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="executor和task优先于线程"><a href="#executor和task优先于线程" class="headerlink" title="executor和task优先于线程"></a>executor和task优先于线程</h2><p><code>tip-68</code><br>Executor Framework是一个基于接口的任务执行工具。</p>
+<p>java.util.concurrent.Executors类包含静态工厂方法，能提供大多数的executor，<br>使用ThreadPoolExecutor类可以最大限度的定制线程池。</p>
+<p>任务(task)有两种:</p>
+<ul>
+<li>Runnable</li>
+<li>Callable (有返回值)</li>
+</ul>
+<p>轻载的服务器，可以使用Executors.newCachedThreaPool()<br>大负载的服务器，最好使用Executors.newFixedThreadPool();<br>被调度的线程池 Executors.newScheduledThreadPool()可以替代java.util.Timer</p>
+<p>timer唯一的线程抛出未被捕获异常，会停止。</p>
+<p>被调度的线程池支持多线程，且优雅的从抛出非受检异常的任务中恢复。</p>
+<p>java.util.Timer 任务抛出异常后，线程终止示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">Timer timer = <span class="keyword">new</span> Timer();</div><div class="line"><span class="comment">//初始延迟</span></div><div class="line"><span class="keyword">int</span> initialDelay = <span class="number">1000</span>;</div><div class="line"><span class="comment">//执行周期</span></div><div class="line"><span class="keyword">int</span> period = <span class="number">2000</span>;</div><div class="line"></div><div class="line"><span class="comment">//固定延迟</span></div><div class="line">timer.schedule(<span class="keyword">new</span> TimerTask()&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(System.nanoTime());</div><div class="line">        <span class="comment">//throw new RuntimeException("foo");</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;, initialDelay, period);</div><div class="line"></div><div class="line"><span class="comment">//固定速率</span></div><div class="line">timer.scheduleAtFixedRate(<span class="keyword">new</span> TimerTask()&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(System.nanoTime());</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"foo"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;, initialDelay,period);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>对 Timer 对象最后的引用消失后，并且 所有未处理的任务都已执行完成，计时器的任务执行线程会正常终止（并且成为垃圾回收的对象）。但是这可能要很长时间后才发生。<br>（Timer任务执行完成之后，执行垃圾回收时才会终止。实验运行阶段造成程序不终止假象 ）</p>
+</blockquote>
+<p>ScheduledThreadPool 任务抛出异常时，执行当前任务的线程停止，<code>当前任务也会终止</code>；<br>任务执行器不会停止，会有新的线程被创建并执行其他任务。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//初始延迟</span></div><div class="line"><span class="keyword">int</span> initialDelay = <span class="number">1000</span>;</div><div class="line"><span class="comment">//执行周期</span></div><div class="line"><span class="keyword">int</span> period = <span class="number">2000</span>;</div><div class="line"></div><div class="line"><span class="keyword">int</span> corePoolSize = <span class="number">1</span>;</div><div class="line">ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(corePoolSize);</div><div class="line"><span class="comment">//固定速率，任务1</span></div><div class="line">ScheduledFuture&lt;?&gt; scheduledFuture = scheduler.scheduleAtFixedRate(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">    </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"foo:"</span> + Thread.currentThread().getName());</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"foo"</span>);</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;, initialDelay, period, TimeUnit.MILLISECONDS);</div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    <span class="comment">//获取任务执行结果，任务抛出异常时能够捕获异常</span></div><div class="line">    scheduledFuture.get();</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//固定延迟的任务，任务2</span></div><div class="line">scheduler.scheduleWithFixedDelay(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">    </div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"bar:"</span> + Thread.currentThread().getName());</div><div class="line">    &#125;</div><div class="line">&#125;, initialDelay, period, TimeUnit.MILLISECONDS);</div></pre></td></tr></table></figure>
+<h2 id="并发工具优先于wait和notify"><a href="#并发工具优先于wait和notify" class="headerlink" title="并发工具优先于wait和notify"></a>并发工具优先于wait和notify</h2><p><code>tip-69</code><br>几乎没有理由再使用wait和notify了，<br>java 1.5提供了更高级的并发工具，<br>他们可以完成以前必须在wait和notify上手写代码才能完成的工作。</p>
+<p>java.util.concurrent中更高级的工具分成三类：</p>
+<ul>
+<li>任务执行工具(Executor Framework)</li>
+<li>并发集合(Concurrent Collection)</li>
+<li>同步器(Synchronizer)</li>
+</ul>
+<p>wait方法的标准模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">synchronized</span>(obj)&#123;</div><div class="line">    <span class="keyword">while</span>(conditionDoesNotHold)&#123;</div><div class="line">        obj.wait();<span class="comment">//Releases lock, and reacquires on wakeup</span></div><div class="line">        <span class="comment">//Perform action appropriate to condition</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>循环会在等待之前和之后测试条件。</p>
+<p>一般情况下，应该优先使用notifyAll，而不是notify<br>使用notifyAll代替notify可以避免来自不相关线程的意外或恶意的等待。<br>否则，这样的等待会“吞掉”一个关键的通知，使真正的接收线程无限地等待下去。</p>
+<h2 id="线程安全性的文档化"><a href="#线程安全性的文档化" class="headerlink" title="线程安全性的文档化"></a>线程安全性的文档化</h2><p><code>tip-70</code><br>一个类为了可被多线程安全地使用，必须在文档中清楚地说明它所支持的线程安全级别。</p>
+<p>线程安全级别：</p>
+<ul>
+<li>不可变的</li>
+<li>无条件的线程安全</li>
+<li>有条件的线程安全</li>
+<li>非线程安全</li>
+<li>线程对立的</li>
+</ul>
+<blockquote>
+<p>线程对立的类不能安全的被多线程并发使用，即时方法调用使用外部同步。<br>线程对立的根源通常在于，没有同步地修改静态数据。<br>如：System.runFinalizersOnExit方法是线程对立的。</p>
+</blockquote>
+<p>线程安全说明通常放在文档注释中。</p>
+<p>静态工厂必须在文档中说明被返回对象的线程安全性。</p>
+<p>私有锁对象模式（防止客户端或子类干扰同步）：</p>
+<ul>
+<li>只能用在无条件的线程安全类上</li>
+<li>特别适用于专门为继承设计的类</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Object lock = <span class="keyword">new</span> Object();</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">synchronized</span>(lock)&#123;</div><div class="line">        <span class="comment">//doSomething</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有条件的线程安全类必须在文档中指明“哪个方法调用序列需外部同步”，<br>以及在执行这些序列时要获取哪个锁。</p>
+<h2 id="慎用延迟初始化"><a href="#慎用延迟初始化" class="headerlink" title="慎用延迟初始化"></a>慎用延迟初始化</h2><p><code>tip-71</code><br>延迟初始化是延迟到<code>需要域的值时</code>才将它初始化。</p>
+<p>延迟初始化降低了初始化类或创建实例的开销，<br>却增加了访问延迟初始化的域的开销。</p>
+<blockquote>
+<p>延迟初始化建议:除非绝对必要，否则就不要这么做。</p>
+</blockquote>
+<p>静态初始化器:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ThreadSafe</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EagerInitialization</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Resource resource = <span class="keyword">new</span> Resource();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Resource <span class="title">getResource</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> resource;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Resource</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote><p>静态初始化器由JVM在<code>类的初始化</code>阶段执行，即在类被加载后并且<code>被线程使用</code>之前。<br>由于JVM将在初始化期间获得一个锁，并且每个线程都至少获取一次这个锁以确保这个类已经被加载，<br>因此在静态初始化期间，内存写入操作将自动对所有线程可见。</p>
+<footer><strong>《Java Concurrency In Practice》</strong></footer></blockquote>
+<p>静态域初始化使用<code>延迟初始化占位类</code>模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Resource</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Resource</span><span class="params">()</span></span>&#123;&#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Resource <span class="title">getResource</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> ResourceHolder.resource;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ResourceHolder</span></span>&#123;</div><div class="line">        <span class="keyword">static</span> Resource  resource = <span class="keyword">new</span> Resource();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实例域初始化使用<code>双重检查</code>模式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> volitile FieldType field4;</div><div class="line"><span class="function">FieldType <span class="title">getField4</span><span class="params">()</span></span>&#123;</div><div class="line">    FieldType result = field4;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">null</span> == result)&#123;</div><div class="line">        <span class="keyword">synchronized</span>(<span class="keyword">this</span>)&#123;</div><div class="line">            result  = field4;</div><div class="line">            <span class="keyword">if</span>(<span class="keyword">null</span> == result)&#123;</div><div class="line">                field4 = result = computeFieldValue();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>局部变量result确保field在已经被初始化的情况下只读取一次，<br>可以提升性能；</p>
+</blockquote>
+<p>可以接受重复初始化的实例域，可以考虑<code>单重检查模式</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> hash;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> h = hash;</div><div class="line">    <span class="keyword">int</span> len = count;</div><div class="line">    <span class="keyword">if</span> (h == <span class="number">0</span> &amp;&amp; len &gt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">int</span> off = offset;</div><div class="line">        <span class="keyword">char</span> val[] = value;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</div><div class="line">            h = <span class="number">31</span>*h + val[off++];</div><div class="line">        &#125;</div><div class="line">        hash = h;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> h;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>String 使用单重检查模式缓存散列码</p>
+</blockquote>
+<h2 id="不要依赖于线程调度器"><a href="#不要依赖于线程调度器" class="headerlink" title="不要依赖于线程调度器"></a>不要依赖于线程调度器</h2><p><code>tip-72</code><br>任何依赖线程调度器来达到正确性或者性能要求的程序，很可能都是<code>不可移植</code>的。</p>
+<p>Thread.yield没有可测试的语义，<br>应该使用Thread.sleep(1)替代Thread.yield进行并发测试。</p>
+<p>线程优先级是Java平台上最不可移植的特性之一。</p>
+<p>线程优先级可以用来提高一个已经<code>能够正常工作</code>的程序的服务质量，<br>但永远不应该用来“修正”一个原本并不能工作的程序。</p>
+<h1 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h1><h2 id="保护性地编写readObject方法"><a href="#保护性地编写readObject方法" class="headerlink" title="保护性地编写readObject方法"></a>保护性地编写readObject方法</h2><p><code>tip-76</code><br>readObject是一个“用字节流作为唯一参数”的构造器。</p>
+<p>对于每个可序列化的不可变类，<br>如果它包含了<code>私有的可变组件</code>，那么在它的readObject方法中，必须对这些组件进行保护性拷贝。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/12/javase-thinkinjava/" rel="next" title="Think In Java">
+                <i class="fa fa-chevron-left"></i> Think In Java
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/20/java-concurrency-in-practice/" rel="prev" title="Java Concurrency In Practice">
+                Java Concurrency In Practice <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#创建和销毁对象"><span class="nav-number">1.</span> <span class="nav-text">创建和销毁对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#考虑用静态工厂方法代替构造器"><span class="nav-number">1.1.</span> <span class="nav-text">考虑用静态工厂方法代替构造器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到多个构造器参数时考虑用构造器"><span class="nav-number">1.2.</span> <span class="nav-text">遇到多个构造器参数时考虑用构造器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用私有构造器或者枚举类型强化Singleton属性"><span class="nav-number">1.3.</span> <span class="nav-text">用私有构造器或者枚举类型强化Singleton属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免创建不必要的对象"><span class="nav-number">1.4.</span> <span class="nav-text">避免创建不必要的对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消除过期的对象引用"><span class="nav-number">1.5.</span> <span class="nav-text">消除过期的对象引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免使用终结方法"><span class="nav-number">1.6.</span> <span class="nav-text">避免使用终结方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对所有对象都通用的方法"><span class="nav-number">2.</span> <span class="nav-text">对所有对象都通用的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#覆盖equals时请遵守通用约定"><span class="nav-number">2.1.</span> <span class="nav-text">覆盖equals时请遵守通用约定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#覆盖equals方法时总要覆盖hashCode"><span class="nav-number">2.2.</span> <span class="nav-text">覆盖equals方法时总要覆盖hashCode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#始终要覆盖toString"><span class="nav-number">2.3.</span> <span class="nav-text">始终要覆盖toString</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类和接口"><span class="nav-number">3.</span> <span class="nav-text">类和接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使类和成员的可访问性最小"><span class="nav-number">3.1.</span> <span class="nav-text">使类和成员的可访问性最小</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在公有类中使用访问方法而非公有域"><span class="nav-number">3.2.</span> <span class="nav-text">在公有类中使用访问方法而非公有域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使可变性最小化"><span class="nav-number">3.3.</span> <span class="nav-text">使可变性最小化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复合优先于继承"><span class="nav-number">3.4.</span> <span class="nav-text">复合优先于继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要么为继承而设计，并提提供文档说明，要么就禁止继承"><span class="nav-number">3.5.</span> <span class="nav-text">要么为继承而设计，并提提供文档说明，要么就禁止继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口优于抽象类"><span class="nav-number">3.6.</span> <span class="nav-text">接口优于抽象类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口只用于定义类型"><span class="nav-number">3.7.</span> <span class="nav-text">接口只用于定义类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用函数对象表示策略"><span class="nav-number">3.8.</span> <span class="nav-text">用函数对象表示策略</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法"><span class="nav-number">4.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#必要时进行保护性拷贝"><span class="nav-number">4.1.</span> <span class="nav-text">必要时进行保护性拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复合优先于继承-1"><span class="nav-number">4.2.</span> <span class="nav-text">复合优先于继承</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#并发"><span class="nav-number">5.</span> <span class="nav-text">并发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#同步访问共享的可变数据"><span class="nav-number">5.1.</span> <span class="nav-text">同步访问共享的可变数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免过度同步"><span class="nav-number">5.2.</span> <span class="nav-text">避免过度同步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#executor和task优先于线程"><span class="nav-number">5.3.</span> <span class="nav-text">executor和task优先于线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发工具优先于wait和notify"><span class="nav-number">5.4.</span> <span class="nav-text">并发工具优先于wait和notify</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程安全性的文档化"><span class="nav-number">5.5.</span> <span class="nav-text">线程安全性的文档化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#慎用延迟初始化"><span class="nav-number">5.6.</span> <span class="nav-text">慎用延迟初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不要依赖于线程调度器"><span class="nav-number">5.7.</span> <span class="nav-text">不要依赖于线程调度器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#序列化"><span class="nav-number">6.</span> <span class="nav-text">序列化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#保护性地编写readObject方法"><span class="nav-number">6.1.</span> <span class="nav-text">保护性地编写readObject方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

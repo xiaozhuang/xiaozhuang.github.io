@@ -1,0 +1,1076 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="《Java并发编程实战》笔记">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Concurrency In Practice">
+<meta property="og:url" content="http://xiaozhuang.github.io/2017/04/20/java-concurrency-in-practice/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="《Java并发编程实战》笔记">
+<meta property="og:updated_time" content="2018-03-06T03:23:01.160Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Concurrency In Practice">
+<meta name="twitter:description" content="《Java并发编程实战》笔记">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> Java Concurrency In Practice | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java Concurrency In Practice
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-20T13:02:49+08:00" content="2017-04-20">
+              2017-04-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>《Java并发编程实战》笔记<br><a id="more"></a></p>
+<h1 id="线程安全性"><a href="#线程安全性" class="headerlink" title="线程安全性"></a>线程安全性</h1><p>编写线程安全的代码，核心在于<code>对状态访问操作</code>进行管理，<br>特别是对<code>共享的</code>和<code>可变的</code>状态的访问。</p>
+<p>实现线程安全:</p>
+<ul>
+<li>不在线程之间共享状态变量</li>
+<li>状态变量修改为不可变变量</li>
+<li>访问状态变量时使用同步</li>
+</ul>
+<p>编写并发程序原则：<br>首先使代码<code>正确运行</code>，然后再提高代码的速度。</p>
+<blockquote>
+<p>应该始终遵循这个原则。由于并发错误难以重现和调试。</p>
+</blockquote>
+<h2 id="什么是线程安全性"><a href="#什么是线程安全性" class="headerlink" title="什么是线程安全性"></a>什么是线程安全性</h2><p>线程安全类：多个线程访问某个类时，类始终能表现出<code>正确的行为</code></p>
+<p>正确性的含义：某个类的<code>行为</code>与其<code>规范</code>完全一致</p>
+<p>线程安全类中封装了必要的同步机制，客户端无须进一步采取同步措施</p>
+<p><code>无状态对象</code>一定是线程安全的。</p>
+<h2 id="竞态条件"><a href="#竞态条件" class="headerlink" title="竞态条件"></a>竞态条件</h2><p>竞态条件：当某个计算的正确性取决于多个线程的交替执行时序时，那么就会发生竞态条件。</p>
+<p>最常见的竞态条件是“先检查后执行”操作</p>
+<p>竞态条件本质:基于一种可能失效的观察结果来做出判断或执行某个计算。</p>
+<h2 id="内置锁"><a href="#内置锁" class="headerlink" title="内置锁"></a>内置锁</h2><p>内置锁提供了独占的加锁方式（原子性、顺序性、可见性）</p>
+<p>每个java<code>对象</code>都可以用做实现同步的锁，<br>这些锁被称为内置锁（Intrinsic Lock）或监视器锁（Monitor Lock）</p>
+<p>Java内置锁相当于一种互斥体，最多<code>只有一个</code>线程能持有锁</p>
+<p>同步代码块（Synchronized Block）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">synchronized</span>(lock)&#123;</div><div class="line">    <span class="comment">//访问或修改由锁保护的共享状态</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>每次<code>只有一个</code>线程执行内置锁保护的代码块，<br>由锁保护的代码块会以<code>原子方式</code>执行。</p>
+<p>原子性：一组语句作为一个不可分割的单元被执行。</p>
+<p>原子性和可见性 JMM关于synchronized的两条规定:</p>
+<ul>
+<li>线程解锁前，必须把共享变量的最新值刷新到主内存</li>
+<li>线程加锁前，清空工作内存中共享变量，从主内存中重新读取最新的值</li>
+</ul>
+<h2 id="重入"><a href="#重入" class="headerlink" title="重入"></a>重入</h2><p>重入：某个线程试图获得一个已经由它持有的锁，那么这个请求会成功</p>
+<p>重入的一种实现方法，为每个锁关联一个<code>获取计数值</code>和一个<code>所有者线程</code></p>
+<p>内置锁是可重入的</p>
+<h2 id="用锁来保护状态"><a href="#用锁来保护状态" class="headerlink" title="用锁来保护状态"></a>用锁来保护状态</h2><p>使用锁来协调对某个变量的访问时，在访问变量的所有位置上都需要使用<code>同一个锁</code></p>
+<p>当获取与某个对象关联的锁时，并<code>不能阻止</code>其他线程<code>访问</code>该对象，<br>某个线程在获得对象的锁之后，能阻止其他线程获得同一个锁。 </p>
+<p>某个变量由锁保护时，意味着每次访问这个变量都需要首先获得锁，<br>这样就确保在同一时刻只有一个线程访问这个变量。</p>
+<p>对于每个包含<code>多个变量</code>的<code>不变性条件</code>，<br>其中涉及的所有变量都需要由<code>同一个</code>锁来保护。</p>
+<p>执行<code>时间较长</code>的计算或可能无法快速完成的操作时（网络I/O、控制台I/O），<br>一定<code>不要</code>持有锁。</p>
+<h1 id="对象的共享"><a href="#对象的共享" class="headerlink" title="对象的共享"></a>对象的共享</h1><p>访问共享的可变状态时需要进行正确的管理。</p>
+<h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><p>没有同步情况下，无法确保执行读操作的线程能适时地看到其他线程写入的值。</p>
+<h2 id="重排序"><a href="#重排序" class="headerlink" title="重排序"></a>重排序</h2><p>在没有同步的情况下，编译器、处理器以及运行时等都可能对<code>操作的执行顺序</code>进行一些意想不到的调整。</p>
+<p>在缺乏足够同步的多线程程序中，无法对内存操作的执行顺序进行判断</p>
+<h2 id="非原子的64位操作"><a href="#非原子的64位操作" class="headerlink" title="非原子的64位操作"></a>非原子的64位操作</h2><p>最低安全性：在没有同步的情况下读取变量，可能得到一个失效值，<br>但至少这个值是由之前某个线程设置的，而不是一个随机值。</p>
+<p>最低安全性适用于绝大多数变量，非volatile类型64位数值变量例外。</p>
+<p>Java内存模型要求，变量<code>读取</code>和<code>写入</code>操作都必须是原子操作，<br>但对非volatile类型的long和double变量，JVM允许将64位的读操作和写操作分解为两个32位操作。</p>
+<p>读取一个非volatile类型long变量时，<br>如果变量的读操作和写操作在不同的线程中执行，那么可能会读到某个值的高32位和另一个值的低32位。</p>
+<p>即使不考虑失效数据问题，多线程程序中使用共享且可变的long和double类型变量也是不安全的。<br>除非使用volatile声明它们或使用锁进行保护。</p>
+<h2 id="加锁与可见性"><a href="#加锁与可见性" class="headerlink" title="加锁与可见性"></a>加锁与可见性</h2><p>加锁的含义不仅仅局限于互斥行为，还包括内存可见性。</p>
+<p>为了确保所有线程都能看到共享变量的最新值，<br>所有执行读操作或写操作的线程都必须在<code>同一个锁</code>上同步。</p>
+<h2 id="volatile变量"><a href="#volatile变量" class="headerlink" title="volatile变量"></a>volatile变量</h2><p>volatile变量确保将变量的更新操作通知到其他线程。</p>
+<p>编译器与运行时<code>不会</code>将volatile变量上的操作与其他内存操作<code>重排序</code>。</p>
+<p>volatile变量<code>不会被缓存</code>在寄存器或对其他处理器不可见的地方。</p>
+<p>volatile使用场景：</p>
+<ul>
+<li>确保自身状态的可见性</li>
+<li>确保引用对象的状态的可见性</li>
+</ul>
+<p>volatile变量通常用做某个操作的<code>状态标识</code></p>
+<p>当且仅当满足以下所有条件时，才应该使用volatile变量：</p>
+<ul>
+<li>对变量的写入操作不依赖变量的当前值</li>
+<li>该变量不会与其他状态变量一起纳入不变性条件</li>
+<li>访问变量时不需要加锁</li>
+</ul>
+<h2 id="发布与逸出"><a href="#发布与逸出" class="headerlink" title="发布与逸出"></a>发布与逸出</h2><p>发布：使对象能够在当前作用域之外的代码中使用。</p>
+<p>逸出：某个不应该发布的对象被发布。</p>
+<p>发布内部类实例导致，隐式地this引用逸出</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThisEscape</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThisEscape</span><span class="params">(EventSource source)</span> </span>&#123;</div><div class="line">        source.registerListener(<span class="keyword">new</span> EventListener() &#123;</div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event e)</span> </span>&#123;</div><div class="line">                <span class="comment">//ThisEscape.this.doSomething()肯能在构造函数完成前被调用</span></div><div class="line">                doSomething(e);</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(Event e)</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">EventSource</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">registerListener</span><span class="params">(EventListener e)</span></span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">EventListener</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event e)</span></span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">Event</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="安全的对象构造过程"><a href="#安全的对象构造过程" class="headerlink" title="安全的对象构造过程"></a>安全的对象构造过程</h2><p>当且仅当对象的构造函数返回时，对象才处于可预测的和一致的状态。</p>
+<p>不要在构造函数中使this引用逸出。</p>
+<p>构造过程中使this引用逸出的常见错误：在构造函数中启动一个线程(由于Thread或Runnable是该对象的内部类)。</p>
+<h2 id="线程封闭"><a href="#线程封闭" class="headerlink" title="线程封闭"></a>线程封闭</h2><p>访问共享的可变数据时，通常需要使用同步。</p>
+<p>一种避免使用同步的方式是不共享数据。</p>
+<p>线程封闭是实现线程安全最简单方式之一。<br>当某个对象封闭在一个线程中时，将自动实现线程安全，即使被封闭的对象本身不是线程安全的。</p>
+<h3 id="栈封闭"><a href="#栈封闭" class="headerlink" title="栈封闭"></a>栈封闭</h3><p>局部变量的固有属性之一就是封闭在执行线程中。</p>
+<p>任何方法都无法获得基本数据类型的引用，<br>基本类型局部变量始终封闭在线程内。</p>
+<p>维持对象引用的栈封闭时，需要确保被引用的对象不会逸出。</p>
+<h3 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h3><p>ThreadLocal类能够使线程中的某个值与ThreadLocal对象关联起来。</p>
+<p>从概念上看，可以将ThreadLocal<t>视为包含了Map<thread,t>对象，<br>其中保存了特定于该线程的值，但ThreadLocal的实现并非如此。</thread,t></t></p>
+<p>特定于线程的值保存在Thread对象中，线程终止后，这些值会被回收。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> ThreadLocal&lt;Integer&gt; dataHolder = <span class="keyword">new</span> ThreadLocal&lt;Integer&gt;()&#123;</div><div class="line">    <span class="comment">// 初次调用ThreadLocal.get方法时，会调用initialValue获取初始值</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> Integer <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Random().nextInt();</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">public</span> Integer <span class="title">getData</span><span class="params">()</span></span>&#123;</div><div class="line">    Integer integer = dataHolder.get();</div><div class="line">    <span class="keyword">return</span> integer;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setData</span><span class="params">(<span class="keyword">int</span> data)</span></span>&#123;</div><div class="line">    dataHolder.set(data);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="不变性"><a href="#不变性" class="headerlink" title="不变性"></a>不变性</h2><p>不可变对象：对象在被创建后状态不能被修改。</p>
+<p>线程安全性是不可变对象的固有属性。</p>
+<p>不可变对象一定是线程安全的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Immutable</span></div><div class="line"> <span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreeStooges</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Set&lt;String&gt; stooges = <span class="keyword">new</span> HashSet&lt;String&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThreeStooges</span><span class="params">()</span> </span>&#123;</div><div class="line">        stooges.add(<span class="string">"Moe"</span>);</div><div class="line">        stooges.add(<span class="string">"Larry"</span>);</div><div class="line">        stooges.add(<span class="string">"Curly"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isStooge</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> stooges.contains(name);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getStoogeNames</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;String&gt; stooges = <span class="keyword">new</span> Vector&lt;String&gt;();</div><div class="line">        stooges.add(<span class="string">"Moe"</span>);</div><div class="line">        stooges.add(<span class="string">"Larry"</span>);</div><div class="line">        stooges.add(<span class="string">"Curly"</span>);</div><div class="line">        <span class="keyword">return</span> stooges.toString();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>实现不可变对象方法，参考《EffectiveJava》tip-15</p>
+</blockquote>
+<h3 id="Final域"><a href="#Final域" class="headerlink" title="Final域"></a>Final域</h3><p>final类型的域是不能修改的</p>
+<p>java内存模型中，final域有着特殊的语义。<br>final域能确保<code>初始化过程</code>的安全性，共享这些对象时无需同步。</p>
+<p>初始化安全性只能保证通过final域<code>可达</code>的值从构造过程完成时开始的可见性。<br>对于通过非final域可达的值，或在<code>构造过程完成后</code>可能<code>改变</code>的值，必须采用同步确保可见性。</p>
+<p>除非需要某个域是可变的，否则应将其声明为final域</p>
+<h3 id="使用volatile类型发布不可变对象"><a href="#使用volatile类型发布不可变对象" class="headerlink" title="使用volatile类型发布不可变对象"></a>使用volatile类型发布不可变对象</h3><p>某些情况下，不可变对象能提供一种弱形式的原子性</p>
+<p>需要对一组相关数据以原子方式执行某个操作时，<br>可以考虑创建一个不可变的类来包含这些数据。</p>
+<h2 id="安全发布"><a href="#安全发布" class="headerlink" title="安全发布"></a>安全发布</h2><p>多线程间共享对象，必须确保安全地进行共享。</p>
+<h3 id="不正确的发布：正确的对象被破坏"><a href="#不正确的发布：正确的对象被破坏" class="headerlink" title="不正确的发布：正确的对象被破坏"></a>不正确的发布：正确的对象被破坏</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StuffIntoPublic</span> </span>&#123;</div><div class="line">    <span class="comment">//不安全发布</span></div><div class="line">    <span class="keyword">public</span> Holder holder;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">()</span> </span>&#123;</div><div class="line">        holder = <span class="keyword">new</span> Holder(<span class="number">42</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Holder</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> n;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Holder</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.n = n;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">assertSanity</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (n != n)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError(<span class="string">"This statement is false."</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>问题并不在于Holder本身，而是在于Holder类未被安全的发布。</p>
+<p>两种不安全情况：</p>
+<ul>
+<li>其他线程可能看到Holder域是一个失效值。</li>
+<li>其他线程可能看到Holder引用的值是最新的，但Holder状态的值却是失效的。</li>
+</ul>
+<p>由于未被正确发布，另一个线程调用assertSanity()将抛出AssertionError（不理解）</p>
+<h3 id="不可变对象与初始化安全性"><a href="#不可变对象与初始化安全性" class="headerlink" title="不可变对象与初始化安全性"></a>不可变对象与初始化安全性</h3><p>java内存模型为不可变对象的共享提供了特殊的初始化安全性保证。</p>
+<p>即使发布不可变对象的引用时没有使用同步，仍然可以安全的访问该对象。</p>
+<h3 id="安全发布的常用模式"><a href="#安全发布的常用模式" class="headerlink" title="安全发布的常用模式"></a>安全发布的常用模式</h3><p>安全地发布一个对象，对象地<code>引用</code>以及对象的<code>状态</code>必须同时对其他线程可见。</p>
+<p><code>正确构造</code>的对象可以通过以下方式来安全发布：</p>
+<ul>
+<li><code>静态初始化函数</code>中初始化一个对象引用</li>
+<li>对象引用保存到<code>volatile</code>类型域或<code>AtomicReferance</code>对象中</li>
+<li>对象引用保存到某个正确构造对象的<code>final</code>域中</li>
+<li>对象引用保存到一个<code>由锁保护</code>的域中</li>
+</ul>
+<p>线程安全容器通过将对象应用保存在由锁保护的域中，<br>保证对象安全发布。</p>
+<p>静态初始化器由JVM在类初始化阶段执行，即在类被加载后并且被线程使用之前。</p>
+<p>由于JVM将在初始化期间获得一个锁，<br>并且每个线程都至少获取一次这个锁以确保这个类已经加载，<br>因此在静态初始化期间，内存写入操作将自动对所有线程可见。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ThreadSafe</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EagerInitialization</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Resource resource = <span class="keyword">new</span> Resource();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Resource <span class="title">getResource</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> resource;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Resource</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="事实不可变对象"><a href="#事实不可变对象" class="headerlink" title="事实不可变对象"></a>事实不可变对象</h3><p>事实不可变对象：对象从技术上看是可变的，但其状态在发布后不会再改变。</p>
+<p>没有额外同步的情况下，任何线程都可以安全地使用<code>被安全发布</code>的事实不可变对象。</p>
+<h3 id="可变对象"><a href="#可变对象" class="headerlink" title="可变对象"></a>可变对象</h3><p>安全发布只能确保<code>发布当时</code>状态的可见性。</p>
+<p>可变对象每次访问都需要使用同步来确保<code>后续修改</code>操作的可见性。</p>
+<h3 id="安全的共享对象"><a href="#安全的共享对象" class="headerlink" title="安全的共享对象"></a>安全的共享对象</h3><ul>
+<li>不可变对象可以通过任意机制发布</li>
+<li>事实不可变对象必须通过安全方式发布</li>
+<li>可变对象必须通过安全方式发布，并且必须线程安全的或由锁保护起来</li>
+</ul>
+<h1 id="基础构建模块"><a href="#基础构建模块" class="headerlink" title="基础构建模块"></a>基础构建模块</h1><h2 id="同步工具类"><a href="#同步工具类" class="headerlink" title="同步工具类"></a>同步工具类</h2><h3 id="锁闭"><a href="#锁闭" class="headerlink" title="锁闭"></a>锁闭</h3><p>锁闭是一种同步工具，可以延迟线程的进度<code>直到其到达终止状态</code>。</p>
+<p>锁闭可以用来确保某些活动<code>直到其他活动都完成</code>才执行。<br>例如：确保某个计算在其所需要的所有资源都初始化之后继续执行。</p>
+<p>锁闭是一次性对象，一旦进入终止状态，就不能被重置。</p>
+<p>CountDownLatch测试n个线程并发执行某个任务需要的时间。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.concurrent.CountDownLatch;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.ExecutorService;</div><div class="line"><span class="keyword">import</span> java.util.concurrent.Executors;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcurrentTimer</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ConcurrentTimer</span><span class="params">()</span></span>&#123;&#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">time</span><span class="params">(ExecutorService executor, <span class="keyword">int</span> concurrency, <span class="keyword">final</span> Runnable action)</span> <span class="keyword">throws</span> InterruptedException</span>&#123;</div><div class="line">        <span class="keyword">final</span> CountDownLatch ready = <span class="keyword">new</span> CountDownLatch(concurrency);</div><div class="line">        <span class="keyword">final</span> CountDownLatch start = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);</div><div class="line">        <span class="keyword">final</span> CountDownLatch done = <span class="keyword">new</span> CountDownLatch(concurrency);</div><div class="line">        </div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; concurrency; i++)&#123;</div><div class="line">            <span class="keyword">try</span>&#123;</div><div class="line">                executor.execute(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">                    </div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                        ready.countDown();</div><div class="line">                        <span class="keyword">try</span> &#123;</div><div class="line">                            start.await();</div><div class="line">                            action.run();</div><div class="line">                        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                            Thread.currentThread().interrupt();</div><div class="line">                            e.printStackTrace();</div><div class="line">                        &#125;<span class="keyword">finally</span> &#123;</div><div class="line">                            done.countDown();</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">            &#125;<span class="keyword">finally</span>&#123;</div><div class="line">                executor.shutdown();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        ready.await();</div><div class="line">        <span class="keyword">long</span> startNanos = System.nanoTime();</div><div class="line">        start.countDown();</div><div class="line">        done.await();</div><div class="line"></div><div class="line">        <span class="keyword">return</span> System.nanoTime() - startNanos;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> concurrency = <span class="number">3</span>;</div><div class="line">        ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            </div><div class="line">            <span class="keyword">long</span> timecost = time(newCachedThreadPool, concurrency, <span class="keyword">new</span> Runnable() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                    System.out.println(<span class="string">"run..."</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">            System.out.println(timecost);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="FutureTask"><a href="#FutureTask" class="headerlink" title="FutureTask"></a>FutureTask</h2><p>FutureTask 也可以用做锁闭。<br>FutureTask 表示一种抽象的可生成结果的计算，通过Callable实现。</p>
+<p>FutureTask 在Executor框架中表示异步任务。</p>
+<p>FutureTask是Future、Runnable的合体。</p>
+<p>Future.get() 如果任务已完成，立即返回结果；<br>否则，阻塞直到任务进入完成状态，然后返回结果或抛出异常。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"> FutureTask&lt;String&gt; futureTask = <span class="keyword">new</span> FutureTask&lt;String&gt;(<span class="keyword">new</span> Callable&lt;String&gt;() &#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"foo"</span>;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">new</span> Thread(futureTask).start();</div><div class="line"></div><div class="line">String result = <span class="keyword">null</span>;</div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    result = futureTask.get();</div><div class="line">    System.out.println(result);</div><div class="line">&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; <span class="keyword">catch</span> (ExecutionException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h2><p>计数信号量(Counting Semaphore)<br>限制对资源的使用，或者同时执行某个指定操作的数量。</p>
+<p>默认为非公平锁，可指定为公平锁。</p>
+<p>Semaphore中管理着一组虚拟的许可(permit)，<br>许可初始数量可通过构造函数指定。</p>
+<p>执行操作时先获得许可，使用之后释放许可。如果没有许可，acquire()将阻塞直到有许可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Semaphore semaphore = <span class="keyword">new</span> Semaphore(<span class="number">0</span>);</div><div class="line"></div><div class="line"><span class="comment">//创建许可</span></div><div class="line">semaphore.release();</div><div class="line">System.out.println(semaphore.availablePermits());</div><div class="line"></div><div class="line"><span class="comment">//获取许可</span></div><div class="line">semaphore.acquire();</div></pre></td></tr></table></figure>
+<p>Semaphore <code>不会</code>将许可与线程关联起来，<br>一个线程获得的许可，可以在另一个线程中释放。<br>可以将acquire操作视为<code>消费</code>一个许可，release操作视为<code>创建</code>一个许可。</p>
+<h2 id="栅栏"><a href="#栅栏" class="headerlink" title="栅栏"></a>栅栏</h2><p>栅栏(Barrier)能阻塞一组线程直到某个事件发生<br>Barrier 在释放等待线程后可以重用</p>
+<p>用于并行迭代算法：将一个问题拆分成一系列相互独立的子问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcurrentTimer2</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ConcurrentTimer2</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">time</span><span class="params">(ExecutorService executor, <span class="keyword">int</span> concurrency, <span class="keyword">final</span> Runnable action)</span></span></div><div class="line">            <span class="keyword">throws</span> InterruptedException, BrokenBarrierException &#123;</div><div class="line">        <span class="comment">// 使用栅栏控制并发</span></div><div class="line">        <span class="keyword">final</span> CyclicBarrier barrier = <span class="keyword">new</span> CyclicBarrier(concurrency + <span class="number">1</span>);</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; concurrency; i++) &#123;</div><div class="line">            executor.submit(<span class="keyword">new</span> Callable&lt;Void&gt;() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> Void <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                    barrier.await();</div><div class="line">                    action.run();</div><div class="line">                    barrier.await();</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        executor.shutdown();</div><div class="line"></div><div class="line">        barrier.await();</div><div class="line">        <span class="keyword">long</span> startNanos = System.nanoTime();</div><div class="line">        barrier.await();</div><div class="line">        <span class="keyword">return</span> System.nanoTime() - startNanos;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> concurrency = <span class="number">3</span>;</div><div class="line">        ExecutorService newCachedThreadPool = Executors.newCachedThreadPool();</div><div class="line">        <span class="keyword">long</span> timecost = <span class="number">0</span>;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            timecost = time(newCachedThreadPool, concurrency, <span class="keyword">new</span> Runnable() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                    System.out.println(<span class="string">"run..."</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (BrokenBarrierException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        System.out.println(timecost);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>在不涉及I/O操作和共享数据访问的计算问题中，<br>当线程数量等于CPU数量或CPU数量+1时将获得最优的吞吐量。</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>所有并发问题都可以归结为如何协调对并发状态的访问</li>
+<li>不可变对象一定是线程安全的</li>
+<li>保护同一个不可变性条件中的所有变量时，使用同一个锁。</li>
+</ul>
+<h1 id="任务执行"><a href="#任务执行" class="headerlink" title="任务执行"></a>任务执行</h1><h1 id="取消与关闭"><a href="#取消与关闭" class="headerlink" title="取消与关闭"></a>取消与关闭</h1><h1 id="线程池的了使用"><a href="#线程池的了使用" class="headerlink" title="线程池的了使用"></a>线程池的了使用</h1><h1 id="避免活跃性危险"><a href="#避免活跃性危险" class="headerlink" title="避免活跃性危险"></a>避免活跃性危险</h1><p>Java程序无法从死锁中恢复过来，在设计时一定要排除那些可能导致死锁出现的条件。</p>
+<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>当一个线程永远地持有一个锁，并且其他线程都尝试获得这个锁，<br>那么他们将永远被阻塞。</p>
+<p>哲学家进餐问题：<br>5个哲学家，5只筷子，交替地进行思考和进餐。</p>
+<p>解决办法：</p>
+<ul>
+<li>至多4个哲学家拿起左边筷子</li>
+<li>奇数号科学家先拿左边筷子，再拿右边筷子；偶数号科学家相反。</li>
+<li>仅当两支筷子均可用时，才允许他拿起筷子进餐。(只有一个哲学家取筷子、轮询锁)</li>
+</ul>
+<h3 id="锁顺序死锁"><a href="#锁顺序死锁" class="headerlink" title="锁顺序死锁"></a>锁顺序死锁</h3><p>原因：两个线程以不同的顺序获得2个锁。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LeftRightDeadLock</span></span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Object left = <span class="keyword">new</span> Object();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Object right = <span class="keyword">new</span> Object();</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">leftRight</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (left) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (right) &#123;</div><div class="line">                <span class="comment">//doSomething</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rightLeft</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (right) &#123;</div><div class="line">            <span class="keyword">synchronized</span> (left) &#123;</div><div class="line">                <span class="comment">//doSomething</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所有线程以固定的顺序来获得锁，就不会出现锁顺序死锁。</p>
+<h3 id="动态顺序死锁"><a href="#动态顺序死锁" class="headerlink" title="动态顺序死锁"></a>动态顺序死锁</h3><p>使用方法传入的两个参数作为锁对象。</p>
+<p>解决方法：<br>使用System.identityHashCode()来定义锁的顺序，<br>极少数情况下，两个对象有相同的散列值，可使用加时赛（TieBreaking）锁，<br>从而保证只有一个线程以未知的顺序获得两个锁。</p>
+<p>若参数对象包含唯一的、不可变的，并且具备比较性的属性，<br>可通过该属性决定获得锁的顺序。</p>
+<h3 id="协作对象之间发生的死锁"><a href="#协作对象之间发生的死锁" class="headerlink" title="协作对象之间发生的死锁"></a>协作对象之间发生的死锁</h3><p>持有锁时调用某个外部方法，外部方法中可能获取其他锁，<br>或阻塞时间过长，导致其他线程无法及时获得当前被持有的锁。</p>
+<h3 id="开放调用"><a href="#开放调用" class="headerlink" title="开放调用"></a>开放调用</h3><p>调用某个方法时不持有锁，称为开放调用。</p>
+<p>通过开放调用避免在相互协作的对象之间产生死锁。</p>
+<p>在程序中尽量使用开放调用。<br>开放调用的程序更易于进行死锁分析。</p>
+<h2 id="死锁避免与诊断"><a href="#死锁避免与诊断" class="headerlink" title="死锁避免与诊断"></a>死锁避免与诊断</h2><ul>
+<li>尽量减少潜在的加锁交互数量</li>
+<li>尽可能使用开放调用</li>
+</ul>
+<h3 id="支持定时的锁"><a href="#支持定时的锁" class="headerlink" title="支持定时的锁"></a>支持定时的锁</h3><p>使用轮询锁、定时锁代替内置锁</p>
+<h3 id="通过线程转储信息来分析死锁"><a href="#通过线程转储信息来分析死锁" class="headerlink" title="通过线程转储信息来分析死锁"></a>通过线程转储信息来分析死锁</h3><p>在生成线程转储之前，JVM将在等待关系图中通过搜索循环来找出死锁。</p>
+<h2 id="其他活跃性危险"><a href="#其他活跃性危险" class="headerlink" title="其他活跃性危险"></a>其他活跃性危险</h2><p>饥饿、丢失信号、活锁</p>
+<h3 id="饥饿"><a href="#饥饿" class="headerlink" title="饥饿"></a>饥饿</h3><p>当线程由于无法访问它所需要的资源而不能继续执行时，就发生了“饥饿”。</p>
+<p>要尽量避免使用线程优先级，这会增加平台依赖性，<br>并可能导致活跃性问题。<br>大多数并发程序中，都可以使用默认的线程优先级。</p>
+<h3 id="活锁"><a href="#活锁" class="headerlink" title="活锁"></a>活锁</h3><p>多个相互协作的线程都对彼此进行响应从而修改各自的状态，<br>并使得任何一个线程都无法继续执行时，就发生了活锁。</p>
+<p>通过等待随机长度的时间和回退可以有效地避免活锁的发生。</p>
+<h3 id="丢失信号"><a href="#丢失信号" class="headerlink" title="丢失信号"></a>丢失信号</h3><p>线程等待一个已经为真的条件，但开始等待之前没有检查条件谓词。</p>
+<p>如：没有在调用wait之前检查条件谓词。</p>
+<h1 id="性能与可伸缩性"><a href="#性能与可伸缩性" class="headerlink" title="性能与可伸缩性"></a>性能与可伸缩性</h1><p>线程的主要目的：提升程序的运行性能。<br>线程可在运行现有任务时立即开始新的任务，提升系统响应性。</p>
+<h2 id="对性能的思考"><a href="#对性能的思考" class="headerlink" title="对性能的思考"></a>对性能的思考</h2><p>多线程总会引入一些额外的性能开销：</p>
+<ul>
+<li>线程之间的协调（加锁、触发信号、内存同步）</li>
+<li>增加上下文切换</li>
+<li>线程的创建和销毁</li>
+<li>线程的调度</li>
+</ul>
+<h2 id="性能与可伸缩性-1"><a href="#性能与可伸缩性-1" class="headerlink" title="性能与可伸缩性"></a>性能与可伸缩性</h2><p>伸缩性：增加计算资源时，程序吞吐量或处理能力相应增加。</p>
+<p>性能调优：用更小的代价完成相同的工作（缓存、算法）。<br>可伸缩性调优：设法将问题的计算并行化，从而能利用更多的计算资源。</p>
+<h2 id="评估各种性能权衡因素"><a href="#评估各种性能权衡因素" class="headerlink" title="评估各种性能权衡因素"></a>评估各种性能权衡因素</h2><p>避免不成熟的优化。<br>首先使程序正确，然后在提高运行速度——如果运行得不够快。</p>
+<p>对性能调优时，一定要有明确的性能需求，<br>还需要一个测试程序以及真实的配置和负载等环境。</p>
+<h2 id="Amdahl定律"><a href="#Amdahl定律" class="headerlink" title="Amdahl定律"></a>Amdahl定律</h2><p>程序的可伸缩性取决于所有代码中必须被串行执行的代码比例。</p>
+<h2 id="减少锁的竞争"><a href="#减少锁的竞争" class="headerlink" title="减少锁的竞争"></a>减少锁的竞争</h2><p>减少锁的竞争能够提高性能和可伸缩性。</p>
+<h3 id="缩小锁的范围"><a href="#缩小锁的范围" class="headerlink" title="缩小锁的范围"></a>缩小锁的范围</h3><p>尽可能缩短锁的持有时间。</p>
+<p>同步需要一定的开销，<br>把一个同步代码块分解为多个同步代码块时，<br>反而会对性能提升产生负面影响。</p>
+<p>仅当可以将一些“大量”计算或阻塞操作从同步代码块中移出时，<br>才应该考虑分解同步代码块。</p>
+<h3 id="减小锁的粒度"><a href="#减小锁的粒度" class="headerlink" title="减小锁的粒度"></a>减小锁的粒度</h3><p>另一个减小锁的持有时间的方式：降低线程请求锁的频率（从而减小发生竞争的可能性）。<br>可通过锁分解和锁分段实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ThreadSafe</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerStatusBeforeSplit</span> </span>&#123;</div><div class="line">    <span class="meta">@GuardedBy</span>(<span class="string">"this"</span>) <span class="keyword">public</span> <span class="keyword">final</span> Set&lt;String&gt; users;</div><div class="line">    <span class="meta">@GuardedBy</span>(<span class="string">"this"</span>) <span class="keyword">public</span> <span class="keyword">final</span> Set&lt;String&gt; queries;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ThreadSafe</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerStatusAfterSplit</span> </span>&#123;</div><div class="line">    <span class="meta">@GuardedBy</span>(<span class="string">"users"</span>) <span class="keyword">public</span> <span class="keyword">final</span> Set&lt;String&gt; users;</div><div class="line">    <span class="meta">@GuardedBy</span>(<span class="string">"queries"</span>) <span class="keyword">public</span> <span class="keyword">final</span> Set&lt;String&gt; queries;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="锁分段"><a href="#锁分段" class="headerlink" title="锁分段"></a>锁分段</h3><p>ConcurrentHashMap使用了包含16个锁的数组，<br>每个锁保护所有散列桶的1/16。</p>
+<p>锁分段劣势：获取所有锁实现独占访问困难且开销高。</p>
+<p>ConcurrentHashMap中size():<br>将每个分段中元素数量相加，而不是维护一个全局计数（避免热点域）。<br>每个分段维护一个独立计数，通过每个分段的锁维护这个值。</p>
+<h3 id="一些替代独占锁的方法"><a href="#一些替代独占锁的方法" class="headerlink" title="一些替代独占锁的方法"></a>一些替代独占锁的方法</h3><p>并发容器、读-写锁、不可变对象、原子变量。</p>
+<h1 id="显式锁"><a href="#显式锁" class="headerlink" title="显式锁"></a>显式锁</h1><p>使用一致的锁协议协调对共享状态的访问，能采用独占方式访问变量，<br>对变量的任何修改对随后获得这个锁的线程都可见。</p>
+<p>显式锁和内置锁在加锁和解锁等操作上有相同的内存语义。</p>
+<p>ReentrantLock并不是一种替代内置锁的方法，<br>而是当内置加锁机制不适用时，作为一种可选择的高级功能。</p>
+<p>Reentrantlock实现了Lock接口，<br>提供了与synchronized相同的的互斥性和内存可见性，<br>提供了可重入的加锁语义。</p>
+<p>必须在finally块中释放锁</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Lock lock = <span class="keyword">new</span> ReentrantLock();<span class="comment">//获取锁</span></div><div class="line"></div><div class="line">lock.lock();</div><div class="line"></div><div class="line"><span class="keyword">try</span>&#123;</div><div class="line">    <span class="comment">//更新对象状态</span></div><div class="line">&#125;<span class="keyword">finally</span>&#123;</div><div class="line">    lock.unlock();<span class="comment">//释放锁</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="轮询锁和定时锁"><a href="#轮询锁和定时锁" class="headerlink" title="轮询锁和定时锁"></a>轮询锁和定时锁</h2><p>内置锁中，死锁是一个严重的问题，<br>恢复程序的唯一办法是重新启动程序，<br>防止死锁的唯一办法是构造程序时避免出现不一致的锁顺序。</p>
+<p>定时锁和可轮询锁提供了另一种选择：避免死锁的发生。</p>
+<p>定时锁示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Lock lock = <span class="keyword">new</span> ReentrantLock();<span class="comment">//获取锁</span></div><div class="line"><span class="comment">//时长</span></div><div class="line"><span class="keyword">long</span> nanosToLock = <span class="number">1000</span>;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (lock.tryLock(nanosToLock, TimeUnit.NANOSECONDS))&#123;</div><div class="line">    <span class="keyword">try</span>&#123;</div><div class="line">        <span class="comment">//更新对象状态</span></div><div class="line">    &#125;<span class="keyword">finally</span>&#123;</div><div class="line">        lock.unlock();<span class="comment">//释放锁</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>轮询锁示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">transferMoney</span><span class="params">(Account fromAcct,</span></span></div><div class="line">                             Account toAcct,</div><div class="line">                             DollarAmount amount,</div><div class="line">                             <span class="keyword">long</span> timeout,</div><div class="line">                             TimeUnit unit)</div><div class="line">        <span class="keyword">throws</span> InsufficientFundsException, InterruptedException &#123;</div><div class="line">    <span class="comment">//轮询固定延时</span></div><div class="line">    <span class="keyword">long</span> fixedDelay = getFixedDelayComponentNanos(timeout, unit);</div><div class="line">    <span class="comment">//轮询随机延时</span></div><div class="line">    <span class="keyword">long</span> randMod = getRandomDelayModulusNanos(timeout, unit);</div><div class="line">    <span class="comment">//计算超时时间</span></div><div class="line">    <span class="keyword">long</span> stopTime = System.nanoTime() + unit.toNanos(timeout);</div><div class="line"></div><div class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (fromAcct.lock.tryLock()) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="keyword">if</span> (toAcct.lock.tryLock()) &#123;</div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        fromAcct.debit(amount);</div><div class="line">                        toAcct.credit(amount);</div><div class="line">                        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">                    &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                        toAcct.lock.unlock();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                fromAcct.lock.unlock();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (System.nanoTime() &lt; stopTime)</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        NANOSECONDS.sleep(fixedDelay + rnd.nextLong() % randMod);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="可中断的锁"><a href="#可中断的锁" class="headerlink" title="可中断的锁"></a>可中断的锁</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Lock lock = <span class="keyword">new</span> ReentrantLock();<span class="comment">//获取锁</span></div><div class="line"></div><div class="line">lock.lockInterruptibly();</div><div class="line"></div><div class="line"><span class="keyword">try</span>&#123;</div><div class="line">    <span class="comment">//更新对象状态</span></div><div class="line">&#125;<span class="keyword">finally</span>&#123;</div><div class="line">    lock.unlock();<span class="comment">//释放锁</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="非块状结构锁"><a href="#非块状结构锁" class="headerlink" title="非块状结构锁"></a>非块状结构锁</h2><p>使用细粒度锁保护链表，<br>每个链表节点一个独立的锁，<br>使不同的线程能独立地对链表的不同部分进行操作。</p>
+<p>每个节点的锁将保护链接指针及该节点中存储的数据。<br>遍历或修改链表时，必须持有节点上的锁，<br>直到获得下一个节点的锁，才能是释放前一个节点的锁。</p>
+<h2 id="公平性"><a href="#公平性" class="headerlink" title="公平性"></a>公平性</h2><p>ReentrantLock提供两种公平性选择：非公平锁(默认)、公平锁</p>
+<blockquote>
+<p>注：即使公平锁，tryLock()仍然会插队。</p>
+</blockquote>
+<p>公平性由于在<code>挂起线程</code>和<code>恢复线程</code>时存在的开销而极大地降低性能。</p>
+<p>与默认的ReentrantLock一样，内置锁不提供确定的公平性保证。</p>
+<h2 id="在synchronized和ReentrantLock之间选择"><a href="#在synchronized和ReentrantLock之间选择" class="headerlink" title="在synchronized和ReentrantLock之间选择"></a>在synchronized和ReentrantLock之间选择</h2><p>ReentrantLock在性能上似乎优于内置锁，<br>其中Java 6中略有胜出，而在java 5中则是远远胜出。</p>
+<p>与显式锁相比，内置锁任然具有很多的优势。<br>内置锁为许多开发人员熟悉，并且简单紧凑。</p>
+<p>未来更可能会提升synchronized性能。<br>因为synchronized是JVM的内置属性，它能执行一些优化。</p>
+<p>线程转储能给出在哪些线程获得了哪些锁，并能够检测和识别发生死锁的线程。<br>线程转储中显式锁信息比内置锁信息精确度低。<br>内置锁与<code>栈帧</code>关联，显式锁与<code>线程</code>关联。</p>
+<p>线程转储：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># windows Ctrl + Break</span></div><div class="line"><span class="comment"># Unix</span></div><div class="line"><span class="built_in">kill</span> -3 pid</div></pre></td></tr></table></figure>
+<p>应该优先使用sysnchronized，<br>仅当内置锁不能满足需求时，才可以考虑使用ReentrantLock。</p>
+<p>实现 定时锁、轮询锁、可中断锁、非块状锁和公平锁，<br>可以考虑使用ReentrantLock。</p>
+<h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ReadWriteLock</span> </span>&#123;</div><div class="line">    <span class="function">Lock <span class="title">readLock</span><span class="params">()</span></span>;</div><div class="line">    <span class="function">Lock <span class="title">writeLock</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>读/写锁：<br>一个资源可以被<code>多个读</code>操作访问，或被<code>一个写</code>操作访问，但两者不能同时进行。</p>
+<p>在多处理器系统上频繁读取的数据结构，读-写锁能够提升性能。</p>
+<p>ReentrantReadWriteLock特点：</p>
+<ul>
+<li>支持公平锁和非公平锁</li>
+<li>可重入</li>
+<li>写锁可降级为读锁，读锁不可升级为写锁。</li>
+</ul>
+<p>线程插队：<br>公平锁中，等待时间最长的线程将优先获得锁。<br>如果锁由读线程持有，另一个线程在请求写锁，<br>那么其他读线程都不能获得读取锁，直到写线程使用完并释放写锁。</p>
+<p>非公平锁中，线程获得访问许可的顺序是不确定的。</p>
+<p>写锁降级为读锁：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> ReadWriteLock lock = <span class="keyword">new</span> ReentrantReadWriteLock();<span class="comment">// 读写锁  </span></div><div class="line">lock.writeLock().lock();  </div><div class="line"></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">try</span> &#123;  </div><div class="line">        <span class="comment">// do something</span></div><div class="line">    &#125; <span class="keyword">finally</span> &#123;  </div><div class="line">        <span class="comment">// 重入——&gt;降级锁的步骤：先获取写锁，然后获取读锁，最后释放写锁（重点）  </span></div><div class="line">        lock.readLock().lock();  </div><div class="line">        lock.writeLock().unlock();  </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// do something</span></div><div class="line">&#125; <span class="keyword">finally</span>&#123;</div><div class="line">    lock.readLock().unlock();  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>读锁不能升级为写锁，<br>两个线程在不释放读锁情况下，同时请求写锁将产生死锁。</p>
+<p>写入锁提供了条件变量(Condition)的支持，<br>读取锁不允许获取条件变量，将得到一个UnsupportedOperationException异常。</p>
+<p>ReentrantReadWriteLock实现线程安全的Map示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ReadWriteMap</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Map&lt;K,V&gt; map;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> ReentrantReadWriteLock lock = <span class="keyword">new</span> ReentrantReadWriteLock();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Lock r = lock.readLock();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Lock w = lock.writeLock();</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ReadWriteMap</span><span class="params">(Map&lt;K,V&gt; map)</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.map = map;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span></span>&#123;</div><div class="line">        w.lock();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> map.put(key, value);</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            w.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span></span>&#123;</div><div class="line">        r.lock();</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="keyword">return</span> map.get(key);</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            r.unlock();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>如果需要基于散列的映射，可以使用ConcurrentHashMap；<br>需要LinkedHashMap并发访问，可以使用使用读写锁包装。</p>
+</blockquote>
+<h1 id="原子变量与非阻塞同步机制"><a href="#原子变量与非阻塞同步机制" class="headerlink" title="原子变量与非阻塞同步机制"></a>原子变量与非阻塞同步机制</h1><p>非阻塞算法用底层的<code>原子机器命令</code>（如比较并交换命令）确保数据并发访问的一致性。</p>
+<p>非阻塞算法不存在死锁和优先级反转问题。</p>
+<p>原子变量提供了与volatile变量相同的内存语义。</p>
+<h2 id="锁的劣势"><a href="#锁的劣势" class="headerlink" title="锁的劣势"></a>锁的劣势</h2><ul>
+<li>线程挂起和恢复开销高，且存在较长时间中断</li>
+<li>优先级反转（高优先级等待低优先级持有的锁）</li>
+<li>持有锁线程永久阻塞，影响其他线程</li>
+<li>对于细粒度操作(如计数器)锁是高开销机制</li>
+</ul>
+<h2 id="比较并交换"><a href="#比较并交换" class="headerlink" title="比较并交换"></a>比较并交换</h2><p>CAS包含3个操作数————内存位置V、比较值A、拟写入新值B</p>
+<p>当且仅当V等于A时，CAS才会通过原子方式用新值B更新V，否则不会执行任何操作。</p>
+<p>CAS含义：<br>“我认为V的值应该为A，如果是，那么将V的值更新为B，<br>否则不修改并告诉V的值实际为多少。”</p>
+<p>由于CAS能检测到来自其他线程的干扰，<br>因此即使不使用锁也能够实现原子的读-改-写操作。</p>
+<h2 id="非阻塞计数器"><a href="#非阻塞计数器" class="headerlink" title="非阻塞计数器"></a>非阻塞计数器</h2><p>CAS的主要缺点：需调用者处理处理竞争问题（通过重试、回退、放弃）</p>
+<p>事实上，CAS最大的缺陷在于难以围绕着CAS正确的构建外部算法。</p>
+<h2 id="原子变量类"><a href="#原子变量类" class="headerlink" title="原子变量类"></a>原子变量类</h2><p>原子变量的compareAndSet()像锁机制一样，<br>既能提供原子性，又能提供可见性。</p>
+<p>12个原子变量类，分为4组:</p>
+<ul>
+<li>标量（Scalar）</li>
+<li>更新器类</li>
+<li>数组类</li>
+<li>复合变量类</li>
+</ul>
+<p>标量类AtomicInteger、AtomicLong、AtomicBoolean、AtomicReference，都支持CAS，<br>AtomicInteger、AtomicLong还支持算术运算。</p>
+<p>模拟其他基本类型的原子变量，<br>可将short或byte转为int，<br>使用Float.floatToIntBits()、Double.doubleToLongBits()转换浮点数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">AtomicInteger count = <span class="keyword">new</span> AtomicInteger(<span class="number">0</span>);</div><div class="line"><span class="comment">//以原子方式将当前值加 1</span></div><div class="line"><span class="keyword">int</span> incrementAndGet = count.incrementAndGet();</div><div class="line">System.out.println(incrementAndGet);</div><div class="line"></div><div class="line"><span class="keyword">int</span> x = count.get();</div><div class="line"><span class="comment">// 如果当前值 == 预期值，则以原子方式将该值设置为给定的更新值。</span></div><div class="line"><span class="keyword">boolean</span> compareAndSet = count.compareAndSet(x,x+<span class="number">10</span>);</div><div class="line">System.out.println(count.get());</div></pre></td></tr></table></figure>
+<p>原子数组类AtomicIntegerArray、AtomicLongArray、AtomicReferenceArray，<br>为数组元素提供了volatile类型的访问语义。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">AtomicReferenceArray&lt;Person&gt; atomicReferenceArray = <span class="keyword">new</span> AtomicReferenceArray&lt;Person&gt;(<span class="number">10</span>);</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; atomicReferenceArray.length(); i++) &#123;  </div><div class="line">    <span class="keyword">boolean</span> compareAndSet = atomicReferenceArray.compareAndSet(i, <span class="keyword">null</span>, <span class="keyword">new</span> Person());</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//设置AtomicInteger</span></div><div class="line"><span class="keyword">int</span> current, next;</div><div class="line"><span class="keyword">do</span> &#123;</div><div class="line">    current = get();</div><div class="line">    next = current + delta;</div><div class="line">&#125; <span class="keyword">while</span> (!compareAndSet(current, next));</div></pre></td></tr></table></figure>
+<p>原子变量没有重新定义hashCode与equals方法，每个实例都是不同的。<br>与其他可变对象相同，他们也不宜用做基于散列的容器中的键值。</p>
+<p>原子域更新器：AtomicIntegerFieldUpdater、AtomicLongFieldUpdater、AtomicReferenceFieldUpdater</p>
+<p>能够在已有的volatile域上使用CAS</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">AtomicReferenceFieldUpdater&lt;InnerPerson, String&gt; nameUpdater = AtomicReferenceFieldUpdater.newUpdater(InnerPerson.class, String.class, <span class="string">"name"</span>);</div><div class="line">       </div><div class="line">InnerPerson person = <span class="keyword">new</span> InnerPerson(<span class="string">"sunday"</span>);</div><div class="line">String personName = person.name;</div><div class="line">nameUpdater.compareAndSet(person, personName, <span class="string">"wangdz"</span>);</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">InnerPerson</span></span>&#123;</div><div class="line">    <span class="comment">// 字段为非private的volatile类型</span></div><div class="line">    <span class="keyword">volatile</span> String name;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">InnerPerson</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">InnerPerson</span><span class="params">(String name)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"InnerPerson [name="</span> + name + <span class="string">"]"</span>;</div><div class="line">    &#125;   </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="性能比较：锁与原子变量"><a href="#性能比较：锁与原子变量" class="headerlink" title="性能比较：锁与原子变量"></a>性能比较：锁与原子变量</h2><p>原子变量在可伸缩性上高于锁。</p>
+<p>在中低程度竞争下，原子变量能提供更高的可伸缩性。<br>在高强度竞争下，锁能够更高效的避免竞争。</p>
+<p>若可以使用ThreadLocal避免使用共享状态，开销更小。<br>可以通过提高处理竞争的效率提高可伸缩性，只有完全消除竞争，才能实现真正的可伸缩性。</p>
+<h2 id="非阻塞算法"><a href="#非阻塞算法" class="headerlink" title="非阻塞算法"></a>非阻塞算法</h2><p>若某算法中，一个线程的失败或挂起不会导致其他线程的失败或挂起，<br>这种算法被称为非阻塞算法。</p>
+<p>非阻塞算法通常不会出现死锁和优先级反转问题，<br>可能会出现饥饿和活锁问题（因为算法中反复地重试）</p>
+<h2 id="非阻塞的栈"><a href="#非阻塞的栈" class="headerlink" title="非阻塞的栈"></a>非阻塞的栈</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcurrentStack</span>&lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">    AtomicReference&lt;Node&lt;E&gt;&gt; top = <span class="keyword">new</span> AtomicReference&lt;Node&lt;E&gt;&gt;();</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(E item)</span></span>&#123;</div><div class="line">        Node&lt;E&gt; newTop = <span class="keyword">new</span> Node&lt;E&gt;(item);</div><div class="line">        Node&lt;E&gt; oldTop;</div><div class="line">        </div><div class="line">        <span class="keyword">do</span>&#123;</div><div class="line">            oldTop = top.get();</div><div class="line">            newTop.next = oldTop;</div><div class="line">        &#125;<span class="keyword">while</span>(!top.compareAndSet(oldTop, newTop));</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span>&lt;<span class="title">E</span>&gt;</span>&#123;</div><div class="line">        <span class="keyword">public</span> <span class="keyword">final</span> E item;</div><div class="line">        <span class="keyword">public</span> Node&lt;E&gt; next;</div><div class="line">        </div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(E item)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.item = item;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="非阻塞的链表"><a href="#非阻塞的链表" class="headerlink" title="非阻塞的链表"></a>非阻塞的链表</h2><p>技巧一：<br>即使一个包含多个步骤的更新操作，<br>也要确保数据结构总是处于一致的状态。</p>
+<p>技巧二：<br>如果线程B到达时发现线程A正在修改数据结构，<br>那么数据结构中应该有足够多的信息，<br>使得线程B能够完成A的更新操作。</p>
+<p>添加元素步骤（更新两个指针）：</p>
+<ul>
+<li>更新最后一个元素next指针，将新节点链接到列表队尾</li>
+<li>更新尾节点</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@ThreadSafe</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedQueue</span> &lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> &lt;<span class="title">E</span>&gt; </span>&#123;</div><div class="line">        <span class="keyword">final</span> E item;</div><div class="line">        <span class="keyword">final</span> AtomicReference&lt;LinkedQueue.Node&lt;E&gt;&gt; next;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Node</span><span class="params">(E item, LinkedQueue.Node&lt;E&gt; next)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.item = item;</div><div class="line">            <span class="keyword">this</span>.next = <span class="keyword">new</span> AtomicReference&lt;LinkedQueue.Node&lt;E&gt;&gt;(next);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 哑节点，初始化时头节点和尾节点都指向该节点</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> LinkedQueue.Node&lt;E&gt; dummy = <span class="keyword">new</span> LinkedQueue.Node&lt;E&gt;(<span class="keyword">null</span>, <span class="keyword">null</span>);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicReference&lt;LinkedQueue.Node&lt;E&gt;&gt; head</div><div class="line">            = <span class="keyword">new</span> AtomicReference&lt;LinkedQueue.Node&lt;E&gt;&gt;(dummy);</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> AtomicReference&lt;LinkedQueue.Node&lt;E&gt;&gt; tail</div><div class="line">            = <span class="keyword">new</span> AtomicReference&lt;LinkedQueue.Node&lt;E&gt;&gt;(dummy);</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">put</span><span class="params">(E item)</span> </span>&#123;</div><div class="line">        LinkedQueue.Node&lt;E&gt; newNode = <span class="keyword">new</span> LinkedQueue.Node&lt;E&gt;(item, <span class="keyword">null</span>);</div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</div><div class="line">            LinkedQueue.Node&lt;E&gt; curTail = tail.get();</div><div class="line">            LinkedQueue.Node&lt;E&gt; tailNext = curTail.next.get();</div><div class="line">            <span class="keyword">if</span> (curTail == tail.get()) &#123;</div><div class="line">                <span class="keyword">if</span> (tailNext != <span class="keyword">null</span>) &#123;</div><div class="line">                    <span class="comment">// 队列处于中间状态，推进尾节点</span></div><div class="line">                    tail.compareAndSet(curTail, tailNext);</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="comment">// 处于稳定状态，尝试插入新节点</span></div><div class="line">                    <span class="keyword">if</span> (curTail.next.compareAndSet(<span class="keyword">null</span>, newNode)) &#123;</div><div class="line">                        <span class="comment">// 插入成功，尝试推进尾节点</span></div><div class="line">                        tail.compareAndSet(curTail, newNode);</div><div class="line">                        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>LinkedQueue说明了ConcurrentLinkedQueue使用的算法，<br>不同的是ConcurrentLinkedQueue中没有使用原子引用表示Node，<br>而是使用volatile类型引用，并通过原子域更新器进行更新，<br>以避免AtomicReference创建，提升性能。</p>
+<h2 id="ABA问题"><a href="#ABA问题" class="headerlink" title="ABA问题"></a>ABA问题</h2><p>如果算法的<code>节点可以被循环使用</code>，<br>那么在使用“比较并交换”指令时可能出现这种问题(主要在没有垃圾回收机制的环境中)。</p>
+<p>某些算法中，如果V值首先由A变成B，再由B变成A，<br>那么仍然被认为发生了变化，并需要执行算法中某些步骤。</p>
+<p>AtomicMarkableReference 维护带有标记位的对象引用，可以原子方式对其进行更新<br>AtomicStampedReference 维护带有整数“标志”的对象引用，可以用原子方式对其进行更新</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">AtomicStampedReference&lt;Integer&gt; atomicStampedRef = <span class="keyword">new</span> AtomicStampedReference&lt;Integer&gt;(<span class="number">100</span>, <span class="number">0</span>);</div><div class="line"></div><div class="line"><span class="comment">// 获取对象引用和获取版本号，能否当前版本号为当前元素版本号的不变性? </span></div><div class="line">Integer reference = atomicStampedRef.getReference();</div><div class="line"><span class="keyword">int</span> stamp = atomicStampedRef.getStamp();</div><div class="line"></div><div class="line">Integer newReference = <span class="keyword">new</span> Integer(reference+<span class="number">1</span>);</div><div class="line"><span class="keyword">int</span> newStamp = stamp + <span class="number">1</span>;</div><div class="line"></div><div class="line">atomicStampedRef.compareAndSet(reference, newReference, stamp, newStamp);</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/19/java-effective/" rel="next" title="Effective Java">
+                <i class="fa fa-chevron-left"></i> Effective Java
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/25/javase-jvm/" rel="prev" title="JavaSE JVM">
+                JavaSE JVM <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="Sunday" />
+          <p class="site-author-name" itemprop="name">Sunday</p>
+          <p class="site-description motion-element" itemprop="description">EveryDay Is Sunday</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线程安全性"><span class="nav-number">1.</span> <span class="nav-text">线程安全性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是线程安全性"><span class="nav-number">1.1.</span> <span class="nav-text">什么是线程安全性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#竞态条件"><span class="nav-number">1.2.</span> <span class="nav-text">竞态条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内置锁"><span class="nav-number">1.3.</span> <span class="nav-text">内置锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重入"><span class="nav-number">1.4.</span> <span class="nav-text">重入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用锁来保护状态"><span class="nav-number">1.5.</span> <span class="nav-text">用锁来保护状态</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象的共享"><span class="nav-number">2.</span> <span class="nav-text">对象的共享</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#可见性"><span class="nav-number">2.1.</span> <span class="nav-text">可见性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重排序"><span class="nav-number">2.2.</span> <span class="nav-text">重排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非原子的64位操作"><span class="nav-number">2.3.</span> <span class="nav-text">非原子的64位操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#加锁与可见性"><span class="nav-number">2.4.</span> <span class="nav-text">加锁与可见性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile变量"><span class="nav-number">2.5.</span> <span class="nav-text">volatile变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布与逸出"><span class="nav-number">2.6.</span> <span class="nav-text">发布与逸出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全的对象构造过程"><span class="nav-number">2.7.</span> <span class="nav-text">安全的对象构造过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程封闭"><span class="nav-number">2.8.</span> <span class="nav-text">线程封闭</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#栈封闭"><span class="nav-number">2.8.1.</span> <span class="nav-text">栈封闭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">2.8.2.</span> <span class="nav-text">ThreadLocal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不变性"><span class="nav-number">2.9.</span> <span class="nav-text">不变性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Final域"><span class="nav-number">2.9.1.</span> <span class="nav-text">Final域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用volatile类型发布不可变对象"><span class="nav-number">2.9.2.</span> <span class="nav-text">使用volatile类型发布不可变对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全发布"><span class="nav-number">2.10.</span> <span class="nav-text">安全发布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不正确的发布：正确的对象被破坏"><span class="nav-number">2.10.1.</span> <span class="nav-text">不正确的发布：正确的对象被破坏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不可变对象与初始化安全性"><span class="nav-number">2.10.2.</span> <span class="nav-text">不可变对象与初始化安全性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全发布的常用模式"><span class="nav-number">2.10.3.</span> <span class="nav-text">安全发布的常用模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事实不可变对象"><span class="nav-number">2.10.4.</span> <span class="nav-text">事实不可变对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可变对象"><span class="nav-number">2.10.5.</span> <span class="nav-text">可变对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全的共享对象"><span class="nav-number">2.10.6.</span> <span class="nav-text">安全的共享对象</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础构建模块"><span class="nav-number">3.</span> <span class="nav-text">基础构建模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#同步工具类"><span class="nav-number">3.1.</span> <span class="nav-text">同步工具类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#锁闭"><span class="nav-number">3.1.1.</span> <span class="nav-text">锁闭</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FutureTask"><span class="nav-number">3.2.</span> <span class="nav-text">FutureTask</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号量"><span class="nav-number">3.3.</span> <span class="nav-text">信号量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栅栏"><span class="nav-number">3.4.</span> <span class="nav-text">栅栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.5.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#任务执行"><span class="nav-number">4.</span> <span class="nav-text">任务执行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#取消与关闭"><span class="nav-number">5.</span> <span class="nav-text">取消与关闭</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程池的了使用"><span class="nav-number">6.</span> <span class="nav-text">线程池的了使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#避免活跃性危险"><span class="nav-number">7.</span> <span class="nav-text">避免活跃性危险</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁"><span class="nav-number">7.1.</span> <span class="nav-text">死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#锁顺序死锁"><span class="nav-number">7.1.1.</span> <span class="nav-text">锁顺序死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态顺序死锁"><span class="nav-number">7.1.2.</span> <span class="nav-text">动态顺序死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协作对象之间发生的死锁"><span class="nav-number">7.1.3.</span> <span class="nav-text">协作对象之间发生的死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开放调用"><span class="nav-number">7.1.4.</span> <span class="nav-text">开放调用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁避免与诊断"><span class="nav-number">7.2.</span> <span class="nav-text">死锁避免与诊断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支持定时的锁"><span class="nav-number">7.2.1.</span> <span class="nav-text">支持定时的锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过线程转储信息来分析死锁"><span class="nav-number">7.2.2.</span> <span class="nav-text">通过线程转储信息来分析死锁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他活跃性危险"><span class="nav-number">7.3.</span> <span class="nav-text">其他活跃性危险</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#饥饿"><span class="nav-number">7.3.1.</span> <span class="nav-text">饥饿</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#活锁"><span class="nav-number">7.3.2.</span> <span class="nav-text">活锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#丢失信号"><span class="nav-number">7.3.3.</span> <span class="nav-text">丢失信号</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能与可伸缩性"><span class="nav-number">8.</span> <span class="nav-text">性能与可伸缩性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对性能的思考"><span class="nav-number">8.1.</span> <span class="nav-text">对性能的思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能与可伸缩性-1"><span class="nav-number">8.2.</span> <span class="nav-text">性能与可伸缩性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评估各种性能权衡因素"><span class="nav-number">8.3.</span> <span class="nav-text">评估各种性能权衡因素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Amdahl定律"><span class="nav-number">8.4.</span> <span class="nav-text">Amdahl定律</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#减少锁的竞争"><span class="nav-number">8.5.</span> <span class="nav-text">减少锁的竞争</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缩小锁的范围"><span class="nav-number">8.5.1.</span> <span class="nav-text">缩小锁的范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#减小锁的粒度"><span class="nav-number">8.5.2.</span> <span class="nav-text">减小锁的粒度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#锁分段"><span class="nav-number">8.5.3.</span> <span class="nav-text">锁分段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些替代独占锁的方法"><span class="nav-number">8.5.4.</span> <span class="nav-text">一些替代独占锁的方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#显式锁"><span class="nav-number">9.</span> <span class="nav-text">显式锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#轮询锁和定时锁"><span class="nav-number">9.1.</span> <span class="nav-text">轮询锁和定时锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可中断的锁"><span class="nav-number">9.2.</span> <span class="nav-text">可中断的锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非块状结构锁"><span class="nav-number">9.3.</span> <span class="nav-text">非块状结构锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公平性"><span class="nav-number">9.4.</span> <span class="nav-text">公平性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在synchronized和ReentrantLock之间选择"><span class="nav-number">9.5.</span> <span class="nav-text">在synchronized和ReentrantLock之间选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读写锁"><span class="nav-number">9.6.</span> <span class="nav-text">读写锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原子变量与非阻塞同步机制"><span class="nav-number">10.</span> <span class="nav-text">原子变量与非阻塞同步机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#锁的劣势"><span class="nav-number">10.1.</span> <span class="nav-text">锁的劣势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较并交换"><span class="nav-number">10.2.</span> <span class="nav-text">比较并交换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞计数器"><span class="nav-number">10.3.</span> <span class="nav-text">非阻塞计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原子变量类"><span class="nav-number">10.4.</span> <span class="nav-text">原子变量类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能比较：锁与原子变量"><span class="nav-number">10.5.</span> <span class="nav-text">性能比较：锁与原子变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞算法"><span class="nav-number">10.6.</span> <span class="nav-text">非阻塞算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞的栈"><span class="nav-number">10.7.</span> <span class="nav-text">非阻塞的栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞的链表"><span class="nav-number">10.8.</span> <span class="nav-text">非阻塞的链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ABA问题"><span class="nav-number">10.9.</span> <span class="nav-text">ABA问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sunday</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

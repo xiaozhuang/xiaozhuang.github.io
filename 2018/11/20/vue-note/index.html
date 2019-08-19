@@ -1,0 +1,844 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript,Note," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Vue Note">
+<meta name="keywords" content="javascript,Note">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue Note">
+<meta property="og:url" content="http://xiaozhuang.github.io/2018/11/20/vue-note/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="Vue Note">
+<meta property="og:updated_time" content="2019-07-22T05:56:16.838Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue Note">
+<meta name="twitter:description" content="Vue Note">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> Vue Note | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Vue Note
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2018-11-20T18:43:54+08:00" content="2018-11-20">
+              2018-11-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Vue Note<br><a id="more"></a></p>
+<h1 id="cli"><a href="#cli" class="headerlink" title="cli"></a>cli</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">num install --global vue-cli</div><div class="line"><span class="comment"># 初始化vue webpack 工程</span></div><div class="line">vue init webpack</div></pre></td></tr></table></figure>
+<h1 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h1><h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>el 用于指定页面中已经存在的DOM元素，来挂载Vue实例；可通过app.$el访问该元素。</p>
+<p>Vue实例本身也代理了 data 对象的所有属性。</p>
+<p>也可以指定一个已有的变量，默认建立双向绑定。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myData = &#123;</div><div class="line">	<span class="attr">a</span> : <span class="number">1</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> Vue(&#123;</div><div class="line">	<span class="attr">el</span> : <span class="string">'#app'</span>,</div><div class="line">	<span class="attr">data</span> : myData</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><ul>
+<li>created 实例创建完成后，未挂载</li>
+<li>mounted el挂载之后</li>
+<li>beforeDestorey 实例销毁之前</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> conf = &#123;</div><div class="line">	<span class="attr">created</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'created'</span>);</div><div class="line">	&#125;,</div><div class="line">	<span class="attr">mounted</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'mounted'</span>);</div><div class="line">	&#125;,</div><div class="line">	<span class="attr">beforeDestorey</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'beforeDestorey'</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="插值与表达式"><a href="#插值与表达式" class="headerlink" title="插值与表达式"></a>插值与表达式</h2><p><code>Mustache</code>语法 将双向绑定的数据显示出来。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">p</span> &gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h2><p>使用管道符<code>|</code>对数据进行过滤</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 可串联使用多个过滤器 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">v-if</span>=<span class="string">"show"</span>&gt;</span>&#123;&#123;name | bookName&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在 filters 项中定义过滤器</span></div><div class="line"><span class="keyword">var</span> filters = &#123;</div><div class="line">	<span class="attr">bookName</span> :<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">		<span class="keyword">return</span> <span class="string">'《'</span> + value + <span class="string">"》"</span>;</div><div class="line">	&#125;</div><div class="line">&#125;；</div></pre></td></tr></table></figure>
+<h2 id="语法糖"><a href="#语法糖" class="headerlink" title="语法糖"></a>语法糖</h2><p>v-bind 可简写为 :xxx<br>v-on 简写为 @xxx</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">:href</span>=<span class="string">"jdUrl"</span>&gt;</span>京东<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">br</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">dblclick</span>=<span class="string">'btnDblClick'</span>&gt;</span>dblclick<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 组件将不会把未被注册的props呈现为普通的HTML属性</span></div><div class="line"><span class="comment">// $attrs可以获取到没有使用的注册属性</span></div><div class="line">inheritAttrs: <span class="literal">false</span></div></pre></td></tr></table></figure>
+<h1 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h1><p>计算属性以函数形式 定义在 computed 中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> computed = &#123;</div><div class="line">	<span class="attr">userName</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="comment">//使用datas中数据，this 必须</span></div><div class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.firstName + <span class="string">' '</span> + <span class="keyword">this</span>.lastName;</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>姓名&#123;&#123;userName&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>计算属性经常用于动态设置元素 class、style，动态传递 props</p>
+<p>两个技巧：</p>
+<ul>
+<li>可依赖其他计算属性</li>
+<li>可依赖其他实例的数据</li>
+</ul>
+<h2 id="计算属性缓存"><a href="#计算属性缓存" class="headerlink" title="计算属性缓存"></a>计算属性缓存</h2><p>与methods中定义方法不同， 计算属性是基于<code>它的依赖</code> <code>缓存</code>的； methods则不同，每次重新渲染，都被调用。</p>
+<h1 id="v-bind及class与style绑定"><a href="#v-bind及class与style绑定" class="headerlink" title="v-bind及class与style绑定"></a>v-bind及class与style绑定</h1><h2 id="class绑定"><a href="#class绑定" class="headerlink" title="class绑定"></a>class绑定</h2><p>:class 等同于 v-bind:class</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 对象语法，key 为class名称； value为Boolean类型 data 或 computed --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:class</span>=<span class="string">"&#123;'active': isActive&#125;"</span>&gt;</span>v-bind:class<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 数组语法，数据元素为 data 或 computed --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:class</span>=<span class="string">"[activeCls, errorCls]"</span>&gt;</span>v-bind:class Array<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 数组语法中可以使用对象语法 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:class</span>=<span class="string">"[&#123;'active': isActive&#125;, errorCls]"</span>&gt;</span>v-bind:class Array &amp;&amp; Object<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">	<span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">	<span class="attr">data</span>: &#123;</div><div class="line">		<span class="attr">name</span>: <span class="string">'sunday'</span>,</div><div class="line">		<span class="attr">jdUrl</span>: <span class="string">'http://www.jd.com'</span>,</div><div class="line">		<span class="attr">isActive</span>: <span class="literal">true</span>,</div><div class="line">		<span class="attr">activeCls</span>: <span class="string">'active'</span>,</div><div class="line">		<span class="attr">errorCls</span>: <span class="string">'error'</span></div><div class="line">	&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="style绑定"><a href="#style绑定" class="headerlink" title="style绑定"></a>style绑定</h2><p>:style 等同于 v-bind:style</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 对象字面量语法 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:style</span>=<span class="string">"&#123;'color': color, 'fontSize': fontSize + 'px'&#125;"</span>&gt;</span>style bind Object<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 绑定data对象 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:style</span>=<span class="string">"styleConf"</span>&gt;</span>style bind Array<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- 数据语法，绑定data对象 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:style</span>=<span class="string">"[styleConf]"</span>&gt;</span>style bind Array<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">	<span class="attr">el</span>: <span class="string">'#app'</span>,</div><div class="line">	<span class="attr">data</span>: &#123;</div><div class="line">		<span class="attr">color</span>: <span class="string">'green'</span>,</div><div class="line">		<span class="attr">fontSize</span>: <span class="number">16</span>,</div><div class="line">		<span class="attr">styleConf</span>:&#123;</div><div class="line">			<span class="attr">color</span>: <span class="string">'green'</span>,</div><div class="line">			<span class="comment">// 使用驼峰命名，渲染后为中划线</span></div><div class="line">			fontSize: <span class="keyword">this</span>.fontSize + <span class="string">'px'</span></div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h1 id="内置指令"><a href="#内置指令" class="headerlink" title="内置指令"></a>内置指令</h1><h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>指令的主要职责是 当其<code>表达式的值改变时</code>，相应的<code>行为</code>应用到DOM上。</p>
+<p>数据驱动DOM是Vue的核心概念。</p>
+<p>v-bind: 单向绑定，数据变化会更新dom<br>v-model: 双向绑定</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- v-bind 动态更新元素属性  --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-bind:href</span>=<span class="string">"jdUrl"</span>&gt;</span>京东<span class="tag">&lt;/<span class="name">a</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- v-on 绑定事件 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:click</span>=<span class="string">'btnClick'</span>&gt;</span>click<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">v-on:dblclick</span>=<span class="string">'btnDblClick'</span>&gt;</span>dblclick <span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="comment">&lt;!-- v-if 表达式为false，不渲染dom--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">v-if</span>=<span class="string">"show"</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">v-else-if</span>=<span class="string">"show2"</span>&gt;</span>&#123;&#123;name2&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">v-else</span>&gt;</span>&#123;&#123;name2&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- v-show 改变CSS属性display --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">v-show</span>=<span class="string">"show"</span>&gt;</span>&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- v-for 数组遍历 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"dog in dogs"</span>&gt;</span>&#123;&#123; dog &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"(dog, i) in dogs"</span>&gt;</span>&#123;&#123; dog &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- v-for 对象遍历 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">"(rent, city) in averageRent"</span>&gt;</span>&#123;&#123; city &#125;&#125; 的平均租金是 &#123;&#123; rent &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- v-html 直接输出html； 可能导致XSS攻击 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">v-html</span>=<span class="string">"htmlData"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 指定绑定的方法，定义在 methods 中</span></div><div class="line"><span class="keyword">var</span> methods = &#123;</div><div class="line">	<span class="attr">btnClick</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'单击'</span>);</div><div class="line">	&#125;,</div><div class="line">	<span class="attr">btnDblClick</span>:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">'双击'</span>);</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><code>Vue实例</code> 将methods里的方法也<code>代理</code>了;</p>
+<h2 id="基本指令"><a href="#基本指令" class="headerlink" title="基本指令"></a>基本指令</h2><p><code>directives</code></p>
+<h3 id="v-cloak"><a href="#v-cloak" class="headerlink" title="v-cloak"></a>v-cloak</h3><p>v-cloak 不需表达式，Vue结束编译时，从绑定的HTML元素上移除。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="selector-attr">[v-cloak]</span>&#123;</div><div class="line">	<span class="attribute">display</span>: none</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单项目中，v-cloak是解决初始化导致页面闪动的最佳实践。<br>使用vue-router时，项目HTML结构只是一个<code>空的</code>div元素，剩余的内容都是有<code>路由挂载不同组件</code>完成的，所以不再需要v-cloak;</p>
+<h3 id="v-once"><a href="#v-once" class="headerlink" title="v-once"></a>v-once</h3><p>作用于它的元素或组件，只渲染一次； 渲染后不随数据变化重新渲染。</p>
+<h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><h2 id="props-数据传递"><a href="#props-数据传递" class="headerlink" title="props 数据传递"></a>props 数据传递</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">	<span class="attr">props</span>: &#123;</div><div class="line">		<span class="attr">items</span>: &#123;</div><div class="line">		  <span class="attr">type</span>: <span class="built_in">Array</span>,</div><div class="line">		  <span class="attr">default</span>: <span class="function"><span class="params">()</span> =&gt;</span> []</div><div class="line">		&#125;,</div><div class="line">		<span class="attr">fields</span>: &#123;</div><div class="line">		  <span class="attr">type</span>: <span class="built_in">Array</span>,</div><div class="line">		  <span class="attr">default</span>: <span class="function"><span class="params">()</span> =&gt;</span> []</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="inheritAttrs"><a href="#inheritAttrs" class="headerlink" title="inheritAttrs"></a>inheritAttrs</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 不把未被注册的props呈现为普通的HTML属性</span></div><div class="line"><span class="comment">// $attrs可获取到没有使用的注册属性</span></div><div class="line">inheritAttrs: <span class="literal">false</span></div></pre></td></tr></table></figure>
+<h2 id="refs-访问子组件实例或子元素"><a href="#refs-访问子组件实例或子元素" class="headerlink" title="$refs 访问子组件实例或子元素"></a>$refs 访问子组件实例或子元素</h2><p>ref 提供对内部指定元素的访问</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 通过 ref 特性为这个子组件赋予一个 ID 引用 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">ref</span>=<span class="string">"input"</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 用来从父级组件聚焦输入框</span></div><div class="line">focus: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">	<span class="keyword">this</span>.$refs.input.focus()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="mixins"><a href="#mixins" class="headerlink" title="mixins"></a>mixins</h2><p>混入对象的<code>钩子</code>将在组件自身钩子<code>之前</code>调用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> mixin = &#123;</div><div class="line">  <span class="attr">created</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'混入对象的钩子被调用'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">mixins</span>: [mixin],</div><div class="line">  <span class="attr">created</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'组件钩子被调用'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// =&gt; "混入对象的钩子被调用"</span></div><div class="line"><span class="comment">// =&gt; "组件钩子被调用"</span></div></pre></td></tr></table></figure>
+<p>值为对象的选项，例如 methods, components 和 directives，将被混合为同一个对象。</p>
+<p>全局mixins</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 为自定义的选项 'myOption' 注入一个处理器。</span></div><div class="line">Vue.mixin(&#123;</div><div class="line">  <span class="attr">created</span>: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> myOption = <span class="keyword">this</span>.$options.myOption</div><div class="line">    <span class="keyword">if</span> (myOption) &#123;</div><div class="line">      <span class="built_in">console</span>.log(myOption)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  <span class="attr">myOption</span>: <span class="string">'hello!'</span></div><div class="line">&#125;)</div><div class="line"><span class="comment">// =&gt; "hello!"</span></div></pre></td></tr></table></figure>
+<h2 id="Event"><a href="#Event" class="headerlink" title="Event"></a>Event</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$emit(eventName, eventData);</div><div class="line"><span class="keyword">this</span>.$root.$emit(<span class="string">`bv::modal::<span class="subst">$&#123;type&#125;</span>`</span>, bvEvt, <span class="keyword">this</span>.safeId());</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$root.$on(event, callback);</div><div class="line"><span class="keyword">this</span>.$refs.configEditForm.$on(<span class="string">'submit'</span>,()=&gt;&#123;alert(<span class="number">123</span>)&#125;);</div></pre></td></tr></table></figure>
+<h1 id="bootstrap-vue"><a href="#bootstrap-vue" class="headerlink" title="bootstrap-vue"></a>bootstrap-vue</h1><h2 id="Modals"><a href="#Modals" class="headerlink" title="Modals"></a>Modals</h2><p><code>b-modal</code></p>
+<p>内部关闭弹窗： 子组件触发事件，父组件处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">showModal() &#123;</div><div class="line"></div><div class="line">	<span class="keyword">this</span>.$refs.myModalRef.show()</div><div class="line">&#125;;</div><div class="line">hideModal() &#123;</div><div class="line">	<span class="comment">// 父组件使用 $refs 关闭弹窗</span></div><div class="line">	<span class="keyword">this</span>.$refs.myModalRef.hide()</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="b-table"><a href="#b-table" class="headerlink" title="b-table"></a>b-table</h2><p>添加操作列：fields添加操作列，设置 show-empty</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span> <span class="attr">slot</span>=<span class="string">"actions"</span> <span class="attr">slot-scope</span>=<span class="string">"row"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">b-button</span></span></div><div class="line">    <span class="attr">size</span>=<span class="string">"sm"</span></div><div class="line">    <span class="attr">variant</span>=<span class="string">"info"</span></div><div class="line">    @<span class="attr">click</span>=<span class="string">"editConfig(row.item, row.index, $event.target)"</span></div><div class="line">    <span class="attr">class</span>=<span class="string">"btn btn-outline-primary active mr-1"</span></div><div class="line">  &gt;编辑<span class="tag">&lt;/<span class="name">b-button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<h1 id="Vue组件"><a href="#Vue组件" class="headerlink" title="Vue组件"></a>Vue组件</h1><h2 id="vue-swal"><a href="#vue-swal" class="headerlink" title="vue-swal"></a>vue-swal</h2><p><code>提示</code><br><code>sweetalert</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm i vue-swal</div><div class="line">npm i vue-sweetalert2</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$swal(<span class="string">"这是一条信息！"</span>)</div><div class="line">swal(<span class="string">"这是一条信息！"</span>, <span class="string">"很漂亮，不是吗？"</span>)</div><div class="line"><span class="keyword">this</span>.$swal(<span class="string">"Good job!"</span>, <span class="string">"You are ready to start!"</span>, <span class="string">"success"</span>);</div></pre></td></tr></table></figure>
+<a href="https://sweetalert.js.org/" title="sweetalert" target="_blank" rel="external">sweetalert</a>
+<a href="http://mishengqiang.com/sweetalert2/" title="sweetalert2" target="_blank" rel="external">sweetalert2</a>
+<h2 id="vue-notification"><a href="#vue-notification" class="headerlink" title="vue-notification"></a>vue-notification</h2><p><code>提示框</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save vue-notification</div></pre></td></tr></table></figure>
+<a href="http://vue-notification.yev.io" title="notification" target="_blank" rel="external">notification</a>
+<h1 id="route"><a href="#route" class="headerlink" title="route"></a>route</h1><h2 id="路由参数"><a href="#路由参数" class="headerlink" title="路由参数"></a>路由参数</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="comment">//? 可选参数</span></div><div class="line">  path: <span class="string">'configManage/:prefix?'</span>,</div><div class="line">  <span class="attr">name</span>: <span class="string">'configManagePre'</span>,</div><div class="line">  <span class="attr">component</span>: ConfigManage,</div><div class="line">  <span class="comment">// 路由参数，传递至prop</span></div><div class="line">  props: <span class="literal">true</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="Passing-Props-to-Route-Components"><a href="#Passing-Props-to-Route-Components" class="headerlink" title="Passing Props to Route Components"></a>Passing Props to Route Components</h2><p>路由组件设置props</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">path</span>: <span class="string">'configManagePre'</span>,</div><div class="line">  <span class="attr">name</span>: <span class="string">'configManagePre'</span>,</div><div class="line">  <span class="attr">component</span>: ConfigManage,</div><div class="line">  <span class="attr">props</span>: &#123; <span class="attr">prefix</span>: <span class="string">'pre'</span> &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="路由切换，组件重新加载"><a href="#路由切换，组件重新加载" class="headerlink" title="路由切换，组件重新加载"></a>路由切换，组件重新加载</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 监听路由变化</span></div><div class="line">watch: &#123;</div><div class="line">	<span class="attr">prefix</span> :&#123;</div><div class="line">	  handler(newPrefix, oldPrefix)&#123;</div><div class="line">	    <span class="comment">// 加载配置数据</span></div><div class="line">	    <span class="keyword">this</span>.loadConfigs();</div><div class="line">	  &#125;,</div><div class="line">	  <span class="comment">// 绑定的时候就执行 handler</span></div><div class="line">	  immediate: <span class="literal">true</span></div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h1 id="solution"><a href="#solution" class="headerlink" title="solution"></a>solution</h1><h2 id="You-may-have-an-infinite-update-loop-in-a-component-render-function"><a href="#You-may-have-an-infinite-update-loop-in-a-component-render-function" class="headerlink" title="You may have an infinite update loop in a component render function."></a>You may have an infinite update loop in a component render function.</h2><p>数组排序无限循环</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// You are indeed causing an infinite loop, because array.sort() mutates the array itself, which triggers the filter to be applied again. Make sure to sort on a copy:</span></div><div class="line"><span class="keyword">return</span> values.slice().sort(...)</div></pre></td></tr></table></figure>
+<a href="https://link.jianshu.com/?t=https://github.com/vuejs/vue/issues/1153" title="Spring" target="_blank" rel="external">Self</a>
+<h2 id="toggle-change-vlue-onclick"><a href="#toggle-change-vlue-onclick" class="headerlink" title="toggle change vlue onclick"></a>toggle change vlue onclick</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;i <span class="class"><span class="keyword">class</span></span>=<span class="string">"el-icon-sort"</span> @click=<span class="string">"sortFlag = !sortFlag"</span> clstag=<span class="string">"pageclick|keycount|TASK_1551778366212|93"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/Note/" rel="tag"># Note</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/17/mybatis/" rel="next" title="MyBatis">
+                <i class="fa fa-chevron-left"></i> MyBatis
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="xiaozhuang" />
+          <p class="site-author-name" itemprop="name">xiaozhuang</p>
+          <p class="site-description motion-element" itemprop="description">O ever youthful</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#cli"><span class="nav-number">1.</span> <span class="nav-text">cli</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据绑定"><span class="nav-number">2.</span> <span class="nav-text">数据绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实例"><span class="nav-number">2.1.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期"><span class="nav-number">2.2.</span> <span class="nav-text">生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插值与表达式"><span class="nav-number">2.3.</span> <span class="nav-text">插值与表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤器"><span class="nav-number">2.4.</span> <span class="nav-text">过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#语法糖"><span class="nav-number">2.5.</span> <span class="nav-text">语法糖</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#计算属性"><span class="nav-number">3.</span> <span class="nav-text">计算属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算属性缓存"><span class="nav-number">3.1.</span> <span class="nav-text">计算属性缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#v-bind及class与style绑定"><span class="nav-number">4.</span> <span class="nav-text">v-bind及class与style绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#class绑定"><span class="nav-number">4.1.</span> <span class="nav-text">class绑定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#style绑定"><span class="nav-number">4.2.</span> <span class="nav-text">style绑定</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内置指令"><span class="nav-number">5.</span> <span class="nav-text">内置指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#指令"><span class="nav-number">5.1.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本指令"><span class="nav-number">5.2.</span> <span class="nav-text">基本指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-cloak"><span class="nav-number">5.2.1.</span> <span class="nav-text">v-cloak</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-once"><span class="nav-number">5.2.2.</span> <span class="nav-text">v-once</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件"><span class="nav-number">6.</span> <span class="nav-text">组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#props-数据传递"><span class="nav-number">6.1.</span> <span class="nav-text">props 数据传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inheritAttrs"><span class="nav-number">6.2.</span> <span class="nav-text">inheritAttrs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#refs-访问子组件实例或子元素"><span class="nav-number">6.3.</span> <span class="nav-text">$refs 访问子组件实例或子元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mixins"><span class="nav-number">6.4.</span> <span class="nav-text">mixins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Event"><span class="nav-number">6.5.</span> <span class="nav-text">Event</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bootstrap-vue"><span class="nav-number">7.</span> <span class="nav-text">bootstrap-vue</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Modals"><span class="nav-number">7.1.</span> <span class="nav-text">Modals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#b-table"><span class="nav-number">7.2.</span> <span class="nav-text">b-table</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue组件"><span class="nav-number">8.</span> <span class="nav-text">Vue组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-swal"><span class="nav-number">8.1.</span> <span class="nav-text">vue-swal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-notification"><span class="nav-number">8.2.</span> <span class="nav-text">vue-notification</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#route"><span class="nav-number">9.</span> <span class="nav-text">route</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#路由参数"><span class="nav-number">9.1.</span> <span class="nav-text">路由参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Passing-Props-to-Route-Components"><span class="nav-number">9.2.</span> <span class="nav-text">Passing Props to Route Components</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由切换，组件重新加载"><span class="nav-number">9.3.</span> <span class="nav-text">路由切换，组件重新加载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solution"><span class="nav-number">10.</span> <span class="nav-text">solution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#You-may-have-an-infinite-update-loop-in-a-component-render-function"><span class="nav-number">10.1.</span> <span class="nav-text">You may have an infinite update loop in a component render function.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toggle-change-vlue-onclick"><span class="nav-number">10.2.</span> <span class="nav-text">toggle change vlue onclick</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiaozhuang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

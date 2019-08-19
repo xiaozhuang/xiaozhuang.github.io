@@ -91,7 +91,7 @@
 <meta property="og:url" content="http://xiaozhuang.github.io/2016/09/17/MySQL5-7-note/index.html">
 <meta property="og:site_name" content="Communicat &amp; Happy Together">
 <meta property="og:description" content="MySQL5.7安装及新特性">
-<meta property="og:updated_time" content="2017-11-17T11:39:40.894Z">
+<meta property="og:updated_time" content="2019-07-06T10:20:38.056Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL5.7 Note">
 <meta name="twitter:description" content="MySQL5.7安装及新特性">
@@ -336,10 +336,10 @@
       
         <p>MySQL5.7安装及新特性<br><a id="more"></a></p>
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="windows版"><a href="#windows版" class="headerlink" title="windows版"></a>windows版</h2><p>系统：win7x64安装<br>MySQL：5.7.15</p>
-<h3 id="解压mysql-5-7-15-winx64-zip"><a href="#解压mysql-5-7-15-winx64-zip" class="headerlink" title="解压mysql-5.7.15-winx64.zip"></a>解压mysql-5.7.15-winx64.zip</h3><h3 id="复制my-default-ini命名为my-ini，创建保存数据data文件夹"><a href="#复制my-default-ini命名为my-ini，创建保存数据data文件夹" class="headerlink" title="复制my-default.ini命名为my.ini，创建保存数据data文件夹"></a>复制my-default.ini命名为my.ini，创建保存数据data文件夹</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#修改配置</span></div><div class="line">[client]</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[mysqld]</div><div class="line">basedir = <span class="string">"E:\mysql-5.7.15-winx64"</span></div><div class="line">datadir = <span class="string">"E:\mysql-5.7.15-winx64\data"</span></div></pre></td></tr></table></figure>
+<h3 id="解压mysql-5-7-15-winx64-zip"><a href="#解压mysql-5-7-15-winx64-zip" class="headerlink" title="解压mysql-5.7.15-winx64.zip"></a>解压mysql-5.7.15-winx64.zip</h3><h3 id="复制my-default-ini命名为my-ini，创建保存数据data文件夹"><a href="#复制my-default-ini命名为my-ini，创建保存数据data文件夹" class="headerlink" title="复制my-default.ini命名为my.ini，创建保存数据data文件夹"></a>复制my-default.ini命名为my.ini，创建保存数据data文件夹</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#修改配置</span></div><div class="line">[client]</div><div class="line">default-character-set=utf8</div><div class="line"></div><div class="line">[mysqld]</div><div class="line">basedir = <span class="string">"E:\mysql-5.7.15-winx64"</span></div><div class="line">datadir = <span class="string">"E:\mysql-5.7.15-winx64\data"</span></div><div class="line">port = 3308</div><div class="line">server_id = 3308</div></pre></td></tr></table></figure>
 <h3 id="管理员运行cmd，进入mysql下bin目录，初试化数据"><a href="#管理员运行cmd，进入mysql下bin目录，初试化数据" class="headerlink" title="管理员运行cmd，进入mysql下bin目录，初试化数据"></a>管理员运行cmd，进入mysql下bin目录，初试化数据</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld --initialize-insecure</div></pre></td></tr></table></figure>
 <h3 id="安装MySQL为windows服务"><a href="#安装MySQL为windows服务" class="headerlink" title="安装MySQL为windows服务"></a>安装MySQL为windows服务</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">mysqld install</div><div class="line">mysqld --install &lt;server_name&gt;</div><div class="line">mysqld --install MySQL5.7.11-3307</div><div class="line"></div><div class="line"><span class="comment"># 一台机器，安装多个MySQL</span></div><div class="line">mysqld --install MySQL5.6.26:3306-SSD  --defaults-file=<span class="string">"C:\Program Files\mysql-5.6.26-winx64\3306\my.ini"</span></div><div class="line">mysqld --install MySQL5.6.26:3307-SSD  --defaults-file=<span class="string">"C:\Program Files\mysql-5.6.26-winx64\3307\my.ini"</span></div><div class="line"></div><div class="line"><span class="comment">#卸载mysql的windows服务命令：</span></div><div class="line">mysqld --remove</div><div class="line">mysqld --remove &lt;server_name&gt;</div><div class="line">mysqld --remove MySQL5.7.11-3307</div></pre></td></tr></table></figure>
-<h3 id="启动MySQL"><a href="#启动MySQL" class="headerlink" title="启动MySQL"></a>启动MySQL</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net start mysql</div></pre></td></tr></table></figure>
+<h3 id="启动MySQL"><a href="#启动MySQL" class="headerlink" title="启动MySQL"></a>启动MySQL</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">net start &lt;server_name&gt;</div></pre></td></tr></table></figure>
 <h3 id="将mysql添加到系统环境变量"><a href="#将mysql添加到系统环境变量" class="headerlink" title="将mysql添加到系统环境变量"></a>将mysql添加到系统环境变量</h3><p>添加path环境变量添加：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">;%MYSQL_HOME%\bin</div></pre></td></tr></table></figure>
 <p>添加系统环境变量MYSQL_HOME，指向mysql根目录</p>
@@ -414,8 +414,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/05/solr-note/" rel="next" title="Solr Note">
-                <i class="fa fa-chevron-left"></i> Solr Note
+              <a href="/2016/08/21/git-note/" rel="next" title="Git Note">
+                <i class="fa fa-chevron-left"></i> Git Note
               </a>
             
           </div>
@@ -424,8 +424,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/09/21/livereload-note/" rel="prev" title="LiveReload Note">
-                LiveReload Note <i class="fa fa-chevron-right"></i>
+              <a href="/2016/11/06/mysql_optimization/" rel="prev" title="MySQL性能优化">
+                MySQL性能优化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -494,7 +494,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -511,7 +511,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -562,7 +562,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

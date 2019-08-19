@@ -1,0 +1,864 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="JUnit 可以用来阻止任何人（包括你自己）破坏你的应用程序，可以控制软件的熵。">
+<meta name="keywords" content="Java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java-junit">
+<meta property="og:url" content="http://xiaozhuang.github.io/2017/09/02/java-junit/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="JUnit 可以用来阻止任何人（包括你自己）破坏你的应用程序，可以控制软件的熵。">
+<meta property="og:updated_time" content="2019-08-16T07:10:48.017Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java-junit">
+<meta name="twitter:description" content="JUnit 可以用来阻止任何人（包括你自己）破坏你的应用程序，可以控制软件的熵。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> java-junit | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java-junit
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-09-02T22:23:28+08:00" content="2017-09-02">
+              2017-09-02
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JUnit 可以用来阻止任何人（包括你自己）破坏你的应用程序，可以控制软件的熵。<br><a id="more"></a></p>
+<h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><p>测试是用来确保我们没有在代码中引入错误。 </p>
+<h1 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 数组相等</span></div><div class="line">assertArrayEquals(<span class="string">"error msg"</span>, <span class="keyword">new</span> Integer[]&#123;<span class="number">1</span>&#125;, <span class="keyword">new</span> Integer[]&#123;<span class="number">1</span>, <span class="number">2</span>&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 对象equal</span></div><div class="line">assertEquals(<span class="string">"error msg"</span>, <span class="keyword">new</span> String(<span class="string">"foo"</span>), <span class="keyword">new</span> String(<span class="string">"foo"</span>));</div><div class="line"></div><div class="line"><span class="comment">// 对象==</span></div><div class="line">assertSame(<span class="string">"error msg"</span>, <span class="keyword">new</span> String(<span class="string">"foo"</span>).intern(), <span class="keyword">new</span> String(<span class="string">"foo"</span>).intern());</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment">// 条件为真断言</span></div><div class="line">Integer num1 = -<span class="number">128</span>;</div><div class="line">Integer num2 = -<span class="number">128</span>;</div><div class="line">assertTrue(<span class="string">"error msg"</span>,num1 == num2);</div><div class="line">Integer num3 = <span class="number">128</span>;</div><div class="line">Integer num4 = <span class="number">128</span>;</div><div class="line">assertTrue(<span class="string">" Cache to support the object identity semantics of autoboxing for values between -128 and 127 "</span>,num3 == num4);</div><div class="line"></div><div class="line"><span class="comment">// 非空断言</span></div><div class="line">assertNotNull(<span class="string">"is can't null"</span>, <span class="keyword">new</span> String());</div></pre></td></tr></table></figure>
+<h1 id="参数化测试"><a href="#参数化测试" class="headerlink" title="参数化测试"></a>参数化测试</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.assertEquals;</div><div class="line"></div><div class="line"><span class="keyword">import</span> java.util.Arrays;</div><div class="line"><span class="keyword">import</span> java.util.Collection;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</div><div class="line"><span class="keyword">import</span> org.junit.runners.Parameterized;</div><div class="line"><span class="keyword">import</span> org.junit.runners.Parameterized.Parameters;</div><div class="line"></div><div class="line"><span class="meta">@RunWith</span>(value = Parameterized.class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ColculatorTest</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">double</span> expected;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">double</span> valueOne;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">double</span> valueTwo;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ColculatorTest</span><span class="params">(<span class="keyword">double</span> expected, <span class="keyword">double</span> valueOne, <span class="keyword">double</span> valueTwo)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.expected = expected;</div><div class="line">        <span class="keyword">this</span>.valueOne = valueOne;</div><div class="line">        <span class="keyword">this</span>.valueTwo = valueTwo;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Parameters</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Collection&lt;Integer[]&gt; getTestParameters()&#123;</div><div class="line">        <span class="keyword">return</span> Arrays.asList(<span class="keyword">new</span> Integer[][]&#123;</div><div class="line">            &#123;<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>&#125;,</div><div class="line">            &#123;<span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>&#125;,</div><div class="line">            &#123;<span class="number">4</span>, <span class="number">3</span>, <span class="number">1</span>&#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testAdd</span><span class="params">()</span> </span>&#123;</div><div class="line">        Calculator calc = <span class="keyword">new</span> Calculator();</div><div class="line">        assertEquals(expected, calc.add(valueOne, valueTwo), <span class="number">0L</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="抛出异常测试"><a href="#抛出异常测试" class="headerlink" title="抛出异常测试"></a>抛出异常测试</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span>(expected=RuntimeException.class)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMain</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="超时测试"><a href="#超时测试" class="headerlink" title="超时测试"></a>超时测试</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span>(timeout=<span class="number">100</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMain</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        TimeUnit.MILLISECONDS.sleep(<span class="number">101</span>);</div><div class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="跳过测试"><a href="#跳过测试" class="headerlink" title="跳过测试"></a>跳过测试</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span>(timeout=<span class="number">100</span>)</div><div class="line"><span class="meta">@Ignore</span>(<span class="string">"Ignore TestCase Reason"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMain</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        TimeUnit.MILLISECONDS.sleep(<span class="number">101</span>);</div><div class="line">    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="提取公共逻辑"><a href="#提取公共逻辑" class="headerlink" title="提取公共逻辑"></a>提取公共逻辑</h1><p>@BeforeClass、@AfterClass：<code>所有</code>@Test方法之前/之后被执行一次</p>
+<p>@Before、@After：<code>每个</code>Test方法之前/之后执行一次</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@BeforeClass</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setUpBeforeClass</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="meta">@AfterClass</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">tearDownAfterClass</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="meta">@Before</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUp</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="meta">@After</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">tearDown</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;&#125;</div></pre></td></tr></table></figure>
+<h1 id="Hamcrest使用"><a href="#Hamcrest使用" class="headerlink" title="Hamcrest使用"></a>Hamcrest使用</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.junit.Assert.assertThat;</div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.hamcrest.CoreMatchers.anyOf;</div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.hamcrest.CoreMatchers.equalTo;</div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.hamcrest.CoreMatchers.hasItem;</div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> org.hamcrest.CoreMatchers.hasItems;</div><div class="line"><span class="keyword">import</span> java.util.Arrays;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HamcrestAppTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMain</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;String&gt; values = Arrays.asList(<span class="keyword">new</span> String[]&#123;</div><div class="line">                <span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span></div><div class="line">        &#125;);</div><div class="line">        </div><div class="line">        assertThat(values, hasItems(<span class="string">"one"</span>, <span class="string">"two"</span>, <span class="string">"three"</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="junit-单元测试事务会自动回滚"><a href="#junit-单元测试事务会自动回滚" class="headerlink" title="junit 单元测试事务会自动回滚"></a>junit 单元测试事务会自动回滚</h1><p>通过@Rollback(true)注解来实现，默认是true，事务会回滚，可以不写。false时事务不会回滚，数据会写到数据库中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Test</span>  </div><div class="line"><span class="meta">@Transactional</span></div><div class="line"><span class="meta">@Rollback</span>(<span class="keyword">true</span>)<span class="comment">// 事务自动回滚，默认是true。可以不写  </span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TestCustomer</span><span class="params">()</span></span>&#123;  </div><div class="line">    RewardCouponDetail rewardCouponDetail = <span class="keyword">new</span> RewardCouponDetail();  </div><div class="line">    rewardCouponDetail.setRewardInfoId(<span class="number">1L</span>);  </div><div class="line">    rewardCouponDetail.setCouponId(<span class="string">"1"</span>);  </div><div class="line">    rewardCouponDetail.setCouponDetailId(<span class="number">1L</span>);  </div><div class="line">    rewardCouponDetail.setCreateTime(<span class="keyword">new</span> Date());  </div><div class="line">    rewardCouponDetailMapper.insert(rewardCouponDetail);  </div><div class="line">    logger.info(JSON.toJSONString(rewardCouponDetail));  </div><div class="line">    Assert.assertNotNull(rewardCouponDetail.getId());  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h1><ul>
+<li>一次只能单元测试一个对象</li>
+<li>在assert调用中解释失败的原因</li>
+<li>总是为跳过测试说明原因</li>
+</ul>
+<h1 id="Mockito"><a href="#Mockito" class="headerlink" title="Mockito"></a>Mockito</h1><h2 id="Enable-Mockito-Annotations"><a href="#Enable-Mockito-Annotations" class="headerlink" title="Enable Mockito Annotations"></a>Enable Mockito Annotations</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RunWith</span>(MockitoJUnitRunner.class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MockitoAnnotationTest</span> </span>&#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 或者</span></div><div class="line"><span class="meta">@Before</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">    MockitoAnnotations.initMocks(<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Mock-Annotation"><a href="#Mock-Annotation" class="headerlink" title="@Mock Annotation"></a>@Mock Annotation</h2><p>创建mock对象</p>
+<p>We can use @Mock to create and inject mocked instances without having to call Mockito.mock manually.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">DynamicConfigContext dynamicConfigContextMock = Mockito.mock(DynamicConfigContext.class);</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">* 动态配置</div><div class="line">*/</div><div class="line"><span class="meta">@Mock</span></div><div class="line"><span class="keyword">private</span> DynamicConfigContext dynamicConfigContext;</div><div class="line"></div><div class="line"><span class="meta">@InjectMocks</span></div><div class="line"><span class="keyword">private</span> DynamicConfigContextCombineImpl dynamicConfigContextCombine;</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@Test</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getConfigParallel</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#123;</div><div class="line">        when(dynamicConfigContext.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE)).thenReturn(Boolean.TRUE);</div><div class="line">        when(dynamicConfigContext.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN)).thenReturn(Boolean.TRUE);</div><div class="line"></div><div class="line">        <span class="comment">// true true -&gt; true</span></div><div class="line">        Boolean waybillScheduleConfig = dynamicConfigContextCombine.getConfigParallel(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE, DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN);</div><div class="line">        Assertions.assertThat(waybillScheduleConfig).as(<span class="string">"并列配置 true true -&gt; true 结果检查"</span>).isEqualTo(Boolean.TRUE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    &#123;</div><div class="line">        when(dynamicConfigContext.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE)).thenReturn(Boolean.TRUE);</div><div class="line">        when(dynamicConfigContext.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN)).thenReturn(Boolean.FALSE);</div><div class="line"></div><div class="line">        <span class="comment">// true false -&gt; false</span></div><div class="line">        Boolean waybillScheduleConfig = dynamicConfigContextCombine.getConfigParallel(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE, DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN);</div><div class="line">        Assertions.assertThat(waybillScheduleConfig).as(<span class="string">"并列配置 true false -&gt; false 结果检查"</span>).isEqualTo(Boolean.FALSE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// false true -&gt; false</span></div><div class="line">        when(dynamicConfigContext.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE)).thenReturn(Boolean.FALSE);</div><div class="line">        when(dynamicConfigContext.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN)).thenReturn(Boolean.TRUE);</div><div class="line"></div><div class="line">        Boolean waybillScheduleConfig = dynamicConfigContextCombine.getConfigParallel(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE, DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN);</div><div class="line">        Assertions.assertThat(waybillScheduleConfig).as(<span class="string">"并列配置 false true -&gt; false 结果检查"</span>).isEqualTo(Boolean.FALSE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    &#123;</div><div class="line">        <span class="comment">// false false -&gt; false</span></div><div class="line">        when(dynamicConfigContext.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE)).thenReturn(Boolean.FALSE);</div><div class="line">        when(dynamicConfigContext.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN)).thenReturn(Boolean.FALSE);</div><div class="line"></div><div class="line">        Boolean waybillScheduleConfig = dynamicConfigContextCombine.getConfigParallel(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE, DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN);</div><div class="line">        Assertions.assertThat(waybillScheduleConfig).as(<span class="string">"并列配置 false false -&gt; false 结果检查"</span>).isEqualTo(Boolean.FALSE);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Spy-Annotation"><a href="#Spy-Annotation" class="headerlink" title="@Spy Annotation"></a>@Spy Annotation</h2><p>局部mock</p>
+<p>use @Spy annotation to spy on an existing instance.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">DynamicConfigContext dynamicConfigContextMock = Mockito.spy(DynamicConfigContextDb.class);</div><div class="line"></div><div class="line">&#123;</div><div class="line">    <span class="comment">// Priority null</span></div><div class="line">    when(dynamicConfigContextMock.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE)).thenReturn(<span class="keyword">null</span>);</div><div class="line">    when(dynamicConfigContextMock.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN)).thenReturn(Boolean.FALSE);</div><div class="line"></div><div class="line">    <span class="comment">// 校验</span></div><div class="line">    verify(dynamicConfigContextMock,times(<span class="number">1</span>)).getConfig(anyString());</div><div class="line"></div><div class="line"></div><div class="line">    Boolean waybillScheduleConfig = dynamicConfigContextMock.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE, DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN);</div><div class="line">    Assertions.assertThat(waybillScheduleConfig).as(<span class="string">"并列配置 Priority null 结果检查"</span>).isEqualTo(Boolean.FALSE);</div><div class="line">&#125;</div><div class="line"></div><div class="line">&#123;</div><div class="line">    <span class="comment">// Priority true</span></div><div class="line">    when(dynamicConfigContextMock.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE)).thenReturn(Boolean.TRUE);</div><div class="line">    when(dynamicConfigContextMock.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN)).thenReturn(Boolean.FALSE);</div><div class="line"></div><div class="line">    Boolean waybillScheduleConfig = dynamicConfigContextMock.getConfig(DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE, DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN);</div><div class="line">    Assertions.assertThat(waybillScheduleConfig).as(<span class="string">"并列配置  Priority true 结果检查"</span>).isEqualTo(Boolean.TRUE);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">when(</div><div class="line">    dynamicConfigContext.getConfig(</div><div class="line">        argThat((ArgumentMatcher&lt;DynamicConfig&gt;) dynamicConfig -&gt; &#123;</div><div class="line">                <span class="keyword">if</span> (<span class="keyword">null</span> == dynamicConfig) &#123;</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                String configKey = dynamicConfig.getConfigKey();</div><div class="line">                <span class="keyword">return</span> Objects.equals(configKey, DynamicConfigConstant.WAYBILL_SCHEDULE_OPEN_PRE.getConfigKey());</div><div class="line">            &#125;</div><div class="line">        )</div><div class="line">    )</div><div class="line">).thenReturn(Boolean.FALSE);</div></pre></td></tr></table></figure>
+<h2 id="InjectMocks"><a href="#InjectMocks" class="headerlink" title="InjectMocks"></a>InjectMocks</h2><p>Field injection; mocks will first be resolved by type, then, if there is several property of the same type, by the match of the field name and the mock name.</p>
+<h1 id="生成测试数据"><a href="#生成测试数据" class="headerlink" title="生成测试数据"></a>生成测试数据</h1><h2 id="随机String"><a href="#随机String" class="headerlink" title="随机String"></a>随机String</h2><p><code>org.apache.commons.lang.RandomStringUtils</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">RandomStringUtils.randomNumeric(<span class="number">8</span>);</div></pre></td></tr></table></figure>
+<h1 id="assertj"><a href="#assertj" class="headerlink" title="assertj"></a>assertj</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- assertj 2.9.1 for Java 7 projects --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.assertj<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>assertj-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Assertions.assertThat(waybillRemindRet.getYn()).as(<span class="string">"insert结果yn检查"</span>)</div><div class="line">                .isEqualTo(waybillRemindOrigin.getYn());</div><div class="line"></div><div class="line">WaybillTradeTaskData waybillTradeTaskData = <span class="keyword">new</span> WaybillTradeTaskData();</div><div class="line">waybillTradeTaskData.addExtendProps(<span class="string">"extKey"</span>, <span class="string">"extValue"</span>);</div><div class="line"></div><div class="line">Assertions.assertThat(waybillTradeTaskData.getExtendProps()).as(<span class="string">"effictive"</span>).isNotEmpty().contains(Assertions.entry(<span class="string">"extKey"</span>, <span class="string">"extValue"</span>));</div></pre></td></tr></table></figure>
+<h1 id="JMH"><a href="#JMH" class="headerlink" title="JMH"></a>JMH</h1><p>JMH (Java Microbenchmark Harness) [ˈhɑːnɪs]  </p>
+<ul>
+<li>确保HotSpot JIT编译达到稳定状态后（-XX:+PrintCompilation，JIT编译日志，不再出现相关日志后），再开始基准测试采样</li>
+<li>基准测试的采样间隔内要避免发生垃圾收集（-verbose:gc，设置-Xms、-Xmx为同一值，设置新生代-Xmn）</li>
+<li>避免为基准测试中的代码被定性为无效代码（被优化到no-op队列），让方法变的必不可少（保存计算结果）</li>
+<li>打印内联优化(-XX:+PrintInlining)，jvm 以server模式运行（-server）</li>
+<li>避免采样过程中逆优化（JIT编译日志，逆优化关键字made not entrant）</li>
+</ul>
+<blockquote>
+<p>no-op 指的是操作或者操作序列对程序的输出状态没有任何影响</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">-server -XX:+UnlockDiagnosticVMOptions -XX:+PrintCompilation -verbose:g -XX:+PrintInlining</div></pre></td></tr></table></figure>
+<p>逆优化：将经过若干级内联而来的编译帧转换为等价的解释器帧的过程。<br>可以将编译代码从多种乐观优化中回退回来，特别是从类型集成关系分析<code>假设</code>中回退回来。</p>
+<blockquote>
+<p>客户端或C1编译器，编译临界值1500；服务端或C2编译器，编译临界值1000</p>
+<p>方法调用计数器和回边计数器:方法计数器，记录一个方法被调用次数的计数器。回边计数器，用于统计方法中循环体代码的执行次数，字节码中遇到控制流向后跳转的指令称为“回边”。</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.openjdk.jmh<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jmh-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.21<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.openjdk.jmh<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jmh-generator-annprocess<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.21<span class="tag">&lt;/<span class="name">version</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+<h2 id="jmh注解"><a href="#jmh注解" class="headerlink" title="jmh注解"></a>jmh注解</h2><h3 id="BenchmarkMode"><a href="#BenchmarkMode" class="headerlink" title="@BenchmarkMode"></a>@BenchmarkMode</h3><ul>
+<li>Throughput：整体吞吐量，每秒执行了多少次调用</li>
+<li>AverageTime：用的平均时间，每次操作的平均时间</li>
+<li>SampleTime：随机取样，最后输出取样结果的分布，例如“99%的调用在xxx毫秒以内，99.99%的调用在xxx毫秒以内”</li>
+<li>SingleShotTime：只运行一次，同时把 warmup 次数设为0，测试冷启动时的性能</li>
+<li>All：上面的所有模式都执行一次，适用于内部JMH测试</li>
+</ul>
+<h3 id="Warmup"><a href="#Warmup" class="headerlink" title="@Warmup"></a>@Warmup</h3><p>预热参数</p>
+<ul>
+<li>iterations：预热的次数</li>
+<li>time：每次预热的时间</li>
+<li>timeUnit：时间的单位，默认秒</li>
+<li>batchSize：批处理大小，每次操作调用几次方法</li>
+</ul>
+<h3 id="Measurement"><a href="#Measurement" class="headerlink" title="@Measurement"></a>@Measurement</h3><p>实际调用方法所需要配置的一些基本测试参数</p>
+<h3 id="Threads"><a href="#Threads" class="headerlink" title="@Threads"></a>@Threads</h3><p>每个进程中的测试线程，可用于类或者方法上。<br>一般选择为cpu乘以2。如果配置了 Threads.MAX ，代表使用 Runtime.getRuntime().availableProcessors() 个线程。</p>
+<h3 id="Fork"><a href="#Fork" class="headerlink" title="@Fork"></a>@Fork</h3><p>we can set up how benchmark execution happens: the value parameter controls <code>how many times</code> the benchmark will be executed </p>
+<p>进行 fork 的次数</p>
+<h3 id="Benchmark"><a href="#Benchmark" class="headerlink" title="@Benchmark"></a>@Benchmark</h3><p>方法级注解，表示该方法是需要进行 benchmark 的对象，用法和 JUnit 的 @Test 类似。</p>
+<h3 id="Param"><a href="#Param" class="headerlink" title="@Param"></a>@Param</h3><p>@Param 可以用来指定某项参数的多种情况。只能作用在字段上。</p>
+<p>特别适合用来测试一个函数在不同的参数输入的情况下的性能。使用该注解<code>必须定义 @State 注解</code>。</p>
+<h3 id="Setup-amp-TearDown"><a href="#Setup-amp-TearDown" class="headerlink" title="@Setup&amp;@TearDown"></a>@Setup&amp;@TearDown</h3><p>@Setup主要实现测试前的初始化工作，只能作用在方法上。用法和Junit一样。使用该注解必须定义 @State 注解。</p>
+<p>@TearDown主要实现测试完成后的垃圾回收等工作，只能作用在方法上。用法和Junit一样。使用该注解必须定义 @State 注解。</p>
+<p>这两个注解都有一个 Level 的枚举value，它有三个值（默认的是Trial）：</p>
+<ul>
+<li>Trial：在每次Benchmark的之前/之后执行。</li>
+<li>Iteration：在每次Benchmark的iteration的之前/之后执行。</li>
+<li>Invocation：每次调用Benchmark标记的方法之前/之后都会执行。</li>
+</ul>
+<h3 id="State"><a href="#State" class="headerlink" title="@State"></a>@State</h3><p>该注解定义了给定类实例的可用范围。JMH可以在多线程同时运行的环境测试，因此需要选择正确的状态。</p>
+<p>Scope有如下3种值：</p>
+<ul>
+<li>Benchmark：同一个benchmark在多个线程之间共享实例。</li>
+<li>Group：同一个线程在同一个group里共享实例。group定义参考注解 @Group 。</li>
+<li>Thread：不同线程之间的实例不共享。</li>
+</ul>
+<h3 id="Group"><a href="#Group" class="headerlink" title="@Group"></a>@Group</h3><p>结合@Benchmark一起使用，把多个基准方法归为一类，只能作用在方法上。</p>
+<h3 id="GroupThreads"><a href="#GroupThreads" class="headerlink" title="@GroupThreads"></a>@GroupThreads</h3><p>定义了多少个线程参与在组中运行基准方法。只能作用在方法上。</p>
+<h3 id="OutputTimeUnit"><a href="#OutputTimeUnit" class="headerlink" title="@OutputTimeUnit"></a>@OutputTimeUnit</h3><p>基准测试结果的时间类型。可用于类或者方法上。秒、毫秒、微秒。</p>
+<h3 id="CompilerControl"><a href="#CompilerControl" class="headerlink" title="@CompilerControl"></a>@CompilerControl</h3><p>该注解可以控制方法编译的行为，可用于类或者方法或者构造函数上。</p>
+<ul>
+<li>CompilerControl.Mode.INLINE：强制使用内联。</li>
+<li>CompilerControl.Mode.DONT_INLINE：禁止使用内联。</li>
+<li>CompilerControl.Mode.EXCLUDE：禁止编译方法。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@State</span>(Scope.Thread)</div><div class="line"><span class="meta">@BenchmarkMode</span>(Mode.AverageTime)</div><div class="line"><span class="meta">@OutputTimeUnit</span>(TimeUnit.NANOSECONDS)</div><div class="line"><span class="meta">@Warmup</span>(iterations = <span class="number">3</span>, time = <span class="number">5</span>, timeUnit = TimeUnit.SECONDS)</div><div class="line"><span class="meta">@Measurement</span>(iterations = <span class="number">5</span>, time = <span class="number">5</span>, timeUnit = TimeUnit.SECONDS)</div><div class="line"><span class="meta">@Fork</span>(<span class="number">3</span>)</div><div class="line"><span class="meta">@Threads</span>(<span class="number">8</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// Do nothing</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</div><div class="line"><span class="meta">@SpringBootTest</span>(classes = StationDaoTestConfig .class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WorkOrderTaskMapperTest</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Resource</span></div><div class="line">    <span class="keyword">private</span> WorkOrderTaskMapper workOrderTaskMapper;</div><div class="line"></div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getWorkOrderTaskByErpAndCode</span><span class="params">()</span> </span>&#123;</div><div class="line">        WorkOrderTask workOrderTask = workOrderTaskMapper.getWorkOrderTaskByErpAndCode(<span class="string">"liuhaiming7"</span>, <span class="number">9000327L</span>);</div><div class="line"></div><div class="line">        Assertions.assertThat(workOrderTask).as(<span class="string">"getWorkOrderTaskByErpAndCode结果检查"</span>).isNotNull();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@SpringBootApplication</span></div><div class="line"><span class="meta">@MapperScan</span>(basePackages = &#123;<span class="string">"erp.ql.station.dao"</span>&#125;)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StationDaoTestConfig</span> </span>&#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.assertj<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>assertj-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-log4j2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>erp.ql.station<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>erp.ql.station-domain<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>logback-classic<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>ch.qos.logback<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/23/spring/" rel="next" title="Spring">
+                <i class="fa fa-chevron-left"></i> Spring
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/17/mybatis/" rel="prev" title="MyBatis">
+                MyBatis <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="xiaozhuang" />
+          <p class="site-author-name" itemprop="name">xiaozhuang</p>
+          <p class="site-description motion-element" itemprop="description">O ever youthful</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#单元测试"><span class="nav-number">1.</span> <span class="nav-text">单元测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#断言"><span class="nav-number">2.</span> <span class="nav-text">断言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数化测试"><span class="nav-number">3.</span> <span class="nav-text">参数化测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#抛出异常测试"><span class="nav-number">4.</span> <span class="nav-text">抛出异常测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#超时测试"><span class="nav-number">5.</span> <span class="nav-text">超时测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#跳过测试"><span class="nav-number">6.</span> <span class="nav-text">跳过测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#提取公共逻辑"><span class="nav-number">7.</span> <span class="nav-text">提取公共逻辑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hamcrest使用"><span class="nav-number">8.</span> <span class="nav-text">Hamcrest使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#junit-单元测试事务会自动回滚"><span class="nav-number">9.</span> <span class="nav-text">junit 单元测试事务会自动回滚</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最佳实践"><span class="nav-number">10.</span> <span class="nav-text">最佳实践</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mockito"><span class="nav-number">11.</span> <span class="nav-text">Mockito</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Enable-Mockito-Annotations"><span class="nav-number">11.1.</span> <span class="nav-text">Enable Mockito Annotations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mock-Annotation"><span class="nav-number">11.2.</span> <span class="nav-text">@Mock Annotation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spy-Annotation"><span class="nav-number">11.3.</span> <span class="nav-text">@Spy Annotation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例"><span class="nav-number">11.4.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InjectMocks"><span class="nav-number">11.5.</span> <span class="nav-text">InjectMocks</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#生成测试数据"><span class="nav-number">12.</span> <span class="nav-text">生成测试数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#随机String"><span class="nav-number">12.1.</span> <span class="nav-text">随机String</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#assertj"><span class="nav-number">13.</span> <span class="nav-text">assertj</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JMH"><span class="nav-number">14.</span> <span class="nav-text">JMH</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jmh注解"><span class="nav-number">14.1.</span> <span class="nav-text">jmh注解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BenchmarkMode"><span class="nav-number">14.1.1.</span> <span class="nav-text">@BenchmarkMode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Warmup"><span class="nav-number">14.1.2.</span> <span class="nav-text">@Warmup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Measurement"><span class="nav-number">14.1.3.</span> <span class="nav-text">@Measurement</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Threads"><span class="nav-number">14.1.4.</span> <span class="nav-text">@Threads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fork"><span class="nav-number">14.1.5.</span> <span class="nav-text">@Fork</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Benchmark"><span class="nav-number">14.1.6.</span> <span class="nav-text">@Benchmark</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Param"><span class="nav-number">14.1.7.</span> <span class="nav-text">@Param</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setup-amp-TearDown"><span class="nav-number">14.1.8.</span> <span class="nav-text">@Setup&@TearDown</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#State"><span class="nav-number">14.1.9.</span> <span class="nav-text">@State</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Group"><span class="nav-number">14.1.10.</span> <span class="nav-text">@Group</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GroupThreads"><span class="nav-number">14.1.11.</span> <span class="nav-text">@GroupThreads</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OutputTimeUnit"><span class="nav-number">14.1.12.</span> <span class="nav-text">@OutputTimeUnit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CompilerControl"><span class="nav-number">14.1.13.</span> <span class="nav-text">@CompilerControl</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Boot"><span class="nav-number">15.</span> <span class="nav-text">Spring Boot</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiaozhuang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>

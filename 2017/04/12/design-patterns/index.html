@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/templateMethod.png">
 <meta property="og:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/StatePattern.png">
 <meta property="og:image" content="http://xiaozhuang.github.io/2017/04/12/design-patterns/proxyPattern.png">
-<meta property="og:updated_time" content="2017-09-03T12:01:45.989Z">
+<meta property="og:updated_time" content="2019-08-03T06:40:46.034Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Design Patterns">
 <meta name="twitter:description" content="Java 设计模式">
@@ -437,6 +437,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.net.MalformedURLException;</div><div class="line"><span class="keyword">import</span> java.rmi.Naming;</div><div class="line"><span class="keyword">import</span> java.rmi.RemoteException;</div><div class="line"><span class="keyword">import</span> java.rmi.registry.LocateRegistry;</div><div class="line"><span class="keyword">import</span> java.rmi.server.UnicastRemoteObject;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServerOperation</span> <span class="keyword">extends</span> <span class="title">UnicastRemoteObject</span> <span class="keyword">implements</span> <span class="title">RMIInterface</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">783820609710107386L</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">ServerOperation</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException </span>&#123;</div><div class="line">        <span class="keyword">super</span>();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">helloTo</span><span class="params">(String name)</span> <span class="keyword">throws</span> RemoteException</span>&#123;</div><div class="line">        System.out.println(name + <span class="string">" is trying to contact!"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="string">"Server says hello to "</span> + name;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            LocateRegistry.createRegistry (<span class="number">1099</span>);</div><div class="line">            Naming.rebind(<span class="string">"//localhost/MyServer"</span>, <span class="keyword">new</span> ServerOperation());</div><div class="line">        &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.net.MalformedURLException;</div><div class="line"><span class="keyword">import</span> java.rmi.Naming;</div><div class="line"><span class="keyword">import</span> java.rmi.NotBoundException;</div><div class="line"><span class="keyword">import</span> java.rmi.RemoteException;</div><div class="line"><span class="keyword">import</span> java.util.Scanner;</div><div class="line"></div><div class="line"><span class="keyword">import</span> com.sunday.rmi_learn.rmi.RMIInterface;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RmiClient</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            RMIInterface look_up = (RMIInterface) Naming.lookup(<span class="string">"rmi://localhost/MyServer"</span>);</div><div class="line">            Scanner scanner = <span class="keyword">new</span> Scanner(System.in);</div><div class="line">            <span class="keyword">try</span>&#123;</div><div class="line">                <span class="keyword">if</span>(scanner.hasNext())&#123;</div><div class="line">                    String txt = scanner.nextLine();</div><div class="line">                    String response = look_up.helloTo(txt);</div><div class="line">                    System.out.println(response);</div><div class="line">                &#125;</div><div class="line">            &#125;<span class="keyword">finally</span> &#123;</div><div class="line">                scanner.close();</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="comment">//String txt = JOptionPane.showInputDialog("What is your name?");</span></div><div class="line">            <span class="comment">//JOptionPane.showMessageDialog(null, reponse);</span></div><div class="line">        &#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125; <span class="keyword">catch</span> (NotBoundException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>代理模式与装饰着模式区别：<br>代理模式，使用组合模式；装饰者模式使用组合模式。<br>装饰着为对象增加行为，代理是控制对象的访问。</p>
+<p>cglib 与 cglib-nodep 区别</p>
+<p>cglib-#.#<em>#.jar - binary distribution, CGLIB classes only, it must be used to extend cglib classes dependant on ASM API<br>cglib-nodep-#.#</em>#.jar - binary distribution, CGLIB and renamed ASM classes, not extendable</p>
 
       
     </div>
@@ -478,8 +480,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/12/javase-thinkinjava/" rel="prev" title="Think In Java">
-                Think In Java <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/19/java-effective/" rel="prev" title="Effective Java">
+                Effective Java <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -548,7 +550,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -565,7 +567,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -616,7 +618,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

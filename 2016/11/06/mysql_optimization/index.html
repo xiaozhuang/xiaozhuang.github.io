@@ -91,7 +91,7 @@
 <meta property="og:url" content="http://xiaozhuang.github.io/2016/11/06/mysql_optimization/index.html">
 <meta property="og:site_name" content="Communicat &amp; Happy Together">
 <meta property="og:description" content="《性能优化之MySQL优化》课程学习笔记http://www.imooc.com/learn/194/">
-<meta property="og:updated_time" content="2018-06-25T09:21:43.403Z">
+<meta property="og:updated_time" content="2019-07-05T01:15:31.652Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL性能优化">
 <meta name="twitter:description" content="《性能优化之MySQL优化》课程学习笔记http://www.imooc.com/learn/194/">
@@ -369,8 +369,9 @@
 <li>key_len:使用索引的长度；不损失精确性的情况下，长度越短越好</li>
 <li>ref：显示索引的哪一列被使用了，常数最好</li>
 <li>rows：表扫描的行数</li>
-<li>Extra：<br>  Using filesort：查询需要优化；用到了文件排序，order by从句常见<br>  Using temporary：查询需要优化；对结果排序时用到了临时表，通常发生在对不同列集进行order by上<br>  Using index: 使用覆盖索引<br>  Using where：MySQL服务器在存储引擎检索行后再进行过滤</li>
+<li>Extra：<br>  Using filesort：查询需要优化；用到了文件排序，order by从句常见<br>  Using temporary：查询需要优化；对结果排序时用到了临时表，通常发生在对不同列集进行order by上<br>  Using index: 使用覆盖索引<br>  Using where：MySQL服务器在存储引擎检索行后再进行过滤<br>  Using index condition: </li>
 </ul>
+<p>在日常生活中，我们通过地图软件查询出行方案时，起点和终点之间存在无限种出行方案，甚至可以南辕北辙绕地球一圈后达到终点，地图软件无法穷举所有的出行方案来供用户选择。<br>同理在MySQL解析SQL并生成执行计划时，不会穷举所有可能执行计划，针对多表关联或嵌套子查询等复杂SQL,MySQL在生成一定数量执行计划后便会停止，<br>并在已生成的执行计划中基于成本考虑挑选”相对较优”的执行计划来执行，因此很有可能使用的执行计划不是“最优执行计划”</p>
 <h1 id="SQL语句优化"><a href="#SQL语句优化" class="headerlink" title="SQL语句优化"></a>SQL语句优化</h1><h2 id="优化Count-和-Max"><a href="#优化Count-和-Max" class="headerlink" title="优化Count() 和 Max()"></a>优化Count() 和 Max()</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">EXPLAIN</span> <span class="keyword">SELECT</span> <span class="keyword">MAX</span>(<span class="string">`payment_date`</span>) <span class="keyword">FROM</span> <span class="string">`payment`</span></div><div class="line"></div><div class="line"><span class="comment">--  在payment_date列，创建索引;</span></div><div class="line"><span class="comment">-- 创建索引后，能够进通过所以查询到结果</span></div><div class="line"><span class="keyword">CREATE</span> <span class="keyword">INDEX</span> idx_paydate <span class="keyword">ON</span> payment(<span class="string">`payment_date`</span>)</div><div class="line"></div><div class="line"><span class="comment">-- 查询年份为2006的电影；</span></div><div class="line"><span class="comment">-- `year` = '2016'进行计数，否则返回NULL,count函数不对NULL进行计数</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(<span class="string">`year`</span> = <span class="string">'2016'</span> <span class="keyword">OR</span> <span class="literal">NULL</span>) <span class="keyword">FROM</span> t</div></pre></td></tr></table></figure>
 <h2 id="子查询优化"><a href="#子查询优化" class="headerlink" title="子查询优化"></a>子查询优化</h2><p>子查询优化为连接查询(join)</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> <span class="string">`id`</span>,<span class="string">`year`</span> <span class="keyword">FROM</span> t <span class="keyword">WHERE</span> <span class="keyword">id</span> <span class="keyword">IN</span> (<span class="keyword">SELECT</span> t_id <span class="keyword">FROM</span> t1)</div><div class="line"></div><div class="line"><span class="keyword">SELECT</span> t.<span class="string">`id`</span>,t.<span class="string">`year`</span> <span class="keyword">FROM</span> t <span class="keyword">JOIN</span> t1 <span class="keyword">ON</span> t1.t_id = t.<span class="string">`id`</span></div><div class="line"><span class="comment">-- 存在一对多关系时，查询结果可能存在重复行，使用DISTINCT函数去重</span></div><div class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> t.<span class="string">`id`</span>,t.<span class="string">`year`</span> <span class="keyword">FROM</span> t <span class="keyword">JOIN</span> t1 <span class="keyword">ON</span> t1.t_id = t.<span class="string">`id`</span></div></pre></td></tr></table></figure>
@@ -514,8 +515,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/04/cpp/" rel="next" title="C++">
-                <i class="fa fa-chevron-left"></i> C++
+              <a href="/2016/09/17/MySQL5-7-note/" rel="next" title="MySQL5.7 Note">
+                <i class="fa fa-chevron-left"></i> MySQL5.7 Note
               </a>
             
           </div>
@@ -594,7 +595,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">55</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -611,7 +612,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">41</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -662,7 +663,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

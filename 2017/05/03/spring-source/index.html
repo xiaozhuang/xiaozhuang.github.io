@@ -1,0 +1,916 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java,Sriing," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Spring 源码学习">
+<meta name="keywords" content="Java,Sriing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Source">
+<meta property="og:url" content="http://xiaozhuang.github.io/2017/05/03/spring-source/index.html">
+<meta property="og:site_name" content="Communicat &amp; Happy Together">
+<meta property="og:description" content="Spring 源码学习">
+<meta property="og:updated_time" content="2019-08-19T14:05:45.677Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Source">
+<meta name="twitter:description" content="Spring 源码学习">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6286766081142949000,
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+
+  <title> Spring Source | Communicat & Happy Together </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Communicat & Happy Together</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring Source
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-05-03T12:50:22+08:00" content="2017-05-03">
+              2017-05-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Note/" itemprop="url" rel="index">
+                    <span itemprop="name">Note</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Spring 源码学习<br><a id="more"></a></p>
+<h1 id="Spring-IoC"><a href="#Spring-IoC" class="headerlink" title="Spring IoC"></a>Spring IoC</h1><h2 id="Bean生命周期"><a href="#Bean生命周期" class="headerlink" title="Bean生命周期"></a>Bean生命周期</h2><p>Spring Bean Life Cycle Callback Methods</p>
+<blockquote><footer><strong>BeanLifeCycle spring-bean-life-cycle-tutorial.jpg</strong></footer></blockquote>
+<blockquote><footer><strong>图片来源</strong><cite><a href="https://www.concretepage.com/spring/spring-bean-life-cycle-tutorial" target="_blank" rel="external">Spring Bean Life Cycle Tutorial</a></cite></footer></blockquote>
+<ul>
+<li>constructor</li>
+<li>setter method</li>
+<li>BeanName<code>Aware</code>.setBeanName()</li>
+<li>BeanClassLoader<code>Aware</code>.setBeanClassLoader()</li>
+<li>BeanFactoryAware.setBeanFactory()</li>
+<li>ApplicationContextAware.setApplicationContext();</li>
+<li>BeanPostProcessor.postProcessBeforeInitialization()</li>
+<li>@PostConstruct</li>
+<li>InitializingBean.afterPropertiesSet() </li>
+<li>init-method</li>
+<li>BeanPostProcessor.postProcessAfterInitialization()</li>
+<li>Now the bean instance is ready to be used. Perform the task using the bean.</li>
+<li>@PreDestroy</li>
+<li>DisposableBean.destroy()</li>
+<li>destroy-method</li>
+</ul>
+<blockquote>
+<p>ServletContextAware、ServletConfigAware、ResourceLoaderAware、LoadTimeWeaverAware<br>BeanPostProcessor 作用在于对于新构造的实例可以做一些自定义的修改，方法的返回值会被Spring容器作为处理后的Bean注册到容器中，应用级别的处理，将处理每个Bean；</p>
+</blockquote>
+<h3 id="BeanPostProcessor"><a href="#BeanPostProcessor" class="headerlink" title="BeanPostProcessor"></a>BeanPostProcessor</h3><ul>
+<li>postProcessBeforeInitialization</li>
+<li>postProcessAfterInitialization</li>
+</ul>
+<h3 id="InstantiationAwareBeanPostProcessor"><a href="#InstantiationAwareBeanPostProcessor" class="headerlink" title="InstantiationAwareBeanPostProcessor"></a>InstantiationAwareBeanPostProcessor</h3><ul>
+<li>postProcessBeforeInstantiation：Bean<code>实例化</code>之前调用</li>
+<li>postProcessAfterInstantiation：Bean<code>实例化</code>之后调用</li>
+<li>postProcessPropertyValues：</li>
+</ul>
+<h2 id="PropertyDescriptor"><a href="#PropertyDescriptor" class="headerlink" title="PropertyDescriptor"></a>PropertyDescriptor</h2><p><code>java.beans.PropertyDescriptor</code></p>
+<p>Java Bean 属性访问器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 获取访问器</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> PropertyDescriptor[] getPropertyDescriptors(Class&lt;?&gt; clazz)</div><div class="line"></div><div class="line"><span class="comment">// 获取属性访问器 org.springframework.beans.BeanUtils#getPropertyDescriptor</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> PropertyDescriptor <span class="title">getPropertyDescriptor</span><span class="params">(Class&lt;?&gt; clazz, String propertyName)</span></span></div></pre></td></tr></table></figure>
+<p>Spring启动时读取Bean配置信息，<br>在Spring容器中生成Bean注册表（BeanDefinition ConcurrentHashMap），<br>根据Bean注册表实例化Bean，<br>装配Bean之间的依赖关系。</p>
+<p>Bean 别名：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 1.使用name属性 --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"testBean"</span> <span class="attr">class</span>=<span class="string">"testBean,testBean2"</span> <span class="attr">class</span>=<span class="string">"com.TestBean"</span> /&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 2.使用alias标签 --&gt;</span> </div><div class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"testBean"</span> <span class="attr">class</span>=<span class="string">"com.TestBean"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">alias</span> <span class="attr">name</span>=<span class="string">"testBean"</span> <span class="attr">alias</span>=<span class="string">"testBean,testBean2"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>使用FactoryBean接口定制实例化bean的逻辑：<code>org.springframework.beans.factory.FactoryBean</code><br>配置文件中<bean>的class属性配置时FactoryBean时，<br>通过getBean()方法返回的不是FactoryBean本身，<br>而是FactoryBean#getObject()方法返回的对象。</bean></p>
+<h2 id="BeanFactory"><a href="#BeanFactory" class="headerlink" title="BeanFactory"></a>BeanFactory</h2><p><code>org.springframework.beans.factory.BeanFactory</code></p>
+<h3 id="AutowireCapableBeanFactory"><a href="#AutowireCapableBeanFactory" class="headerlink" title="AutowireCapableBeanFactory"></a>AutowireCapableBeanFactory</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Resolve the bean instance that uniquely matches the given object type, if any, including its bean name.</span></div><div class="line"><span class="comment">// @since 4.3.3</span></div><div class="line">&lt;T&gt; <span class="function">NamedBeanHolder&lt;T&gt; <span class="title">resolveNamedBean</span><span class="params">(Class&lt;T&gt; requiredType)</span></span></div></pre></td></tr></table></figure>
+<h3 id="ListableBeanFactory"><a href="#ListableBeanFactory" class="headerlink" title="ListableBeanFactory"></a>ListableBeanFactory</h3><p><code>org.springframework.beans.factory.ListableBeanFactory</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 获取指定类型BeanName，包含子类</span></div><div class="line">String[] getBeanNamesForType(Class&lt;?&gt; type, <span class="keyword">boolean</span> includeNonSingletons, <span class="keyword">boolean</span> allowEagerInit)</div></pre></td></tr></table></figure>
+<h3 id="HierarchicalBeanFactory"><a href="#HierarchicalBeanFactory" class="headerlink" title="HierarchicalBeanFactory"></a>HierarchicalBeanFactory</h3><p><code>org.springframework.beans.factory.HierarchicalBeanFactory</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">// 检查当前BeanFactory是否包含指定Bean</span></div><div class="line"><span class="comment">// Return whether the local bean factory contains a bean of the given name,</span></div><div class="line"><span class="comment">// ignoring beans defined in ancestor contexts.</span></div><div class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">containsLocalBean</span><span class="params">(String name)</span></span></div></pre></td></tr></table></figure>
+<h3 id="ConfigurableBeanFactory"><a href="#ConfigurableBeanFactory" class="headerlink" title="ConfigurableBeanFactory"></a>ConfigurableBeanFactory</h3><p><code>org.springframework.beans.factory.config.ConfigurableBeanFactory</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Determine whether the specified bean is currently in creation.</span></div><div class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isCurrentlyInCreation</span><span class="params">(String beanName)</span></span>;</div></pre></td></tr></table></figure>
+<h2 id="ImportBeanDefinitionRegistrar"><a href="#ImportBeanDefinitionRegistrar" class="headerlink" title="ImportBeanDefinitionRegistrar"></a>ImportBeanDefinitionRegistrar</h2><p>Interface to be implemented by types that register additional bean definitions when processing @{@link Configuration} classes.</p>
+<p>自定义注解import ImportBeanDefinitionRegistrar，ImportBeanDefinitionRegistrar中注册BeanDefinition</p>
+<blockquote>
+<p>示例 @EnableAspectJAutoProxy</p>
+</blockquote>
+<h2 id="ImportSelector"><a href="#ImportSelector" class="headerlink" title="ImportSelector"></a>ImportSelector</h2><p><code>注解引入JavaConfig</code><br><code>注解引入配置</code></p>
+<p>Interface to be implemented by types that determine which @{@link Configuration} class(es) should be imported based on a given selection criteria</p>
+<p>实现类返回需导入至Spring中的JavaConfig</p>
+<blockquote>
+<p>示例：@EnableTransactionManagement -&gt; TransactionManagementConfigurationSelector.class</p>
+</blockquote>
+<h1 id="Spring-MyBatis"><a href="#Spring-MyBatis" class="headerlink" title="Spring MyBatis"></a>Spring MyBatis</h1><h1 id="Spring-AOP"><a href="#Spring-AOP" class="headerlink" title="Spring AOP"></a>Spring AOP</h1><p>cglib动态代理是使用ASM开源包，将代理对象类的class类文件加载进来，然后利用字节码技术修改class文件的字节码生成子类，进而实现代理类。</p>
+<h2 id="Pointcut"><a href="#Pointcut" class="headerlink" title="Pointcut"></a>Pointcut</h2><p><code>org.springframework.aop.Pointcut</code><br><code>切点</code></p>
+<p>Pointcut由ClassFilter和MethodMatcher构成</p>
+<blockquote>
+<p>org.springframework.aop.MethodMatcher、org.springframework.aop.ClassFilter</p>
+</blockquote>
+<h2 id="Advisor"><a href="#Advisor" class="headerlink" title="Advisor"></a>Advisor</h2><p><code>org.springframework.aop.Advisor</code><br><code>切面</code></p>
+<p>切面同时包含横切代码和连接点信息。</p>
+<h2 id="PointcutAdvisor"><a href="#PointcutAdvisor" class="headerlink" title="PointcutAdvisor"></a>PointcutAdvisor</h2><p><code>org.springframework.aop.PointcutAdvisor</code></p>
+<p>具有切点的切面，它包含Advice和Pointcut两个类</p>
+<p>PointcutAdvisor主要有6个具体的实现类:</p>
+<p>DefaultPointcutAdvisor：常用切面类型，可通过任意Pointcut和Advice定义切面，不支持引介切面<br>NameMatchMethodPointcutAdvisor：可按方法名定义切面<br>RegexpMethodPointcutAdvisor：按正则表达式匹配方法名切点定义切面<br>StaticMethodMatcherPointcutAdvisor：静态匹配切点定义切面（静态匹配：按targetClass、method； 动态匹配：按targetClass、method、args）<br>AspectJExpressionPointcutAdvisor：用于AspectJ切点表达式定义切点的切面<br>AspectJPointcutAdvisor：用于AspectJ语法定义切点的切面</p>
+<h2 id="IntroductionAdvisor"><a href="#IntroductionAdvisor" class="headerlink" title="IntroductionAdvisor"></a>IntroductionAdvisor</h2><p>Advisor分两大类：IntroductionAdvisor（引介通知器）和PointcutAdvisor（切点通知器）。</p>
+<p>IntroductionAdvisor主要为了给targetClass追加接口（或者说追加更多的方法），这种增强属于类级别的增强；<br>而PointcutAdvisor主要为了拦截方法，这种增强属于方法级别的增强。</p>
+<blockquote>
+<p>正是由于两类Advisor的增强级别不同，而导致了对ClassFilter的使用方式不同。IntroductionAdvisor进行类级别增强，因此只需要直接持有ClassFilter即可；而PointcutAdvisor进行方法级别增强，因此需要同时使用ClassFilter和MethodMatcher（方法匹配器）。PointcutAdvisor内部持有一个Pointcut，而Pointcut就是由ClassFilter和MethodMatcher组成的。</p>
+</blockquote>
+<h2 id="AnnotationAwareAspectJAutoProxyCreator"><a href="#AnnotationAwareAspectJAutoProxyCreator" class="headerlink" title="AnnotationAwareAspectJAutoProxyCreator"></a>AnnotationAwareAspectJAutoProxyCreator</h2><p><code>注解切面</code></p>
+<blockquote>
+<p>通过InstantiationAwareBeanPostProcessor生成代理类</p>
+</blockquote>
+<h1 id="Utils"><a href="#Utils" class="headerlink" title="Utils"></a>Utils</h1><h2 id="NamedThreadLocal"><a href="#NamedThreadLocal" class="headerlink" title="NamedThreadLocal"></a>NamedThreadLocal</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> ThreadLocal&lt;JmsUserCredentials&gt; threadBoundCredentials =</div><div class="line">			<span class="keyword">new</span> NamedThreadLocal&lt;JmsUserCredentials&gt;(<span class="string">"Current JMS user credentials"</span>);</div></pre></td></tr></table></figure>
+<h2 id="BeanFactoryUtils"><a href="#BeanFactoryUtils" class="headerlink" title="BeanFactoryUtils"></a>BeanFactoryUtils</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// beanFactory中获取指定类型beanName，包含父容器中Bean</span></div><div class="line"><span class="comment">// Get all bean names for the given type, including those defined in ancestor * factories.</span></div><div class="line">String[] globalAdvisorNames = BeanFactoryUtils.beanNamesForTypeIncludingAncestors(beanFactory, Advisor.class);</div><div class="line"></div><div class="line"><span class="comment">// Obtain a bean of type &#123;@code T&#125; from the given &#123;@code BeanFactory&#125; declaring a qualifier</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">qualifiedBeanOfType</span><span class="params">(BeanFactory beanFactory, Class&lt;T&gt; beanType, String qualifier)</span></span></div></pre></td></tr></table></figure>
+<h2 id="OrderComparator"><a href="#OrderComparator" class="headerlink" title="OrderComparator"></a>OrderComparator</h2><p><code>org.springframework.core.Ordered</code> 对象排序</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">List&lt;Object&gt; beans = <span class="keyword">new</span> ArrayList&lt;Object&gt;(globalAdvisorNames.length + globalInterceptorNames.length);</div><div class="line">OrderComparator.sort(beans);</div></pre></td></tr></table></figure>
+<h2 id="ClassUtils"><a href="#ClassUtils" class="headerlink" title="ClassUtils"></a>ClassUtils</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 获取所有接口</span></div><div class="line">ClassUtils.getAllInterfacesForClass(targetClass, <span class="keyword">this</span>.proxyClassLoader)</div><div class="line"></div><div class="line"><span class="comment">// 获取类的而所有接口</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Set&lt;Class&gt; <span class="title">getAllInterfacesForClassAsSet</span><span class="params">(Class clazz)</span> </span></div><div class="line"></div><div class="line"><span class="comment">// 获取类加载器</span></div><div class="line"><span class="comment">// Return the default ClassLoader to use: typically the thread context ClassLoader, if available; the ClassLoader that loaded the ClassUtils class will be used as fallback.</span></div><div class="line">ClassUtils.<span class="title">getDefaultClassLoader</span><span class="params">()</span></div><div class="line"></div><div class="line"><span class="comment">// 获取方法个数</span></div><div class="line">org.springframework.util.ClassUtils#getMethodCountForName</div></pre></td></tr></table></figure>
+<h2 id="Assert"><a href="#Assert" class="headerlink" title="Assert"></a>Assert</h2><p><code>断言</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Assert.notNull(intf, <span class="string">"Interface must not be null"</span>);</div><div class="line"></div><div class="line">Objects.requireNonNull(h)</div></pre></td></tr></table></figure>
+<h2 id="arraycopy"><a href="#arraycopy" class="headerlink" title="arraycopy"></a>arraycopy</h2><p><code>数组拷贝</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">System.arraycopy(specifiedInterfaces, <span class="number">0</span>, proxiedInterfaces, <span class="number">0</span>, specifiedInterfaces.length);</div></pre></td></tr></table></figure>
+<h2 id="WeakCache"><a href="#WeakCache" class="headerlink" title="WeakCache"></a>WeakCache</h2><p>Cache mapping pairs of {@code (key, sub-key) -&gt; value}</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">WeakCache&lt;ClassLoader, Class&lt;?&gt;[], Class&lt;?&gt;&gt;</div><div class="line">        proxyClassCache = <span class="keyword">new</span> WeakCache&lt;&gt;(<span class="keyword">new</span> KeyFactory(), <span class="keyword">new</span> ProxyClassFactory());</div></pre></td></tr></table></figure>
+<h2 id="StringUtils"><a href="#StringUtils" class="headerlink" title="StringUtils"></a>StringUtils</h2><h3 id="toStringArray"><a href="#toStringArray" class="headerlink" title="toStringArray"></a>toStringArray</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// String集合转数组</span></div><div class="line">StringUtils.toStringArray(resultList)</div></pre></td></tr></table></figure>
+<h1 id="Exception"><a href="#Exception" class="headerlink" title="Exception"></a>Exception</h1><h1 id="BeanCreationException"><a href="#BeanCreationException" class="headerlink" title="BeanCreationException"></a>BeanCreationException</h1><p><code>org.springframework.beans.factory.BeanCreationException</code></p>
+<h1 id="MyBatis-Spring"><a href="#MyBatis-Spring" class="headerlink" title="MyBatis-Spring"></a>MyBatis-Spring</h1><h2 id="SqlSessionTemplate事务支持"><a href="#SqlSessionTemplate事务支持" class="headerlink" title="SqlSessionTemplate事务支持"></a>SqlSessionTemplate事务支持</h2><p>SqlSessionTemplate 获取当前线程SqlSession（<code>SqlSessionUtils#getSqlSession</code>）</p>
+<p>当前线程无SqlSession，则用SqlSessionFactory创建SqlSession；<br>创建SqlSession时通过Environment中TransactionFactory获取Transaction创建Executor（<code>DefaultSqlSessionFactory#openSessionFromDataSource</code>）<br>创建Statement时，通过Transaction获取连接(<code>SimpleExecutor#prepareStatement</code>)</p>
+<p>SqlSessionFactory通过SqlSessionFactoryBean创建，默认使用SpringManagedTransaction（<code>SqlSessionFactoryBean#buildSqlSessionFactory</code>）</p>
+<p>SpringManagedTransaction通过DataSourceUtils#getConnection获取Connection（<code>SpringManagedTransaction#getConnection</code>）</p>
+<p>DataSourceUtils#getConnection通过TransactionSynchronizationManager.getResource使用<code>dataSource</code>获取<code>当前线程</code>的ConnectionHolder（<code>DataSourceUtils#getConnection</code>）</p>
+<p>获取到的是Spring事务管理开启事务的Connection</p>
+<blockquote>
+<p>如果Spring注解@Transactional中value 指定事务管理器错误（不是<code>当前数据源</code>的事务管理器），Spring将使用该事务管理器开启事务<br>MyBatis执行时通过TransactionSynchronizationManager使用<code>数据源</code>获取当前线程Connection，<br>将从数据源中获取Connection，并通过SqlSessionUtils#isSqlSessionTransactional检查结果为不提交事务<br>导致事务不生效；如果defaultAutoCommit设置为false，数据将无法提交</p>
+<p>源码参考：<br>org.springframework.transaction.interceptor.TransactionAspectSupport#invokeWithinTransaction<br>org.mybatis.spring.SqlSessionTemplate.SqlSessionInterceptor</p>
+</blockquote>
+<h1 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h1><ul>
+<li>ThemeResolver：主题解析器</li>
+<li>HandlerMapping：处理器映射</li>
+<li>handlerAdapter：处理器适配器</li>
+<li>HandlerExceptionResolver：处理器异常解析器</li>
+<li>RequestToViewNameTranslator：视图逻辑名称转换器</li>
+<li><p>ViewResolver：视图解析器</p>
+</li>
+<li><p>HandlerExecutionChain</p>
+</li>
+</ul>
+<h2 id="ServletContainerInitializer"><a href="#ServletContainerInitializer" class="headerlink" title="ServletContainerInitializer"></a>ServletContainerInitializer</h2><p><code>SpringServletContainerInitializer</code></p>
+<blockquote>
+<p>SpringMVC不使用web.xml配置，继承ServletContainerInitializer创建初始化类</p>
+</blockquote>
+<p>Servlet3.0之后允许取消web.xml，允许<code>动态加载Servlet</code>，需要实现ServletContainerInitializer</p>
+<ul>
+<li>Servlet容器启动会扫描，当前应用里面每一个jar包的ServletContainerInitializer的实现</li>
+<li>实现类必须绑定在META-INF/services/javax.servlet.ServletContainerInitializer</li>
+<li>可以给ServletContainerInitializer 的实现类添加 @HandlesTypes 注解</li>
+<li>ServletContainerInitializer实现的onStartup方法将获取到ServletContext 和 @HandlesTypes 注解的实现类的集合</li>
+</ul>
+<blockquote>
+<p>示例：SpringServletContainerInitializer<br>不使用xml配置SpringMVC参考继承AbstractAnnotationConfigDispatcherServletInitializer<br>SpringMVC动态添加Servlet使用WebApplicationInitializer</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">registerDispatcherServlet</span><span class="params">(ServletContext servletContext)</span> </span>&#123;</div><div class="line">	String servletName = getServletName();</div><div class="line"></div><div class="line">	DispatcherServlet dispatcherServlet = <span class="keyword">new</span> DispatcherServlet(servletAppContext);</div><div class="line">	ServletRegistration.Dynamic registration = servletContext.addServlet(servletName, dispatcherServlet);</div><div class="line"></div><div class="line">	registration.setLoadOnStartup(<span class="number">1</span>);</div><div class="line">	registration.addMapping(getServletMappings());</div><div class="line">	registration.setAsyncSupported(isAsyncSupported());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h1><ul>
+<li>DeferredImportSelector</li>
+<li>@Transactional注解中value指定Qualifier</li>
+<li>父子容器中切面</li>
+<li>包扫描</li>
+</ul>
+<blockquote>
+<p>org.springframework.transaction.interceptor.TransactionInterceptor</p>
+</blockquote>
+<p>Cglib 无接口类proxy</p>
+<ul>
+<li>[ ] Advised</li>
+<li>[ ] Advisor</li>
+<li>[ ] SpringProxy</li>
+<li>[ ] Advice</li>
+<li>[ ] Interceptor</li>
+</ul>
+<p>PointcutAdvisor</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">((IntroductionAdvisor) advisor).getClassFilter().matches(targetClass);</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Sriing/" rel="tag"># Sriing</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/25/mysql/" rel="next" title="高性能 MySQL">
+                <i class="fa fa-chevron-left"></i> 高性能 MySQL
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/14/spring-boot/" rel="prev" title="Spring Boot">
+                Spring Boot <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="xiaozhuang" />
+          <p class="site-author-name" itemprop="name">xiaozhuang</p>
+          <p class="site-description motion-element" itemprop="description">O ever youthful</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-IoC"><span class="nav-number">1.</span> <span class="nav-text">Spring IoC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean生命周期"><span class="nav-number">1.1.</span> <span class="nav-text">Bean生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BeanPostProcessor"><span class="nav-number">1.1.1.</span> <span class="nav-text">BeanPostProcessor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InstantiationAwareBeanPostProcessor"><span class="nav-number">1.1.2.</span> <span class="nav-text">InstantiationAwareBeanPostProcessor</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PropertyDescriptor"><span class="nav-number">1.2.</span> <span class="nav-text">PropertyDescriptor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanFactory"><span class="nav-number">1.3.</span> <span class="nav-text">BeanFactory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AutowireCapableBeanFactory"><span class="nav-number">1.3.1.</span> <span class="nav-text">AutowireCapableBeanFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ListableBeanFactory"><span class="nav-number">1.3.2.</span> <span class="nav-text">ListableBeanFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HierarchicalBeanFactory"><span class="nav-number">1.3.3.</span> <span class="nav-text">HierarchicalBeanFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConfigurableBeanFactory"><span class="nav-number">1.3.4.</span> <span class="nav-text">ConfigurableBeanFactory</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ImportBeanDefinitionRegistrar"><span class="nav-number">1.4.</span> <span class="nav-text">ImportBeanDefinitionRegistrar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ImportSelector"><span class="nav-number">1.5.</span> <span class="nav-text">ImportSelector</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-MyBatis"><span class="nav-number">2.</span> <span class="nav-text">Spring MyBatis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-AOP"><span class="nav-number">3.</span> <span class="nav-text">Spring AOP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Pointcut"><span class="nav-number">3.1.</span> <span class="nav-text">Pointcut</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advisor"><span class="nav-number">3.2.</span> <span class="nav-text">Advisor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PointcutAdvisor"><span class="nav-number">3.3.</span> <span class="nav-text">PointcutAdvisor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IntroductionAdvisor"><span class="nav-number">3.4.</span> <span class="nav-text">IntroductionAdvisor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AnnotationAwareAspectJAutoProxyCreator"><span class="nav-number">3.5.</span> <span class="nav-text">AnnotationAwareAspectJAutoProxyCreator</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Utils"><span class="nav-number">4.</span> <span class="nav-text">Utils</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#NamedThreadLocal"><span class="nav-number">4.1.</span> <span class="nav-text">NamedThreadLocal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanFactoryUtils"><span class="nav-number">4.2.</span> <span class="nav-text">BeanFactoryUtils</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OrderComparator"><span class="nav-number">4.3.</span> <span class="nav-text">OrderComparator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ClassUtils"><span class="nav-number">4.4.</span> <span class="nav-text">ClassUtils</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Assert"><span class="nav-number">4.5.</span> <span class="nav-text">Assert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arraycopy"><span class="nav-number">4.6.</span> <span class="nav-text">arraycopy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WeakCache"><span class="nav-number">4.7.</span> <span class="nav-text">WeakCache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#StringUtils"><span class="nav-number">4.8.</span> <span class="nav-text">StringUtils</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#toStringArray"><span class="nav-number">4.8.1.</span> <span class="nav-text">toStringArray</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exception"><span class="nav-number">5.</span> <span class="nav-text">Exception</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BeanCreationException"><span class="nav-number">6.</span> <span class="nav-text">BeanCreationException</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MyBatis-Spring"><span class="nav-number">7.</span> <span class="nav-text">MyBatis-Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SqlSessionTemplate事务支持"><span class="nav-number">7.1.</span> <span class="nav-text">SqlSessionTemplate事务支持</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SpringMVC"><span class="nav-number">8.</span> <span class="nav-text">SpringMVC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ServletContainerInitializer"><span class="nav-number">8.1.</span> <span class="nav-text">ServletContainerInitializer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TODO"><span class="nav-number">9.</span> <span class="nav-text">TODO</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xiaozhuang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if ( $('#local-search-input').size() === 0) {
+        return;
+      }
+
+      // Popup Window;
+      var isfetched = false;
+      // Search DB path;
+      var search_path = "search.xml";
+      if (search_path.length == 0) {
+        search_path = "search.xml";
+      }
+      var path = "/" + search_path;
+      // monitor main search box;
+
+      function proceedsearch() {
+        $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+        $('.popup').toggle();
+
+      }
+      // search function;
+      var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+          url: path,
+          dataType: "xml",
+          async: true,
+          success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+              return {
+                title: $( "title", this ).text(),
+                content: $("content",this).text(),
+                url: $( "url" , this).text()
+              };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+              var matchcounts = 0;
+              var str='<ul class=\"search-result-list\">';
+              var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+              $resultContent.innerHTML = "";
+              if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                  var isMatch = true;
+                  var content_index = [];
+                  var data_title = data.title.trim().toLowerCase();
+                  var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                  var data_url = data.url;
+                  var index_title = -1;
+                  var index_content = -1;
+                  var first_occur = -1;
+                  // only match artiles with not empty titles and contents
+                  if(data_title != '' && data_content != '') {
+                    keywords.forEach(function(keyword, i) {
+                      index_title = data_title.indexOf(keyword);
+                      index_content = data_content.indexOf(keyword);
+                      if( index_title < 0 && index_content < 0 ){
+                        isMatch = false;
+                      } else {
+                        if (index_content < 0) {
+                          index_content = 0;
+                        }
+                        if (i == 0) {
+                          first_occur = index_content;
+                        }
+                      }
+                    });
+                  }
+                  // show search results
+                  if (isMatch) {
+                    matchcounts += 1;
+                    str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                    var content = data.content.trim().replace(/<[^>]+>/g,"");
+                    if (first_occur >= 0) {
+                      // cut out 100 characters
+                      var start = first_occur - 20;
+                      var end = first_occur + 80;
+                      if(start < 0){
+                        start = 0;
+                      }
+                      if(start == 0){
+                        end = 50;
+                      }
+                      if(end > content.length){
+                        end = content.length;
+                      }
+                      var match_content = content.substring(start, end);
+                      // highlight all keywords
+                      keywords.forEach(function(keyword){
+                        var regS = new RegExp(keyword, "gi");
+                        match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                      });
+
+                      str += "<p class=\"search-result\">" + match_content +"...</p>"
+                    }
+                    str += "</li>";
+                  }
+                })};
+              str += "</ul>";
+              if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+              if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+              $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+          }
+        });}
+
+      // handle and trigger popup window;
+      $('.popup-trigger').mousedown(function(e) {
+        e.stopPropagation();
+        if (isfetched == false) {
+          searchFunc(path, 'local-search-input', 'local-search-result');
+        } else {
+          proceedsearch();
+        };
+
+      });
+
+      $('.popup-btn-close').click(function(e){
+        $('.popup').hide();
+        $(".popoverlay").remove();
+        $('body').css('overflow', '');
+      });
+      $('.popup').click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+
+  
+
+  
+
+  
+  
+
+
+</body>
+</html>
